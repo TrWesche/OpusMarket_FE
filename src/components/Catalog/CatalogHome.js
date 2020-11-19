@@ -7,11 +7,16 @@ import {
     } from "@material-ui/core";
 import HeroStepper from "../Common/Hero/HeroStepper";
 import CardList from "../Common/CardList/CardList";
-import catalogStyles from "./catalogStyles";
+import { makeStyles } from '@material-ui/core/styles';
 
+const useStyles = makeStyles((theme) => ({
+    root: {
+      flexGrow: 1,
+    }
+}));
 
 function Catalog() {
-    const classes = catalogStyles();
+    const classes = useStyles();
     const theme = useTheme();
 
     return (

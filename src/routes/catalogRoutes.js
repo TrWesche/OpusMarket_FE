@@ -1,19 +1,21 @@
-import React from "react";
-import { Route, Switch } from "react-router-dom";
 import CatalogHome from "../components/Catalog/CatalogHome";
 import ProductDetail from "../components/Product/ProductDetail";
 
-function CatalogRoutes () {
-    return (
-        <Switch>
-            <Route exact path="/">
-                <CatalogHome />
-            </Route>
-            <Route exact path="/product/:productID">
-                <ProductDetail />
-            </Route>
-        </Switch>
-    )
-}
+import {
+    CATALOG_BROWSE_PATH, 
+    CATALOG_PRODUCT_PATH } from './_pathDict';
+
+const CatalogRoutes = [
+    {
+        'component': CatalogHome,
+        'path': CATALOG_BROWSE_PATH,
+        'exact': true
+    },
+    {
+        'component': ProductDetail,
+        'path': CATALOG_PRODUCT_PATH,
+        'exact': false
+    }
+];
 
 export default CatalogRoutes;

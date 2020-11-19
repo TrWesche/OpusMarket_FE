@@ -22,7 +22,7 @@ export default function UserUpdateForm() {
   const classes = useStyles();
   return (
     <Container>
-      <p>Under Construction</p>
+      <p>Update User Under Construction</p>
     </Container>
   );
 }

@@ -22,7 +22,7 @@ export default function MerchantHome() {
   const classes = useStyles();
   return (
     <Container>
-      <p>Under Construction</p>
+      <p>Merchant Home Under Construction</p>
     </Container>
   );
 }

@@ -1,23 +1,35 @@
-import React from "react";
-import { Route, Switch } from "react-router-dom";
+import ProductManagementHome from "../components/Product/ProductManagementHome";
+import NewProductConfiguration from "../components/Product/NewProductConfiguration";
+import ViewProductConfiguration from "../components/Product/ViewProductConfiguration";
+import UpdateProductConfiguration from "../components/Product/UpdateProductConfiguration";
 
-function ProductManagementRoutes () {
-    return (
-        <Switch>
-            <Route exact path="/">
-                <ProductManagementHome />
-            </Route>
-            <Route exact path="/new">
-                <NewProductConfiguration />
-            </Route>
-            <Route exact path="/view/:productID">
-                <ViewProductConfiguration />
-            </Route>
-            <Route exact path="/update/:productID">
-                <UpdateProductConfiguration />
-            </Route>
-        </Switch>
-    )
-}
+import {
+    PRODUCT_MANAGEMENT_HOME_PATH, 
+    PRODUCT_MANAGEMENT_NEW_PRODUCT_PATH, 
+    PRODUCT_MANAGEMENT_VIEW_PRODUCT_PATH, 
+    PRODUCT_MANAGEMENT_UPDATE_PRODUCT_PATH } from './_pathDict';
+
+const ProductManagementRoutes = [
+    {
+        'component': ProductManagementHome,
+        'path': PRODUCT_MANAGEMENT_HOME_PATH,
+        'exact': true
+    },
+    {
+        'component': NewProductConfiguration,
+        'path': PRODUCT_MANAGEMENT_NEW_PRODUCT_PATH,
+        'exact': true
+    },
+    {
+        'component': ViewProductConfiguration,
+        'path': PRODUCT_MANAGEMENT_VIEW_PRODUCT_PATH,
+        'exact': true
+    },
+    {
+        'component': UpdateProductConfiguration,
+        'path': PRODUCT_MANAGEMENT_UPDATE_PRODUCT_PATH,
+        'exact': true
+    }
+];
 
 export default ProductManagementRoutes;

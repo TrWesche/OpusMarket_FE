@@ -1,7 +1,7 @@
 import React from 'react';
 import { 
-    Container
-  } from "@material-ui/core";
+  Container
+} from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
 
 
@@ -18,11 +18,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function MerchantAbout() {
+export default function ProductManagementHome() {
   const classes = useStyles();
   return (
     <Container>
-      <p>Merchant About Under Construction</p>
+      <p>Product Management Under Construction</p>
     </Container>
   );
 }

@@ -26,13 +26,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function NewUserForm() {
+export default function MerchantLoginForm() {
   const classes = useStyles();
   const [values, setValues] = React.useState({
     password: '',
     email: '',
-    firstname: '',
-    lastname: '',
     showPassword: false,
   });
 
@@ -50,11 +48,10 @@ export default function NewUserForm() {
 
   return (
     <Container>
-      <p>New User</p>
+      <p>Merchant Login</p>
       <form>
         <FormControl className={clsx(classes.margin, classes.textField)} variant="outlined">
           <OutlinedInput
-            required
             id="outlined-adornment-email"
             value={values.email}
             onChange={handleChange('email')}
@@ -66,37 +63,6 @@ export default function NewUserForm() {
           />
           <FormHelperText id="outlined-email-helper-text">Email</FormHelperText>
         </FormControl>
-
-        <FormControl className={clsx(classes.margin, classes.textField)} variant="outlined">
-          <OutlinedInput
-            required
-            id="outlined-adornment-firstname"
-            value={values.firstname}
-            onChange={handleChange('firstname')}
-            aria-describedby="outlined-firstname-helper-text"
-            inputProps={{
-              'aria-label': 'first name',
-            }}
-            labelWidth={0}
-          />
-          <FormHelperText id="outlined-firstname-helper-text">First Name</FormHelperText>
-        </FormControl>
-
-        <FormControl className={clsx(classes.margin, classes.textField)} variant="outlined">
-          <OutlinedInput
-            required
-            id="outlined-adornment-lastname"
-            value={values.lastname}
-            onChange={handleChange('lastname')}
-            aria-describedby="outlined-lastname-helper-text"
-            inputProps={{
-              'aria-label': 'last name',
-            }}
-            labelWidth={0}
-          />
-          <FormHelperText id="outlined-lastname-helper-text">Last Name</FormHelperText>
-        </FormControl>
-
         <FormControl className={clsx(classes.margin, classes.textField)} variant="outlined">
           <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
           <OutlinedInput

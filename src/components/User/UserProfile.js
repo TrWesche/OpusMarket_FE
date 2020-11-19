@@ -22,7 +22,7 @@ export default function UserProfile() {
   const classes = useStyles();
   return (
     <Container>
-      <p>Under Construction</p>
+      <p>User Profile Under Construction</p>
     </Container>
   );
 }

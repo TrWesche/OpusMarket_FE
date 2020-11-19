@@ -18,11 +18,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function MerchantAbout() {
+export default function MerchantProfile() {
   const classes = useStyles();
   return (
     <Container>
-      <p>Merchant About Under Construction</p>
+      <p>Merchant Profile Under Construction</p>
     </Container>
   );
 }

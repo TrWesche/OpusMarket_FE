@@ -1,7 +1,12 @@
+// To be implemented using SqPaymentForm 
+// https://developer.squareup.com/blog/online-payments-form-react/
+
+// https://github.com/square/react-square-payment-form
+
 import React from 'react';
 import { 
-    Container
-  } from "@material-ui/core";
+  Container
+} from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
 
 
@@ -18,11 +23,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function MerchantAbout() {
+export default function SquarePurchase() {
   const classes = useStyles();
   return (
     <Container>
-      <p>Merchant About Under Construction</p>
+      <p>Square Purchase Under Construction</p>
     </Container>
   );
 }

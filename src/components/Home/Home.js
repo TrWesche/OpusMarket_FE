@@ -4,17 +4,24 @@ import {
     Grid, 
     useTheme
     } from "@material-ui/core";
+import { makeStyles } from '@material-ui/core/styles';
 import HeroStepper from "../Common/Hero/HeroStepper";
 import CardList from "../Common/CardList/CardList";
-import homeStyles from "./homeStyles";
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+      flexGrow: 1,
+    }
+}));
 
 
 function Home() {
-    const classes = homeStyles();
+    const classes = useStyles();
     const theme = useTheme();
 
     return (
             <Container>
+                <p>Home</p>
                 <Grid container className={classes.root} spacing={2}>
                     <Grid item xs={12}>
                         <HeroStepper />

@@ -22,7 +22,7 @@ export default function ProductDetail() {
   const classes = useStyles();
   return (
     <Container>
-      <p>Under Construction</p>
+      <p>Product Details Under Construction</p>
     </Container>
   );
 }

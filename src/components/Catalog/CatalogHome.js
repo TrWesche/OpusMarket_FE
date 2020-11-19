@@ -21,6 +21,7 @@ function Catalog() {
 
     return (
             <Container>
+                <p>Catalog</p>
                 <Grid container className={classes.root} spacing={2}>
                     <Grid item xs={12}>
                         <HeroStepper />

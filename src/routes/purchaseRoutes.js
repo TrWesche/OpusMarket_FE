@@ -1,27 +1,20 @@
-import React from "react";
-import { Route, Switch } from "react-router-dom";
+import CartHome from "../components/Purchase/CartHome";
+import SquarePurchase from "../components/Purchase/SquarePurchase";
+import {VIEW_CART_PATH, BUY_CART_PATH} from "./_pathDict";
 
-function PurchaseRoutes () {
-    return (
-        <Switch>
-            <Route exact path="/cart">
-                <CartHome />
-            </Route>
-            <Route exact path="/cart/destination">
-                <SquareDelivery />
-            </Route>
-            <Route exact path="/cart/payment">
-                <SquarePayment />
-            </Route>
-            <Route exact path="/order/:orderID">
-                <OrderDetails />
-            </Route>
-            <Route exact path="/order-history">
-                <OrderHome />
-            </Route>
-        </Switch>
-    )
-}
+
+const PurchaseRoutes = [
+    {
+        'component': CartHome,
+        'path': VIEW_CART_PATH,
+        'exact': true
+    },
+    {
+        'component': SquarePurchase,
+        'path': BUY_CART_PATH,
+        'exact': false
+    }
+];
 
 export default PurchaseRoutes;
 

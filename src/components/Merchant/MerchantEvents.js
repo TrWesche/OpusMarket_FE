@@ -22,7 +22,7 @@ export default function MerchantEvents() {
   const classes = useStyles();
   return (
     <Container>
-      <p>Under Construction</p>
+      <p>Merchant Events Under Construction</p>
     </Container>
   );
 }

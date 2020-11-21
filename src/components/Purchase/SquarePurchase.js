@@ -42,6 +42,11 @@ const SquarePurchase = () => {
 
     setErrorMessages([]);
 
+    const data = {
+      nonce: nonce,
+      buyerVerificationToken: buyerVerificationToken
+    }
+
     // alert('nonce created: ' + nonce + ', buyerVerificationToken: ' + buyerVerificationToken);
     const result = axios.post(`${BASE_URL}/sqpay/process-payment`, {nonce: nonce, buyerVerificationToken: buyerVerificationToken});
     console.log(result);

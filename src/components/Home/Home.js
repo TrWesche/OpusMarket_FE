@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+
 import { 
     Container, 
     Grid, 
-    useTheme
+    // useTheme
     } from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
 import HeroStepper from "../Common/Hero/HeroStepper";
 import CardList from "../Common/CardList/CardList";
+import { fetchCatalogProducts } from "../../actions/actionsCatalog";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -17,7 +20,17 @@ const useStyles = makeStyles((theme) => ({
 
 function Home() {
     const classes = useStyles();
-    const theme = useTheme();
+    // const theme = useTheme();
+
+    const productCatalog = useSelector(store => store.productCatalog);
+    // const error = useSelector(store => store.error);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(fetchCatalogProducts());
+    }, [dispatch]);
+
+    console.log(productCatalog);
 
     return (
             <Container>

@@ -2,7 +2,7 @@ import React from 'react';
 import { 
   Container,
   Grid,
-  useTheme
+  // useTheme
 } from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
 import CardList from "../Common/CardList/CardList";
@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CartHome() {
   const classes = useStyles();
-  const theme = useTheme();
+  // const theme = useTheme();
 
   return (
     <Container>

@@ -3,7 +3,7 @@ import './App.css';
 import NavBar from "../NavBar/NavBar";
 import Routes from "../../routes/routes";
 import theme from "../../theme";
-import {ThemeProvider, Grid} from "@material-ui/core";
+import {ThemeProvider} from "@material-ui/core";
 
 function App() {
   return (

@@ -1,14 +1,24 @@
 import React from "react";
 import {
     Grid,
-    useTheme
+    // useTheme
 } from "@material-ui/core";
-import cardListStyles from "./cardListStyles";
+import { makeStyles } from '@material-ui/core/styles';
+
 import ProductCard from "../ProductCard/ProductCard";
 
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+      flexGrow: 1,
+    }
+}));
+
+
+
 function CardList() {
-    const classes = cardListStyles();
-    const theme = useTheme();
+    const classes = useStyles();
+    // const theme = useTheme();
 
     return (
         <Grid container className={classes.root} spacing={2}>

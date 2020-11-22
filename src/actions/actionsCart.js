@@ -1,10 +1,56 @@
 import axios from 'axios';
 import {
+    ADD_PRODUCT_TO_CART,
+    UPDATE_PRODUCT_IN_CART,
+    REMOVE_PRODUCT_FROM_CART,
     APPLY_COUPON_TO_PRODUCT,
-    SYSTEM_ORDER_CREATED
+    CREATE_NEW_ORDER,
+    READ_ORDER_DATA,
+    ERROR
 } from "./actionTypes";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:5000/api";
+
+export const addProductToCart = (quantity, product) => {
+    const qty = +quantity;
+    return ({
+        type: ADD_PRODUCT_TO_CART,
+        payload: {...product, qty}
+    })
+}
+
+export const updateProductInCart = (quantity, product) => {
+    const qty = +quantity;
+    return ({
+        type: UPDATE_PRODUCT_IN_CART,
+        payload: {...product, qty}
+    })
+}
+
+export const removeProductFromCart = (productId) => {
+    return({
+        type: REMOVE_PRODUCT_FROM_CART,
+        id: productId
+    })
+}
+
+export const fetchOrderData = (orderId) => {
+    return async function (dispatch) {
+        try {
+            const { data } = await axios.get(`${BASE_URL}/orders/${orderId}`);
+            dispatch(gotOrderData(data));
+        } catch (error) {
+            dispatch(gotError());
+        }
+    }
+}
+
+const gotOrderData = (orderData) => {
+    return ({
+        type:  READ_ORDER_DATA,
+        payload: orderData
+    })
+}
 
 
 export const fetchCouponData = (prodId, couponCode) => {
@@ -18,7 +64,7 @@ export const fetchCouponData = (prodId, couponCode) => {
             const { data } = await axios.get(`${BASE_URL}/products/${prodId}/coupon/${couponCode}`);
             dispatch(gotCouponData(data));
         } catch (error) {
-            // dispatch(gotError());
+            dispatch(gotError());
         }
     }
 }
@@ -28,7 +74,7 @@ const gotCouponData = (couponData) => {
     // couponData = {
     //     id: 1,
     //     code: "",
-    //     pct_discount: 0.1,
+    //     pct_discount: 0.1,.
     // }
     return ({
         type: APPLY_COUPON_TO_PRODUCT,
@@ -62,7 +108,7 @@ export const createOrder = (orderData) => {
             const { data } = await axios.post(`${BASE_URL}/orders/new`, orderData);
             dispatch(createOrderSuccess(data));
         } catch (error) {
-            // dispatch(gotError());
+            dispatch(gotError());
         }
     }
 }
@@ -115,7 +161,14 @@ const createOrderSuccess = (validatedOrder) => {
     //     }
     // }
     return ({
-        type: SYSTEM_ORDER_CREATED,
+        type: CREATE_NEW_ORDER,
         payload: validatedOrder
+    })
+}
+
+
+const gotError = () => {
+    return ({
+        type: ERROR
     })
 }

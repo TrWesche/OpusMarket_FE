@@ -11,7 +11,27 @@ import {
     KeyboardArrowRight
 } from '@material-ui/icons';
 
-import heroStepperStyles from './heroStepperStyles';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+      flexGrow: 1,
+    },
+    header: {
+      display: 'flex',
+      alignItems: 'center',
+      height: 50,
+      paddingLeft: theme.spacing(4),
+      backgroundColor: theme.palette.background.default,
+    },
+    img: {
+      height: 255,
+      // maxWidth: 400,
+      overflow: 'clip',
+      display: 'block',
+      width: '100%',
+    },
+}));
 
 const tutorialSteps = [
   {
@@ -42,7 +62,7 @@ const tutorialSteps = [
 ];
 
 function HeroStepper() {
-  const classes = heroStepperStyles();
+  const classes = useStyles();
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
   const maxSteps = tutorialSteps.length;

@@ -8,10 +8,21 @@ import {
     Button,
     Typography
 } from '@material-ui/core';
-import productCardStyles from "./productCardStyles";
+
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles({
+    root: {
+      // maxWidth: 345,
+    },
+    media: {
+      height: 140,
+    },
+});
+
 
 function ProductCard() {
-  const classes = productCardStyles();
+  const classes = useStyles();
 
   return (
     <Card className={classes.root}>

@@ -3,7 +3,7 @@ import {
     Container, 
     Grid,
     Typography,
-    useTheme
+    // useTheme
     } from "@material-ui/core";
 import HeroStepper from "../Common/Hero/HeroStepper";
 import CardList from "../Common/CardList/CardList";
@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
 
 function Catalog() {
     const classes = useStyles();
-    const theme = useTheme();
+    // const theme = useTheme();
 
     return (
             <Container>

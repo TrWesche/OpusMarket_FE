@@ -12,6 +12,7 @@ import {
 import { 
     Menu as MenuIcon,
     Mail as MailIcon,
+    // ShoppingBasket as ShoppingBasket,
     Search as SearchIcon,
     AccountCircle,
     Notifications as NotificationsIcon,
@@ -36,16 +37,17 @@ const useStyles = makeStyles((theme) => {
           },
           search: {
             position: 'relative',
+            flexGrow: 1,
             borderRadius: theme.shape.borderRadius,
             backgroundColor: fade(theme.palette.common.white, 0.15),
             '&:hover': {
               backgroundColor: fade(theme.palette.common.white, 0.25),
             },
-            marginRight: theme.spacing(2),
+            marginRight: theme.spacing(10),
             marginLeft: 0,
             width: '100%',
             [theme.breakpoints.up('sm')]: {
-              marginLeft: theme.spacing(3),
+              marginLeft: theme.spacing(10),
               width: 'auto',
             },
           },
@@ -60,16 +62,15 @@ const useStyles = makeStyles((theme) => {
           },
           inputRoot: {
             color: 'inherit',
+            width: '100%'
           },
           inputInput: {
-            padding: theme.spacing(1, 1, 1, 0),
+            padding: theme.spacing(2, 1, 1, 0),
             // vertical padding + font size from searchIcon
-            paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+            paddingLeft: `calc(1em + ${theme.spacing(6)}px)`,
             transition: theme.transitions.create('width'),
             width: '100%',
-            [theme.breakpoints.up('md')]: {
-              width: '20ch',
-            },
+
           },
           sectionDesktop: {
             display: 'none',
@@ -183,7 +184,7 @@ function NavBar() {
             <MenuIcon />
           </IconButton>
           <Typography className={classes.title} variant="h6" noWrap>
-            Material-UI
+            OpusMarket
           </Typography>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
@@ -198,7 +199,7 @@ function NavBar() {
               inputProps={{ 'aria-label': 'search' }}
             />
           </div>
-          <div className={classes.grow} />
+
           <div className={classes.sectionDesktop}>
             <IconButton aria-label="show 4 new mails" color="inherit">
               <Badge badgeContent={4} color="secondary">

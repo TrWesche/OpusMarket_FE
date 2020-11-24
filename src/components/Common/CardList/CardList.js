@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-function CardList() {
+function CardList({ cardData }) {
     const classes = useStyles();
     // const theme = useTheme();
 

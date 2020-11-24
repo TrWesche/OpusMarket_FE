@@ -8,33 +8,54 @@ import {
     ERROR
 } from "../actions/actionTypes";
 
-const INITIAL_STATE = {};
+const INITIAL_STATE = {products: []};
 
 const cartReducer = (state = INITIAL_STATE, action) => {
-    let cartContents;
-    let cartProducts;
+    let id;
+    let qty;
+    let checkCart;
+    let updatedCart;
+
+    let productList;
+    let tempProducts;
     switch (action.type){
         case ADD_PRODUCT_TO_CART:
-            cartContents = {...state, cartContents: [...cartContents, action.payload]};  
-            return cartContents;
+            // Retrieve unique identified from incoming item
+            id = action.payload.id;
+            qty = action.payload.qty;
+            
+            // Check if incoming item is in the cart already, if not add to the cart
+            checkCart = state.products.findIndex((product) => product.id === id);
+            if (checkCart === -1) {
+                return {...state, products: [...state.products, action.payload]};;
+            }
+
+            // If is in cart already increment the cart quantity by payload quantity
+            updatedCart = state.products.map((product, idx) => {
+                if (idx === checkCart) {
+                    return {...product, qty: product.qty + qty};
+                }
+                return product;
+            })
+            return {...state, products: [...updatedCart]};
         case UPDATE_PRODUCT_IN_CART:
-            cartProducts = state.cartContents.map(item => item.id === action.payload.id ? action.payload : item);
-            cartContents = {...state, cartContents: cartProducts};  
-            return cartContents;
+            tempProducts = state.products.map(product => product.id === action.payload.id ? action.payload : product);
+            productList = {...state, products: tempProducts};  
+            return productList;
         case REMOVE_PRODUCT_FROM_CART:
-            cartProducts = state.cartContents.filter(item => item.id !== action.id);
-            cartContents = {...state, cartContents: cartProducts};
-            return cartContents;
+            tempProducts = state.products.filter(product => product.id !== action.id);
+            productList = {...state, products: tempProducts};
+            return productList;
         case APPLY_COUPON_TO_PRODUCT:
-            cartProducts = state.cartContents.filter(item => item.id === action.payload.id ? action.paylod : item);
-            cartContents = {...state, cartContents: cartProducts}
-            return cartContents;
+            tempProducts = state.products.filter(product => product.id === action.payload.id ? action.paylod : product);
+            productList = {...state, products: tempProducts}
+            return productList;
         case CREATE_NEW_ORDER:
-            cartContents = {...state, cartContents: action.payload}    
-            return cartContents;
+            productList = {...state, products: action.payload}    
+            return productList;
         case READ_ORDER_DATA:
-            cartContents = {...state, cartContents: action.payload}
-            return cartContents;
+            productList = {...state, products: action.payload}
+            return productList;
         case ERROR:
             return {...state, error: true};
         default:

@@ -8,8 +8,9 @@ import {
     } from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
 import HeroStepper from "../Common/Hero/HeroStepper";
+import ProductList from "../Common/CardList/ProductList";
 import CardList from "../Common/CardList/CardList";
-import { fetchCatalogProducts } from "../../actions/actionsCatalog";
+import { fetchCatalogProducts } from "../../actions/actionsProductCatalog";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -30,7 +31,7 @@ function Home() {
         dispatch(fetchCatalogProducts());
     }, [dispatch]);
 
-    console.log(productCatalog);
+    // console.log(productCatalog);
 
     return (
             <Container>
@@ -39,9 +40,7 @@ function Home() {
                     <Grid item xs={12}>
                         <HeroStepper />
                     </Grid>
-                    <Grid item xs={12}>
-                        <CardList />
-                    </Grid>
+                    <ProductList productDataList={productCatalog.products} />
                     <Grid item xs={12}>
                         <CardList />
                     </Grid>

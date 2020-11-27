@@ -1,4 +1,5 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import { 
     AppBar, 
     Toolbar,
@@ -12,7 +13,7 @@ import {
 import { 
     Menu as MenuIcon,
     Mail as MailIcon,
-    // ShoppingBasket as ShoppingBasket,
+    ShoppingBasket as ShoppingBasket,
     Search as SearchIcon,
     AccountCircle,
     Notifications as NotificationsIcon,
@@ -93,6 +94,7 @@ function NavBar() {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  const history = useHistory();
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -113,6 +115,10 @@ function NavBar() {
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
+
+  const handleViewCart = () => {
+    history.push(`/cart`);
+  }
 
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
@@ -209,6 +215,11 @@ function NavBar() {
             <IconButton aria-label="show 17 new notifications" color="inherit">
               <Badge badgeContent={17} color="secondary">
                 <NotificationsIcon />
+              </Badge>
+            </IconButton>
+            <IconButton onClick={handleViewCart} aria-label="show 17 new notifications" color="inherit">
+              <Badge badgeContent={5} color="secondary">
+                <ShoppingBasket />
               </Badge>
             </IconButton>
             <IconButton

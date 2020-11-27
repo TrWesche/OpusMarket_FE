@@ -40,7 +40,7 @@ function Home() {
                     <Grid item xs={12}>
                         <HeroStepper />
                     </Grid>
-                    <ProductList productDataList={productCatalog.products} />
+                    <ProductList productDataList={productCatalog.products} listid={"featured-product"}/>
                     <Grid item xs={12}>
                         <CardList />
                     </Grid>

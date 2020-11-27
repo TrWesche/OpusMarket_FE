@@ -97,13 +97,12 @@ function ProductCardRow({cardData}) {
   }
 
   return (
-    <Card className={classes.root} key={`catalog-${cardData.id}`} variant="outlined">
-      <CardActionArea>
+    <Card className={classes.root} variant="outlined">
+      <CardActionArea onClick={handleViewProductDetails}>
         <CardMedia
           className={classes.media}
           image={cardData.img_url}
           title={cardData.name}
-          onClick={handleViewProductDetails}
         />
         <CardContent>
           <Typography gutterBottom variant="caption" component="h6">

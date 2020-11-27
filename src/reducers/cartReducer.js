@@ -1,6 +1,6 @@
 import {
     ADD_PRODUCT_TO_CART,
-    UPDATE_PRODUCT_IN_CART,
+    UPDATE_PRODUCT_QUANTITY,
     REMOVE_PRODUCT_FROM_CART,
     APPLY_COUPON_TO_PRODUCT,
     CREATE_NEW_ORDER,
@@ -12,7 +12,7 @@ const INITIAL_STATE = {products: []};
 
 const cartReducer = (state = INITIAL_STATE, action) => {
     let id;
-    let qty;
+    let quantity;
     let checkCart;
     let updatedCart;
 
@@ -22,7 +22,7 @@ const cartReducer = (state = INITIAL_STATE, action) => {
         case ADD_PRODUCT_TO_CART:
             // Retrieve unique identified from incoming item
             id = action.payload.id;
-            qty = action.payload.qty;
+            quantity = action.payload.quantity;
             
             // Check if incoming item is in the cart already, if not add to the cart
             checkCart = state.products.findIndex((product) => product.id === id);
@@ -33,13 +33,18 @@ const cartReducer = (state = INITIAL_STATE, action) => {
             // If is in cart already increment the cart quantity by payload quantity
             updatedCart = state.products.map((product, idx) => {
                 if (idx === checkCart) {
-                    return {...product, qty: product.qty + qty};
+                    return {...product, quantity: product.quantity + quantity};
                 }
                 return product;
-            })
+            });
             return {...state, products: [...updatedCart]};
-        case UPDATE_PRODUCT_IN_CART:
-            tempProducts = state.products.map(product => product.id === action.payload.id ? action.payload : product);
+        case UPDATE_PRODUCT_QUANTITY:
+            tempProducts = state.products.map(product => {
+                if (product.id === action.payload.id) {
+                    return {...product, quantity: action.payload.quantity};
+                }
+                return product;
+            });
             productList = {...state, products: tempProducts};  
             return productList;
         case REMOVE_PRODUCT_FROM_CART:
@@ -47,7 +52,15 @@ const cartReducer = (state = INITIAL_STATE, action) => {
             productList = {...state, products: tempProducts};
             return productList;
         case APPLY_COUPON_TO_PRODUCT:
-            tempProducts = state.products.filter(product => product.id === action.payload.id ? action.paylod : product);
+            tempProducts = state.products.map(product => {
+                if (product.id === action.payload.id) {
+                    return {...product, 
+                        coupon_discount: action.payload.couponData.pct_discount,
+                        coupon_id: action.payload.couponData.id,
+                        coupon_code: action.payload.couponData.code};
+                }
+                return product;
+            });
             productList = {...state, products: tempProducts}
             return productList;
         case CREATE_NEW_ORDER:

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {
     ADD_PRODUCT_TO_CART,
-    UPDATE_PRODUCT_IN_CART,
+    UPDATE_PRODUCT_QUANTITY,
     REMOVE_PRODUCT_FROM_CART,
     APPLY_COUPON_TO_PRODUCT,
     CREATE_NEW_ORDER,
@@ -15,15 +15,15 @@ export const addProductToCart = (quantity, product) => {
     const qty = +quantity;
     return ({
         type: ADD_PRODUCT_TO_CART,
-        payload: {...product, qty}
+        payload: {...product, quantity: qty}
     })
 }
 
-export const updateProductInCart = (quantity, product) => {
+export const updateProductQuantity = (quantity, productId) => {
     const qty = +quantity;
     return ({
-        type: UPDATE_PRODUCT_IN_CART,
-        payload: {...product, qty}
+        type: UPDATE_PRODUCT_QUANTITY,
+        payload: {id: productId, quantity: qty}
     })
 }
 
@@ -53,7 +53,7 @@ const gotOrderData = (orderData) => {
 }
 
 
-export const fetchCouponData = (prodId, couponCode) => {
+export const fetchCouponData = (productId, couponCode) => {
     // Takes couponCode and product ID from cart and user input
     // and pulls the coupon information from the backend for user display
     // and couponID appending to the cart data.  This couponID is later
@@ -61,15 +61,15 @@ export const fetchCouponData = (prodId, couponCode) => {
     // when creating the order.
     return async function (dispatch) {
         try {
-            const { data } = await axios.get(`${BASE_URL}/products/${prodId}/coupon/${couponCode}`);
-            dispatch(gotCouponData(data));
+            const { data } = await axios.get(`${BASE_URL}/products/${productId}/coupon/${couponCode}`);
+            dispatch(gotCouponData(productId, data.product_coupon));
         } catch (error) {
             dispatch(gotError());
         }
     }
 }
 
-const gotCouponData = (couponData) => {
+const gotCouponData = (id, couponData) => {
     // Input Data Structure
     // couponData = {
     //     id: 1,
@@ -78,7 +78,7 @@ const gotCouponData = (couponData) => {
     // }
     return ({
         type: APPLY_COUPON_TO_PRODUCT,
-        payload: couponData
+        payload: {id, couponData}
     })
 }
 

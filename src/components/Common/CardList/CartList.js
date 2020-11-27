@@ -5,7 +5,7 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
 
-import ProductCardRow from "../ProductCard/ProductCardRow";
+import ProductCardCart from "../ProductCard/ProductCardCart";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -32,8 +32,8 @@ function ProductList({ productDataList, listid }) {
                 <Grid container className={classes.root} spacing={2}>
                     {productDataList.map(productData => {
                         return (
-                            <Grid item xs={6} md={3} lg={2} key={`${listid}-${productData.id}`}>
-                                <ProductCardRow cardData={productData}/>
+                            <Grid item xs={12} key={`${listid}-${productData.id}`}>
+                                <ProductCardCart cardData={productData}/>
                             </Grid>    
                         )
                     })}

@@ -32,14 +32,16 @@ const useStyles = makeStyles((theme) => ({
     },
     pricing: {
       flexDirection: 'column',
-      alignContent: 'start'
+      textAlign: 'end',
+      minWidth: 180,
+      backgroundColor: '#F0FAFA'
     },
     actionButtons: {
       flexDirection: 'row',
       minWidth: 140
     },
     stdPriceNoSale: {
-      fontSize: '0.9rem'
+      fontSize: '0.75rem'
     },
     stdPriceSale: {
       textDecoration: 'line-through',
@@ -47,9 +49,12 @@ const useStyles = makeStyles((theme) => ({
       fontSize: '0.75rem'
     },
     salePrice: {
-      fontWeight: 'bold',
       color: '#AA0000',
-      fontSize: '0.9rem'
+      fontSize: '0.75rem'
+    },
+    totalPrice: {
+      fontWeight: 'bold',
+      fontSize: '0.75rem'
     },
     productInformation: {
       flexDirection: 'column',
@@ -59,7 +64,10 @@ const useStyles = makeStyles((theme) => ({
       maxWidth: 100,
     },
     productCoupon: {
-      maxWidth: 100,
+      maxWidth: 100
+    },
+    resize: {
+      fontSize: '0.75rem'
     },
     removeFromCartIcon: {
       height: 28,
@@ -112,6 +120,8 @@ function ProductCardCol({cardData}) {
   const priceRender = () => {
     const basePriceStyle = (cardData.coupon_discount || cardData.promotion_price) ? classes.stdPriceSale : classes.stdPriceNoSale;
     let salePricing;
+    let pricePerQty = cardData.base_price;
+    let totalPrice;
 
     const basePrice = (
       <Typography variant="body2" aria-label="base price" className={basePriceStyle}>
@@ -120,52 +130,63 @@ function ProductCardCol({cardData}) {
     );
     
     if(cardData.coupon_discount && cardData.promotion_price) {
+      pricePerQty = Math.floor(cardData.promotion_price*(1-cardData.coupon_discount));
       salePricing = (
         <React.Fragment>
           <Typography variant="body1" aria-label="sale price" className={classes.salePrice}>
-            Sale Price: ${cardData.promotion_price/100}
+            Sale: ${cardData.promotion_price/100}
           </Typography>
-          <Typography variant="body1" aria-label="sale price" className={classes.salePrice}>
-            Coupon Discount: {cardData.coupon_discount*100}%
+          <Typography variant="body1" aria-label="coupon discount" className={classes.salePrice}>
+            {cardData.coupon_code}: {cardData.coupon_discount*100}%
           </Typography>
-          <Typography variant="body1" aria-label="sale price" className={classes.salePrice}>
-            Final Price: ${Math.floor(cardData.promotion_price*(1-cardData.coupon_discount))/100}
+          <Typography variant="body1" aria-label="final price" className={classes.salePrice}>
+            Final: ${pricePerQty/100}
           </Typography>
         </React.Fragment>
       )
     } else if (cardData.coupon_discount) {
+      pricePerQty = Math.floor(cardData.base_price*(1-cardData.coupon_discount));
       salePricing = (
         <React.Fragment>
-          <Typography variant="body1" aria-label="sale price" className={classes.salePrice}>
-            Coupon Discount: {cardData.coupon_discount*100}%
+          <Typography variant="body1" aria-label="coupon discount" className={classes.salePrice}>
+            Coupon: {cardData.coupon_discount*100}%
           </Typography>
-          <Typography variant="body1" aria-label="sale price" className={classes.salePrice}>
-            Final Price: ${Math.floor(cardData.base_price*(1-cardData.coupon_discount))/100}
+          <Typography variant="body1" aria-label="final price" className={classes.salePrice}>
+            Final Price: ${pricePerQty/100}
           </Typography>
         </React.Fragment>
       )
     } else if (cardData.promotion_price) {
+      pricePerQty = cardData.promotion_price;
       salePricing = (
         <React.Fragment>
           <Typography variant="body1" aria-label="sale price" className={classes.salePrice}>
-            Sale Price: ${cardData.promotion_price/100}
+            Sale Price: ${pricePerQty/100}
           </Typography>
         </React.Fragment>
       )
     }
 
+    totalPrice = pricePerQty * cardData.quantity;
+    
     if(salePricing) {
       return (
-        <div className={classes.pricing}>
+        <CardContent className={classes.pricing}>
           {basePrice}
           {salePricing}
-        </div>
+          <Typography variant="body1" aria-label="total price" className={classes.totalPrice}>
+            Total: ${totalPrice/100}
+          </Typography>
+        </CardContent>
       )
     } else {
       return (
-        <div className={classes.pricing}>
+        <CardContent className={classes.pricing}>
           {basePrice}
-        </div>
+          <Typography variant="body1" aria-label="total price" className={classes.totalPrice}>
+            Total: ${totalPrice/100}
+          </Typography>
+        </CardContent>
       )
     }
   }
@@ -186,7 +207,7 @@ function ProductCardCol({cardData}) {
           </CardContent>
         </div>
       </CardActionArea> 
-      {priceRender()}
+      
 
       <CardActions className={classes.actionBar}>
         <div className={classes.actionButtons}>
@@ -221,6 +242,11 @@ function ProductCardCol({cardData}) {
                   label="Coupon"
                   value={formDataCoupon.couponCode}
                   className={classes.productCoupon}
+                  InputProps={{
+                    classes: {
+                      input: classes.resize
+                    }
+                  }}
                   size="small"
                   onChange={handleChangeCoupon}
                 />
@@ -235,6 +261,8 @@ function ProductCardCol({cardData}) {
         
         </div>
       </CardActions>
+
+      {priceRender()}
     </Card>
   );
 }

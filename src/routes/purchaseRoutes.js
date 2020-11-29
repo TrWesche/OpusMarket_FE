@@ -1,5 +1,6 @@
 import CartHome from "../components/Purchase/CartHome";
-import SquarePurchase from "../components/Purchase/SquarePurchase";
+// import SquarePurchase from "../components/Purchase/SquarePurchase";
+import OrderPurchase from "../components/Order/OrderPurchase";
 import {VIEW_CART_PATH, BUY_CART_PATH} from "./_pathDict";
 
 
@@ -10,7 +11,7 @@ const PurchaseRoutes = [
         'exact': true
     },
     {
-        'component': SquarePurchase,
+        'component': OrderPurchase,
         'path': BUY_CART_PATH,
         'exact': false
     }

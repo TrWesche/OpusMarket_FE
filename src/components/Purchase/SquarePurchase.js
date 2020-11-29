@@ -26,14 +26,15 @@ import {
   MasterpassButton
 } from 'react-square-payment-form';
 import 'react-square-payment-form/lib/default.css';
+import apiOpus from '../../utils/apiOpusMarket';
 
 const APPLICATION_ID = process.env.REACT_APP_SQUARE_APP_ID;
 const LOCATION_ID = process.env.REACT_APP_SQUARE_LOC_ID;
 const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:5000/api";
 
-const SquarePurchase = () => {
-  // const order = useSelector(store => store.cartContents);
-
+const SquarePurchase = ({orderDetails}) => {
+  
+  console.log("Order Details Square", orderDetails)
   const [errorMessages, setErrorMessages] = useState([]);
 
   function cardNonceResponseReceived(errors, nonce, cardData, buyerVerificationToken) {
@@ -44,24 +45,26 @@ const SquarePurchase = () => {
 
     setErrorMessages([]);
 
-    // const data = {
-    //   nonce: nonce,
-    //   buyerVerificationToken: buyerVerificationToken,
-    //   order_id: order.id
-    // }
+    const data = {
+      nonce: nonce,
+      buyerVerificationToken: buyerVerificationToken,
+      order_id: orderDetails.id
+    }
 
-    const result = axios.post(`${BASE_URL}/sqpay/process-payment`, {nonce: nonce, buyerVerificationToken: buyerVerificationToken});
+    // const result = axios.post(`${BASE_URL}/sqpay/process-payment`, {nonce: nonce, buyerVerificationToken: buyerVerificationToken});
+    const result = apiOpus.processPaymentSquare(data);
+    // const result = axios.post(`${BASE_URL}/sqpay/process-payment`, data);
     console.log(result);
   }
 
-  // const lineItems = order.products.map(product => {
-  //   return {
-  //     label: product.product_name,
-  //     quantity: product.quantity,
-  //     amount: product.final_price,
-  //     pending: false
-  //   }
-  // })
+  const lineItems = orderDetails.products.map(product => {
+    return {
+      label: product.product_name,
+      quantity: product.quantity,
+      amount: product.final_price,
+      pending: false
+    }
+  })
 
   function createPaymentRequest() {
     return {
@@ -70,27 +73,27 @@ const SquarePurchase = () => {
       currencyCode: 'USD',
       countryCode: 'US',
       total: {
-        // label: `OpusMarket - Order: ${order.id}`,
-        label: 'Square Test Order',
-        // amount: `${order.order_total}`,
-        amount: '1000',
+        label: `OpusMarket - Order: ${orderDetails.id}`,
+        // label: 'Square Test Order',
+        amount: `${orderDetails.order_total}`,
+        // amount: '1000',
         pending: false,
       },
-      // lineItems: lineItems,
-      lineItems: [
-        {
-          label: 'Subtotal',
-          amount: '1',
-          pending: false,
-        },
-      ],
+      lineItems: lineItems,
+      // lineItems: [
+      //   {
+      //     label: 'Total',
+      //     amount: '1',
+      //     pending: false,
+      //   },
+      // ],
     };
   }
 
   function createVerificationDetails() {
     return {
-      // amount: `${order.order_total / 100}`,
-      amount: '10.00',
+      amount: `${orderDetails.order_total / 100}`,
+      // amount: '10.00',
       currencyCode: 'USD',
       intent: 'CHARGE',
       billingContact: {
@@ -158,7 +161,7 @@ const SquarePurchase = () => {
         </div>
       </fieldset>
 
-      <CreditCardSubmitButton>Pay $10.00</CreditCardSubmitButton>
+      <CreditCardSubmitButton>Pay ${orderDetails.order_total/100}</CreditCardSubmitButton>
 
       <div className="sq-error-message">
         {errorMessages.map(errorMessage => (

@@ -1,10 +1,8 @@
-import axios from 'axios';
+import apiOpus from "../utils/apiOpusMarket";
 import {
     LOAD_CATALOG_PRODUCTS,
     ERROR
 } from "./actionTypes";
-
-const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:5000/api";
 
 export const fetchCatalogProducts = (searchParamObject = {}) => {
     // Expected parameters
@@ -13,7 +11,7 @@ export const fetchCatalogProducts = (searchParamObject = {}) => {
     // r - Rating Filter
     const searchKeys = Object.keys(searchParamObject);
 
-    let callConstructor = `${BASE_URL}/products/catalog`;
+    let callConstructor = ""
 
     if (searchKeys.length) {
         callConstructor = callConstructor + '?';
@@ -26,11 +24,11 @@ export const fetchCatalogProducts = (searchParamObject = {}) => {
         }
     }
 
-    console.log(callConstructor);
+    // console.log(callConstructor);
 
     return async function (dispatch) {
         try {
-            const { data } = await axios.get(callConstructor);
+            const data = await apiOpus.getProducts(callConstructor);
             dispatch(gotCatalogProducts(data));
         } catch (error) {
             dispatch(gotError());

@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:5000/api";
 
-class apiJobly {
+class apiOpus {
 
     static async request(endpoint, verb = "get", paramsOrData = {}) {
         // for now, hardcode token for "testing"
@@ -10,7 +10,7 @@ class apiJobly {
         // "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc" +
         // "3RpbmciLCJpc19hZG1pbiI6ZmFsc2UsImlhdCI6MTU1MzcwMzE1M30." +
         // "COmFETEsTxN_VfIlgIKw0bYJLkvbRQNgO1XCSE8NZ0U");
-        paramsOrData._token = localStorage.getItem("token");
+        // paramsOrData._token = localStorage.getItem("token");
 
 
         console.debug("API Call:", endpoint, paramsOrData, verb);
@@ -19,12 +19,13 @@ class apiJobly {
           return (await axios({
             method: verb,
             url: `${BASE_URL}/${endpoint}`,
+            withCredentials: true,
             [verb === "get" ? "params" : "data"]: paramsOrData})).data;
             // axios sends query string data via the "params" key,
             // and request body data via the "data" key,
             // so the key we need depends on the HTTP verb
         }
-    
+        
         catch(err) {
           console.error("API Error:", err.response);
           let message = err.response.data.message;
@@ -41,6 +42,7 @@ class apiJobly {
                                   
     static async loginUser(userData) {
         const res = await this.request("auth/user", "post", userData);
+        console.log(document);
         return res.message;
     }
     
@@ -167,12 +169,17 @@ class apiJobly {
     // Read Routes
     static async getProducts(queryParams) {
         const res = await this.request(`products/catalog${queryParams}`);
-        return res.products;
+        return res;
     }
 
     static async getProductDetails(productId) {
         const res = await this.request(`products/catalog/${productId}`);
         return res.product;
+    }
+
+    static async getProductCouponByCode(productId, couponCode) {
+        const res = await this.request(`products/${productId}/coupon/${couponCode}`);
+        return res;
     }
 
 
@@ -257,7 +264,8 @@ class apiJobly {
     // ║║╔═╗║╚═╝║  ║║  ║╔═╗║║╔══╝║╔╗╔╝ ║║ ║║╚╗║║║║╔═╗╚══╗║
     // ║╚╩═║║╔═╗║ ╔╝╚╗ ║║ ║║║╚══╗║║║╚╗╔╣╠╗║║ ║║║║╚╩═║║╚═╝║
     // ╚═══╝╚╝ ╚╝ ╚══╝ ╚╝ ╚╝╚═══╝╚╝╚═╝╚══╝╚╝ ╚═╝╚═══╝╚═══╝
-                                                        
+
+    // Create Routes
     static async createGathering(payloadData) {
         const res = await this.request("gatherings/new", "post", payloadData);
         return res.gathering;
@@ -302,6 +310,33 @@ class apiJobly {
         const res = await this.request(`gatherings/${gatheringId}/img/${imageId}`, "delete");
         return res.message;
     }
+
+
+    // ╔═══╗╔═══╗╔═══╗╔═══╗╔═══╗
+    // ║╔═╗║║╔═╗║╚╗╔╗║║╔══╝║╔═╗║
+    // ║║ ║║║╚═╝║ ║║║║║╚══╗║╚═╝║
+    // ║║ ║║║╔╗╔╝ ║║║║║╔══╝║╔╗╔╝
+    // ║╚═╝║║║║╚╗╔╝╚╝║║╚══╗║║║╚╗
+    // ╚═══╝╚╝╚═╝╚═══╝╚═══╝╚╝╚═╝
+                             
+    // Create Routes
+    static async createNewOrder(orderData) {
+        const res = await this.request(`orders/new`, "post", orderData);
+        return res.order;
+    }
+
+    static async getOrderDetails(orderId) {
+        const res = await this.request(`orders/${orderId}`);
+        return res;
+    }
+    
+
+    // Pay Routes
+    static async processPaymentSquare(data) {
+        const res = await this.request(`sqpay/process-payment`, "post", data);
+        return res;
+    }
+
 }
 
-export default apiJobly;
+export default apiOpus;

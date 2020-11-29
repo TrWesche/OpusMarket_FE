@@ -1,8 +1,10 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import { 
-  Container
+  Container,
+  Button
 } from "@material-ui/core";
 import IconButton from '@material-ui/core/IconButton';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
@@ -12,6 +14,8 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
+
+import apiOpus from "../../utils/apiOpusMarket";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,6 +31,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function UserLoginForm() {
+  const history = useHistory();
   const classes = useStyles();
   const [values, setValues] = React.useState({
     password: '',
@@ -46,10 +51,23 @@ export default function UserLoginForm() {
     event.preventDefault();
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      console.log("sending", values);
+      const res = await apiOpus.loginUser(values);
+      console.log(res);
+      history.push('/');
+    } catch (error) {
+      console.log("Error", error);
+    }
+  }
+
   return (
     <Container>
       <p>User Login</p>
-      <form>
+      <form onSubmit={handleSubmit}>
         <FormControl className={clsx(classes.margin, classes.textField)} variant="outlined">
           <OutlinedInput
             id="outlined-adornment-email"
@@ -85,6 +103,9 @@ export default function UserLoginForm() {
             labelWidth={70}
           />
         </FormControl>
+        <Button type="submit" aria-label="user login" variant="contained" color="primary">
+            Login
+        </Button>
       </form>
     </Container>
   );

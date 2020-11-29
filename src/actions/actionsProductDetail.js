@@ -1,15 +1,14 @@
-import axios from 'axios';
+import apiOpus from "../utils/apiOpusMarket";
 import {
     LOAD_PRODUCT_DETAILS,
     ERROR
 } from "./actionTypes";
 
-const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:5000/api";
-
 export const fetchProductDetails = (productID) => {
     return async function (dispatch) {
         try {
-            const { data } = await axios.get(`${BASE_URL}/products/catalog/${productID}`);
+            const data = await apiOpus.getProductDetails(productID);
+            console.log(data);
             dispatch(gotProductDetails(data));
         } catch (error) {
             dispatch(gotError());

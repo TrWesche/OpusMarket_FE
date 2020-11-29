@@ -1,6 +1,6 @@
 import React from 'react';
 import { useHistory } from "react-router-dom";
-// import { useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
     Card,
     CardActions,
@@ -13,7 +13,7 @@ import {
 //   RemoveShoppingCart,
 //   AddCircleOutline } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
-// import { updateProductQuantity, removeProductFromCart, fetchCouponData } from '../../../actions/actionsCart';
+import { createOrder } from '../../actions/actionsCart';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -43,7 +43,9 @@ function OrderOverviewCard({productDataList}) {
 
   const handleProccedToCheckout = () => {
     console.log("Proceed to checkout triggered")
-    // history.push(`/catalog/${cardData.id}`);
+
+    // dispatch(createOrder(productDataList));
+    history.push(`/cart/buy`);
   }
 
   const renderTotal = () => {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
@@ -16,6 +16,8 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 
 import apiOpus from "../../utils/apiOpusMarket";
+import { AuthContext } from "../App/AuthContext";
+import { useCookies } from "react-cookie";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,6 +33,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function UserLoginForm() {
+  const {authToken, setAuthToken} = useContext(AuthContext);
+  // const { cookies, setCookies } = Cookies.prototype.getAll();
+
+  // console.log(cookies)
   const history = useHistory();
   const classes = useStyles();
   const [values, setValues] = React.useState({
@@ -56,7 +62,9 @@ export default function UserLoginForm() {
 
     try {
       const res = await apiOpus.loginUser(values);
-      history.push('/');
+      
+      // console.log(Cookies.prototype.get('sid'));
+      // history.push('/');
     } catch (error) {
       console.log("Error", error);
     }

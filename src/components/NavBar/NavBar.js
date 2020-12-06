@@ -1,4 +1,4 @@
-  import React from "react";
+import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { 
     AppBar, 
@@ -19,8 +19,9 @@ import {
     Notifications as NotificationsIcon,
     MoreVert as MoreIcon } from "@material-ui/icons";
 import { fade, makeStyles } from '@material-ui/core/styles';
-import jwt from "jsonwebtoken";
-import { OPUS_PUBLIC_KEY } from "../../keys";
+
+import {AuthContext} from "../App/AuthContext";
+
 
 const useStyles = makeStyles((theme) => {
   return (
@@ -91,11 +92,8 @@ const useStyles = makeStyles((theme) => {
 });
 
 
-function NavBar(cookies) {
-  if (cookies.cookies.sid) {
-    console.log(jwt.verify(cookies.cookies.sid, OPUS_PUBLIC_KEY));
-  }
-  
+function NavBar() {
+  const {authToken, setAuthToken} = useContext(AuthContext);
 
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -126,7 +124,31 @@ function NavBar(cookies) {
     history.push(`/cart`);
   }
 
+  const handleLogin = () => {
+    setAnchorEl(null);
+    handleMobileMenuClose();
+    history.push(`/uacm/login`);
+  }
+
   const menuId = 'primary-search-account-menu';
+  const renderMenuItems = () => {
+    if (authToken) {
+      return (
+        <React.Fragment>
+          <MenuItem onClick={handleMenuClose}>My Account</MenuItem>
+          <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
+        </React.Fragment>
+      )
+    } else {
+      return (
+        <React.Fragment>
+          <MenuItem onClick={handleLogin}>Login</MenuItem>
+          <MenuItem onClick={handleMenuClose}>Register</MenuItem>
+        </React.Fragment>
+      )
+    }
+  }
+
   const renderMenu = (
     <Menu
       anchorEl={anchorEl}
@@ -137,8 +159,7 @@ function NavBar(cookies) {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      {renderMenuItems()}
     </Menu>
   );
 

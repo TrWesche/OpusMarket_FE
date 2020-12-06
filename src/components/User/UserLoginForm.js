@@ -55,9 +55,7 @@ export default function UserLoginForm() {
     e.preventDefault();
 
     try {
-      console.log("sending", values);
       const res = await apiOpus.loginUser(values);
-      console.log(res);
       history.push('/');
     } catch (error) {
       console.log("Error", error);

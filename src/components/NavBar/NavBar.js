@@ -1,4 +1,4 @@
-import React from "react";
+  import React from "react";
 import { useHistory } from "react-router-dom";
 import { 
     AppBar, 
@@ -19,7 +19,8 @@ import {
     Notifications as NotificationsIcon,
     MoreVert as MoreIcon } from "@material-ui/icons";
 import { fade, makeStyles } from '@material-ui/core/styles';
-
+import jwt from "jsonwebtoken";
+import { OPUS_PUBLIC_KEY } from "../../keys";
 
 const useStyles = makeStyles((theme) => {
   return (
@@ -90,7 +91,12 @@ const useStyles = makeStyles((theme) => {
 });
 
 
-function NavBar() {
+function NavBar(cookies) {
+  if (cookies.cookies.sid) {
+    console.log(jwt.verify(cookies.cookies.sid, OPUS_PUBLIC_KEY));
+  }
+  
+
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);

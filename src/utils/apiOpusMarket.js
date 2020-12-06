@@ -42,7 +42,6 @@ class apiOpus {
                                   
     static async loginUser(userData) {
         const res = await this.request("auth/user", "post", userData);
-        console.log(document);
         return res.message;
     }
     

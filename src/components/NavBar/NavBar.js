@@ -22,7 +22,6 @@ import { fade, makeStyles } from '@material-ui/core/styles';
 
 import {AuthContext} from "../App/AuthContext";
 
-
 const useStyles = makeStyles((theme) => {
   return (
       {
@@ -91,9 +90,8 @@ const useStyles = makeStyles((theme) => {
   )
 });
 
-
 function NavBar() {
-  const {authToken, setAuthToken} = useContext(AuthContext);
+  const {authToken} = useContext(AuthContext);
 
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -131,37 +129,39 @@ function NavBar() {
   }
 
   const menuId = 'primary-search-account-menu';
-  const renderMenuItems = () => {
+  const renderMenu = () => {
     if (authToken) {
       return (
-        <React.Fragment>
+        <Menu
+          anchorEl={anchorEl}
+          anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+          id={menuId}
+          keepMounted
+          transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+          open={isMenuOpen}
+          onClose={handleMenuClose}
+        >
           <MenuItem onClick={handleMenuClose}>My Account</MenuItem>
           <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
-        </React.Fragment>
+        </Menu>
       )
     } else {
       return (
-        <React.Fragment>
+        <Menu
+          anchorEl={anchorEl}
+          anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+          id={menuId}
+          keepMounted
+          transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+          open={isMenuOpen}
+          onClose={handleMenuClose}
+        >
           <MenuItem onClick={handleLogin}>Login</MenuItem>
           <MenuItem onClick={handleMenuClose}>Register</MenuItem>
-        </React.Fragment>
+        </Menu>
       )
     }
   }
-
-  const renderMenu = (
-    <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-      id={menuId}
-      keepMounted
-      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}
-    >
-      {renderMenuItems()}
-    </Menu>
-  );
 
   const mobileMenuId = 'primary-search-account-menu-mobile';
   const renderMobileMenu = (
@@ -274,7 +274,7 @@ function NavBar() {
         </Toolbar>
       </AppBar>
       {renderMobileMenu}
-      {renderMenu}
+      {renderMenu()}
     </div>
   );
 }

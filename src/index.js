@@ -10,8 +10,6 @@ import { createStore, compose, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
 
-import { CookiesProvider } from 'react-cookie';
-
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 const store = createStore(
@@ -25,11 +23,9 @@ const store = createStore(
 ReactDOM.render(
   <Provider store={store}>
     <CssBaseline />
-    <CookiesProvider>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </CookiesProvider>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </Provider>,
   document.getElementById('root')
 );

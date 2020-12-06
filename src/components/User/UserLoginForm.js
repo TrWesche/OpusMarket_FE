@@ -16,8 +16,8 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 
 import apiOpus from "../../utils/apiOpusMarket";
-import { AuthContext } from "../App/AuthContext";
-import { useCookies } from "react-cookie";
+// import { AuthContext } from "../App/AuthContext";
+import {CookiesContext} from "../../contextProviders/CookiesContext";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,10 +33,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function UserLoginForm() {
-  const {authToken, setAuthToken} = useContext(AuthContext);
-  // const { cookies, setCookies } = Cookies.prototype.getAll();
+  const {updateContextCookies} = useContext(CookiesContext);
+  // TODO: If authenticated redirect?
+  // const {authToken} = useContext(AuthContext);
 
-  // console.log(cookies)
   const history = useHistory();
   const classes = useStyles();
   const [values, setValues] = React.useState({
@@ -62,9 +62,8 @@ export default function UserLoginForm() {
 
     try {
       const res = await apiOpus.loginUser(values);
-      
-      // console.log(Cookies.prototype.get('sid'));
-      // history.push('/');
+      updateContextCookies('sid');
+      history.push('/');
     } catch (error) {
       console.log("Error", error);
     }

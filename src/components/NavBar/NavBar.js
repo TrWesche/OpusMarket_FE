@@ -9,6 +9,7 @@ import {
     Badge,
     MenuItem,
     Menu,
+    Link
     } from "@material-ui/core";
 import { 
     Menu as MenuIcon,
@@ -21,6 +22,19 @@ import {
 import { fade, makeStyles } from '@material-ui/core/styles';
 
 import {AuthContext} from "../App/AuthContext";
+import {CookiesContext} from "../../contextProviders/CookiesContext";
+import {
+  VIEW_CART_PATH,
+  USER_ACCOUNT_LOGIN_PATH,
+  USER_ACCOUNT_NEW_PATH,
+  USER_ACCOUNT_PROFILE_PATH,
+  USER_ACCOUNT_UPDATE_PROFILE_PATH,
+  MERCHANT_ACCOUNT_LOGIN_PATH,
+  MERCHANT_ACCOUNT_NEW_PATH,
+  MERCHANT_ACCOUNT_PROFILE_PATH,
+  MERCHANT_ACCOUNT_UPDATE_PROFILE_PATH
+} from "../../routes/_pathDict";
+import apiOpus from "../../utils/apiOpusMarket";
 
 const useStyles = makeStyles((theme) => {
   return (
@@ -36,6 +50,8 @@ const useStyles = makeStyles((theme) => {
             [theme.breakpoints.up('sm')]: {
               display: 'block',
             },
+            color: "#FFFFFF",
+            textDecoration: "none"
           },
           search: {
             position: 'relative',
@@ -92,6 +108,7 @@ const useStyles = makeStyles((theme) => {
 
 function NavBar() {
   const {authToken} = useContext(AuthContext);
+  const {updateContextCookies} = useContext(CookiesContext);
 
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -119,14 +136,50 @@ function NavBar() {
   };
 
   const handleViewCart = () => {
-    history.push(`/cart`);
-  }
+    history.push(VIEW_CART_PATH);
+  };
 
   const handleLogin = () => {
     setAnchorEl(null);
     handleMobileMenuClose();
-    history.push(`/uacm/login`);
-  }
+    history.push(USER_ACCOUNT_LOGIN_PATH);
+  };
+
+  const handleHome = () => {
+    setAnchorEl(null);
+    handleMobileMenuClose();
+    history.push('/');
+  };
+
+  const handleRegister = () => {
+    setAnchorEl(null);
+    handleMobileMenuClose();
+    history.push(USER_ACCOUNT_NEW_PATH);
+  };
+
+  const handleProfile = () => {
+    setAnchorEl(null);
+    handleMobileMenuClose();
+    if(authToken.type === "user") {
+      history.push(USER_ACCOUNT_PROFILE_PATH);
+    } else if (authToken.type === "merchant") {
+      history.push(MERCHANT_ACCOUNT_PROFILE_PATH);
+    }
+  };
+
+  const handleLogout = async (e) => {
+    e.preventDefault();
+    setAnchorEl(null);
+    handleMobileMenuClose();
+
+    // Cleanup session on backend
+    await apiOpus.logoutUser();
+
+    // Cleanup session on frontend -> Looking for the session cookie will result 
+    // in refresh of cookies removing now missing 'sid' cookie.
+    updateContextCookies('sid');
+    history.push('/');
+  };
 
   const menuId = 'primary-search-account-menu';
   const renderMenu = () => {
@@ -141,8 +194,8 @@ function NavBar() {
           open={isMenuOpen}
           onClose={handleMenuClose}
         >
-          <MenuItem onClick={handleMenuClose}>My Account</MenuItem>
-          <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
+          <MenuItem onClick={handleProfile}>My Account</MenuItem>
+          <MenuItem onClick={handleLogout}>Logout</MenuItem>
         </Menu>
       )
     } else {
@@ -157,7 +210,7 @@ function NavBar() {
           onClose={handleMenuClose}
         >
           <MenuItem onClick={handleLogin}>Login</MenuItem>
-          <MenuItem onClick={handleMenuClose}>Register</MenuItem>
+          <MenuItem onClick={handleRegister}>Register</MenuItem>
         </Menu>
       )
     }
@@ -216,9 +269,9 @@ function NavBar() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography className={classes.title} variant="h6" noWrap>
+          <Link className={classes.title} onClick={handleHome} href="#" variant="h6" noWrap>
             OpusMarket
-          </Typography>
+          </Link>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />

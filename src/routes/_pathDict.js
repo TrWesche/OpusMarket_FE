@@ -11,11 +11,11 @@ export const GATHERING_MANAGEMENT_UPDATE_PATH = '/gman/update/:gatheringID';
 
 
 // User Account Paths
-export const USER_ACCOUNT_LOGIN_PATH = '/uacm/login';
-export const USER_ACCOUNT_NEW_PATH = '/uacm/register';
-export const USER_ACCOUNT_PROFILE_PATH = '/uacm/profile';
-export const USER_ACCOUNT_UPDATE_PROFILE_PATH = '/uacm/update';
-export const USER_ACCOUNT_UPDATE_PASSWORD_PATH = '/uacm/cpw';
+export const USER_ACCOUNT_LOGIN_PATH = '/login';
+export const USER_ACCOUNT_NEW_PATH = '/register';
+export const USER_ACCOUNT_PROFILE_PATH = '/profile';
+export const USER_ACCOUNT_UPDATE_PROFILE_PATH = '/update';
+export const USER_ACCOUNT_UPDATE_PASSWORD_PATH = '/cpw';
 
 
 // Order Paths
@@ -31,11 +31,11 @@ export const PRODUCT_MANAGEMENT_UPDATE_PRODUCT_PATH = '/pman/update/:productID';
 
 
 // Merchant Account Paths
-export const MERCHANT_ACCOUNT_LOGIN_PATH = '/macm/login';
-export const MERCHANT_ACCOUNT_NEW_PATH = '/macm/register';
-export const MERCHANT_ACCOUNT_PROFILE_PATH = '/macm/profile';
-export const MERCHANT_ACCOUNT_UPDATE_PROFILE_PATH = '/macm/update';
-export const MERCHANT_ACCOUNT_UPDATE_PASSWORD_PATH = '/macm/cpw';
+export const MERCHANT_ACCOUNT_LOGIN_PATH = '/m/login';
+export const MERCHANT_ACCOUNT_NEW_PATH = '/m/register';
+export const MERCHANT_ACCOUNT_PROFILE_PATH = '/m/profile';
+export const MERCHANT_ACCOUNT_UPDATE_PROFILE_PATH = '/m/update';
+export const MERCHANT_ACCOUNT_UPDATE_PASSWORD_PATH = '/m/cpw';
 
 
 // Merchant Public Paths

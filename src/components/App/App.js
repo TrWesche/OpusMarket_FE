@@ -37,9 +37,10 @@ function App() {
 
   const updateContextCookies = (key) => {
     const result = getCookie(key);
-
     if (result) {
       setContextCookies({...contextCookies, [key]: result});
+    } else {
+      setContextCookies(getAllCookies());
     }
   };
 

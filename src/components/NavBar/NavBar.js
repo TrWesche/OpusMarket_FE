@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { 
     AppBar, 
     Toolbar,
     IconButton,
     Button,
-    Typography, 
     InputBase,
     Badge,
     MenuItem,
@@ -29,11 +29,7 @@ import {
   USER_ACCOUNT_LOGIN_PATH,
   USER_ACCOUNT_NEW_PATH,
   USER_ACCOUNT_PROFILE_PATH,
-  USER_ACCOUNT_UPDATE_PROFILE_PATH,
-  MERCHANT_ACCOUNT_LOGIN_PATH,
-  MERCHANT_ACCOUNT_NEW_PATH,
-  MERCHANT_ACCOUNT_PROFILE_PATH,
-  MERCHANT_ACCOUNT_UPDATE_PROFILE_PATH
+  MERCHANT_ACCOUNT_PROFILE_PATH
 } from "../../routes/_pathDict";
 import apiOpus from "../../utils/apiOpusMarket";
 import TemporaryDrawer from "./NavDrawer";
@@ -112,7 +108,7 @@ const useStyles = makeStyles((theme) => {
             alignItems: 'start'
           },
           accountLine1: {
-            margin: '0 0 -4px 0',
+            margin: '0 0 -6px 0',
             padding: '0px',
             fontSize: '0.7rem'
           },
@@ -129,6 +125,11 @@ const useStyles = makeStyles((theme) => {
 function NavBar() {
   const {authToken} = useContext(AuthContext);
   const {updateContextCookies} = useContext(CookiesContext);
+
+  const cartContents = useSelector(store => store.cartReducer);
+  const cartContentsQty = cartContents.products.reduce((acc, val) => {
+    return val.quantity + acc;
+  }, 0);
 
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -236,6 +237,24 @@ function NavBar() {
     }
   };
 
+  const renderProfileMenuText = () => {
+    if (authToken) {
+      return (
+        <div className={classes.account}>
+          <p className={classes.accountLine1}>Welcome</p>
+      <p className={classes.accountLine2}>{authToken.first_name}</p>
+        </div>
+      )
+    } else {
+      return (
+        <div className={classes.account}>
+          <p className={classes.accountLine1}>Login or</p>
+          <p className={classes.accountLine2}>Register</p>
+        </div>
+      )
+    }
+  }
+
   const mobileMenuId = 'primary-search-account-menu-mobile';
   const renderMobileMenu = (
     <Menu
@@ -248,20 +267,12 @@ function NavBar() {
       onClose={handleMobileMenuClose}
     >
       <MenuItem>
-        <IconButton aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="secondary">
-            <MailIcon />
+        <IconButton onClick={handleViewCart} aria-label={`Your cart currently has ${cartContentsQty} items.`} color="inherit">
+          <Badge badgeContent={cartContentsQty} color="secondary">
+            <ShoppingBasket />
           </Badge>
         </IconButton>
-        <p>Messages</p>
-      </MenuItem>
-      <MenuItem>
-        <IconButton aria-label="show 11 new notifications" color="inherit">
-          <Badge badgeContent={11} color="secondary">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
+        <p>Cart</p>
       </MenuItem>
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
@@ -272,7 +283,7 @@ function NavBar() {
         >
           <AccountCircle />
         </IconButton>
-        <p>Profile</p>
+        {renderProfileMenuText()}
       </MenuItem>
     </Menu>
   );
@@ -300,8 +311,8 @@ function NavBar() {
           </div>
 
           <div className={classes.sectionDesktop}>
-            <IconButton onClick={handleViewCart} aria-label="show 17 new notifications" color="inherit">
-              <Badge badgeContent={5} color="secondary">
+            <IconButton onClick={handleViewCart} aria-label={`Your cart currently has ${cartContentsQty} items.`} color="inherit">
+              <Badge badgeContent={cartContentsQty} color="secondary">
                 <ShoppingBasket />
               </Badge>
             </IconButton>
@@ -315,10 +326,7 @@ function NavBar() {
               color="inherit"
               startIcon={<AccountCircle />}
             >
-              <div className={classes.account}>
-                <p className={classes.accountLine1}>Login or</p>
-                <p className={classes.accountLine2}>Register</p>
-              </div>
+              {renderProfileMenuText()}
             </Button>
           </div>
           <div className={classes.sectionMobile}>

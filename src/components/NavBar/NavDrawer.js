@@ -1,32 +1,40 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import { 
     Drawer,
-    Button,
     List,
     Divider,
     ListItem,
-    ListItemIcon,
     ListItemText,
-    IconButton
+    IconButton,
+    Typography
 } from '@material-ui/core';
 import {
-    MoveToInbox as InboxIcon,
-    Mail as MailIcon,
     Menu as MenuIcon
 } from '@material-ui/icons';
+import {
+  CATALOG_BROWSE_PATH,
+  MERCHANTS_BROWSE_PATH
+} from '../../routes/_pathDict';
+
 
 const useStyles = makeStyles({
   list: {
-    width: 250,
+    width: 300,
   },
   fullList: {
     width: 'auto',
   },
+  sectionHeader: {
+    padding: '8px 16px 0px 16px'
+  }
 });
 
 export default function TemporaryDrawer() {
+  const history = useHistory();
+
   const classes = useStyles();
   const [state, setState] = React.useState({
     top: false,
@@ -34,6 +42,19 @@ export default function TemporaryDrawer() {
     bottom: false,
     right: false,
   });
+
+  const featuredList = [
+    {name: 'Products', destination: `${CATALOG_BROWSE_PATH}?featured=true`},
+    {name: 'Creators', destination: `${MERCHANTS_BROWSE_PATH}?featured=true`},
+    {name: 'Products', destination: `${CATALOG_BROWSE_PATH}?orderby=sales`}
+  ]
+
+
+  const departmentList = [
+    {name: 'Clothing', destination: `${CATALOG_BROWSE_PATH}?t=clothes`},
+    {name: 'Furniture', destination: `${CATALOG_BROWSE_PATH}?t=furniture`},
+    {name: 'Art', destination: `${CATALOG_BROWSE_PATH}?t=art`}
+  ]
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -43,6 +64,10 @@ export default function TemporaryDrawer() {
     setState({ ...state, [anchor]: open });
   };
 
+  const handleMenuSelection = (destination) => {
+    history.push(destination);
+  }
+
   const list = (anchor) => (
     <div
       className={clsx(classes.list, {
@@ -51,21 +76,21 @@ export default function TemporaryDrawer() {
       role="presentation"
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
-    >
+    > 
+      <Typography variant="h5" className={classes.sectionHeader}>Featured</Typography>
       <List>
-        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-            <ListItemText primary={text} />
+        {featuredList.map((feature) => (
+          <ListItem button key={`NavDrawer-${feature.name}`}>
+            <ListItemText primary={feature.name} onClick={() => handleMenuSelection(feature.destination)}/>
           </ListItem>
         ))}
       </List>
       <Divider />
+      <Typography variant="h5" className={classes.sectionHeader}>Shop By Department</Typography>
       <List>
-        {['All mail', 'Trash', 'Spam'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-            <ListItemText primary={text} />
+        {departmentList.map((department) => (
+          <ListItem button key={department.name}>
+            <ListItemText primary={department.name} onClick={() => handleMenuSelection(department.destination)}/>
           </ListItem>
         ))}
       </List>

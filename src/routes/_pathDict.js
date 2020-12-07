@@ -39,10 +39,11 @@ export const MERCHANT_ACCOUNT_UPDATE_PASSWORD_PATH = '/m/cpw';
 
 
 // Merchant Public Paths
-export const MERCHANT_HOMEPAGE_PATH = '/merchant/:merchantID';
-export const MERCHANT_ABOUT_PATH = '/merchant/:merchantID/about';
-export const MERCHANT_STORE_PATH = '/merchant/:merchantID/store';
-export const MERCHANT_EVENTS_PATH = '/merchant/:merchantID/events';
+export const MERCHANTS_BROWSE_PATH = '/merchants'
+export const MERCHANT_HOMEPAGE_PATH = '/merchants/:merchantID';
+export const MERCHANT_ABOUT_PATH = '/merchants/:merchantID/about';
+export const MERCHANT_STORE_PATH = '/merchants/:merchantID/store';
+export const MERCHANT_EVENTS_PATH = '/merchants/:merchantID/events';
 
 
 // Catalog Paths

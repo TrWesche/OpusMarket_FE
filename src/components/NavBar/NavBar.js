@@ -4,6 +4,7 @@ import {
     AppBar, 
     Toolbar,
     IconButton,
+    Button,
     Typography, 
     InputBase,
     Badge,
@@ -35,6 +36,7 @@ import {
   MERCHANT_ACCOUNT_UPDATE_PROFILE_PATH
 } from "../../routes/_pathDict";
 import apiOpus from "../../utils/apiOpusMarket";
+import TemporaryDrawer from "./NavDrawer";
 
 const useStyles = makeStyles((theme) => {
   return (
@@ -102,6 +104,24 @@ const useStyles = makeStyles((theme) => {
               display: 'none',
             },
           },
+          account: {
+            margin: '0px',
+            padding: '0px',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'start'
+          },
+          accountLine1: {
+            margin: '0 0 -4px 0',
+            padding: '0px',
+            fontSize: '0.7rem'
+          },
+          accountLine2: {
+            margin: '0px',
+            padding: '0px',
+            fontWeight: 'bold',
+            fontSize: '0.75rem'
+          }
       }
   )
 });
@@ -214,7 +234,7 @@ function NavBar() {
         </Menu>
       )
     }
-  }
+  };
 
   const mobileMenuId = 'primary-search-account-menu-mobile';
   const renderMobileMenu = (
@@ -261,14 +281,7 @@ function NavBar() {
     <div className={classes.grow}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="open drawer"
-          >
-            <MenuIcon />
-          </IconButton>
+          <TemporaryDrawer />
           <Link className={classes.title} onClick={handleHome} href="#" variant="h6" noWrap>
             OpusMarket
           </Link>
@@ -287,31 +300,26 @@ function NavBar() {
           </div>
 
           <div className={classes.sectionDesktop}>
-            <IconButton aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <MailIcon />
-              </Badge>
-            </IconButton>
-            <IconButton aria-label="show 17 new notifications" color="inherit">
-              <Badge badgeContent={17} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
             <IconButton onClick={handleViewCart} aria-label="show 17 new notifications" color="inherit">
               <Badge badgeContent={5} color="secondary">
                 <ShoppingBasket />
               </Badge>
             </IconButton>
-            <IconButton
+            <Button
               edge="end"
               aria-label="account of current user"
+              size="large"
               aria-controls={menuId}
               aria-haspopup="true"
               onClick={handleProfileMenuOpen}
               color="inherit"
+              startIcon={<AccountCircle />}
             >
-              <AccountCircle />
-            </IconButton>
+              <div className={classes.account}>
+                <p className={classes.accountLine1}>Login or</p>
+                <p className={classes.accountLine2}>Register</p>
+              </div>
+            </Button>
           </div>
           <div className={classes.sectionMobile}>
             <IconButton

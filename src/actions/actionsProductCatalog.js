@@ -66,10 +66,10 @@ export const fetchCatalogProducts = ({searchParameters, searchType}) => {
     };
 };
 
-const gotCatalogProducts = (catalogProducts) => {
+const gotCatalogProducts = (queryProducts) => {
     return ({
         type: LOAD_CATALOG_PRODUCTS,
-        payload: catalogProducts
+        payload: queryProducts
     })
 };
 

@@ -226,7 +226,9 @@ function NavBar() {
       history.push(`${CATALOG_BROWSE_PATH}`);
     } else {
       history.push(`${CATALOG_BROWSE_PATH}?s=${preparedSearchValue}`);
-    }    
+    }
+
+    setSearchValues({...searchValues, 's': ""});
   };
 
   const menuId = 'primary-search-account-menu';

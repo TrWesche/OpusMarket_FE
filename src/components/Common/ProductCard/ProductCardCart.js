@@ -197,7 +197,7 @@ function ProductCardCol({cardData}) {
         <div>
           <CardMedia
             className={classes.media}
-            image={cardData.img_url}
+            image={cardData.img_urls[0]}
             title={cardData.name}
           />
           <CardContent className={classes.productInformation}>

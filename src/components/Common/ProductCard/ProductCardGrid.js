@@ -21,12 +21,13 @@ const useStyles = makeStyles({
       // maxWidth: 345,
     },
     media: {
-      height: 140,
+      height: 110,
       overflow: 'clip'
     },
     actionBar: {
       alignContent: 'space-between',
-      backgroundColor: '#F0FAFA'
+      backgroundColor: '#F0FAFA',
+      height: 45
     },
     pricing: {
       display: 'flex',
@@ -38,21 +39,28 @@ const useStyles = makeStyles({
       display: 'flex'
     },
     stdPriceNoSale: {
-      display: 'flex'
+      display: 'flex',
+      fontSize: '0.75rem'
     },
     stdPriceSale: {
       display: 'flex',
       textDecoration: 'line-through',
       color: '#AAAAAA',
-      fontSize: '0.75rem'
+      fontSize: '0.6rem'
     },
     salePrice: {
       display: 'flex',
       fontWeight: 'bold',
-      color: '#AA0000'
+      color: '#AA0000',
+      fontSize: '0.75rem'
     },
-    addShoppingCartIcon: {
-      
+    productName: {
+      display: 'flex',
+      overflow: 'clip',
+      fontSize: '0.75rem'
+    },
+    nameContainer: {
+      padding: '0.2rem 0.4rem'
     }
 });
 
@@ -101,11 +109,14 @@ function ProductCardRow({cardData}) {
       <CardActionArea onClick={handleViewProductDetails}>
         <CardMedia
           className={classes.media}
-          image={cardData.img_url}
+          image={cardData.img_urls[0]}
           title={cardData.name}
         />
-        <CardContent>
-          <Typography gutterBottom variant="caption" component="h6">
+        <CardContent className={classes.nameContainer}>
+          <Typography 
+            gutterBottom variant="caption" 
+            className={classes.productName}
+          >
             {cardData.name}
           </Typography>
         </CardContent>
@@ -113,7 +124,11 @@ function ProductCardRow({cardData}) {
       <CardActions className={classes.actionBar}>
         {priceRender()}
         <div className={classes.actionButtons}>
-          <IconButton onClick={handleAddToCart} aria-label="add to cart">
+          <IconButton 
+            onClick={handleAddToCart} 
+            aria-label="add to cart"
+            size="small"
+          >
             <AddShoppingCart className={classes.addShoppingCartIcon} />
           </IconButton>
         </div>

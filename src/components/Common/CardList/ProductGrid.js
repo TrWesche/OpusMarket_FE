@@ -14,7 +14,6 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-// TODO: If time allows add overflow hide feature and "more" button
 function ProductGrid({ productDataList, listid }) {
     const classes = useStyles();
 
@@ -32,7 +31,7 @@ function ProductGrid({ productDataList, listid }) {
                 <Grid container className={classes.root} spacing={2}>
                     {productDataList.map(productData => {
                         return (
-                            <Grid item xs={6} md={3} lg={2} key={`${listid}-${productData.id}`}>
+                            <Grid item xs={4} md={3} lg={2} key={`${listid}-${productData.id}`}>
                                 <ProductCardGrid cardData={productData}/>
                             </Grid>    
                         )

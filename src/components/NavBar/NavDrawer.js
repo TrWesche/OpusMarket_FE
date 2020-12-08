@@ -44,9 +44,9 @@ export default function NavDrawer() {
   });
 
   const featuredList = [
-    {name: 'Products', destination: `${CATALOG_BROWSE_PATH}?featured=true`},
+    {name: 'Products', destination: `${CATALOG_BROWSE_PATH}?featured=true&site_wide=true`},
     {name: 'Creators', destination: `${MERCHANTS_BROWSE_PATH}?featured=true`},
-    {name: 'Products', destination: `${CATALOG_BROWSE_PATH}?orderby=sales`}
+    {name: 'Top Sellers', destination: `${CATALOG_BROWSE_PATH}?sort=purchases-desc`}
   ]
 
 

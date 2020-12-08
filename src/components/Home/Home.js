@@ -3,18 +3,25 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { 
     Container, 
-    Grid, 
+    Grid,
+    Typography
     // useTheme
     } from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
 import HeroStepper from "../Common/Hero/HeroStepper";
 import ProductList from "../Common/CardList/ProductList";
-import CardList from "../Common/CardList/CardList";
 import { fetchCatalogProducts } from "../../actions/actionsProductCatalog";
 
 const useStyles = makeStyles((theme) => ({
     root: {
       flexGrow: 1,
+    },
+    productSection: {
+        backgroundColor: "#FFF",
+        margin: "1rem 0"
+    },
+    sectionTitle: {
+        margin: "0rem 0rem 0.5rem 0rem"
     }
 }));
 
@@ -24,25 +31,34 @@ function Home() {
     // const theme = useTheme();
 
     const productCatalog = useSelector(store => store.productCatalog);
+
     // const error = useSelector(store => store.error);
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(fetchCatalogProducts());
+        dispatch(fetchCatalogProducts({searchParameters: {featured: true, site_wide: true}, searchType: "featured"}));
+        dispatch(fetchCatalogProducts({searchParameters: {sort: 'purchases-desc'}, searchType: "bestSelling"}));
     }, [dispatch]);
 
-    // console.log(productCatalog);
-
+    // TODO: Hero Stepper Needs to be Finalized
     return (
             <Container>
                 <p>Home</p>
-                <Grid container className={classes.root} spacing={2}>
+                <Grid container className={classes.root} spacing={4}>
                     <Grid item xs={12}>
                         <HeroStepper />
                     </Grid>
-                    <ProductList productDataList={productCatalog.products} listid={"featured-product"}/>
-                    <Grid item xs={12}>
-                        <CardList />
+                    <Grid item xs={12} className={classes.productSection}>
+                        <Grid item xs={12} className={classes.sectionTitle}>
+                            <Typography variant='h5'>Featured Products</Typography>
+                        </Grid>
+                        <ProductList productDataList={productCatalog.featuredProducts} listid={"featured-products"}/>
+                    </Grid>
+                    <Grid item xs={12} className={classes.productSection}>
+                        <Grid item xs={12} className={classes.sectionTitle}>
+                            <Typography variant='h5'>Best Sellers</Typography>
+                        </Grid>
+                        <ProductList productDataList={productCatalog.bestSellingProducts} listid={"best-selling-products"}/>
                     </Grid>
                 </Grid>
             </Container>

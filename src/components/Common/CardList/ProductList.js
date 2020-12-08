@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-
+// TODO: If time allows add overflow hide feature and "more" button
 function ProductList({ productDataList, listid }) {
     const classes = useStyles();
 

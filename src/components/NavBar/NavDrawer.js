@@ -32,7 +32,7 @@ const useStyles = makeStyles({
   }
 });
 
-export default function TemporaryDrawer() {
+export default function NavDrawer() {
   const history = useHistory();
 
   const classes = useStyles();

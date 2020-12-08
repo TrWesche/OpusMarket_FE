@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { 
@@ -6,19 +6,18 @@ import {
     Toolbar,
     IconButton,
     Button,
-    InputBase,
     Badge,
     MenuItem,
     Menu,
-    Link
+    Link,
+    FormControl,
+    Input,
+    InputAdornment
     } from "@material-ui/core";
 import { 
-    Menu as MenuIcon,
-    Mail as MailIcon,
     ShoppingBasket as ShoppingBasket,
     Search as SearchIcon,
     AccountCircle,
-    Notifications as NotificationsIcon,
     MoreVert as MoreIcon } from "@material-ui/icons";
 import { fade, makeStyles } from '@material-ui/core/styles';
 
@@ -29,7 +28,8 @@ import {
   USER_ACCOUNT_LOGIN_PATH,
   USER_ACCOUNT_NEW_PATH,
   USER_ACCOUNT_PROFILE_PATH,
-  MERCHANT_ACCOUNT_PROFILE_PATH
+  MERCHANT_ACCOUNT_PROFILE_PATH,
+  CATALOG_BROWSE_PATH
 } from "../../routes/_pathDict";
 import apiOpus from "../../utils/apiOpusMarket";
 import TemporaryDrawer from "./NavDrawer";
@@ -51,8 +51,9 @@ const useStyles = makeStyles((theme) => {
             color: "#FFFFFF",
             textDecoration: "none"
           },
-          search: {
+          searchForm: {
             position: 'relative',
+            padding: '1px',
             flexGrow: 1,
             borderRadius: theme.shape.borderRadius,
             backgroundColor: fade(theme.palette.common.white, 0.15),
@@ -81,12 +82,9 @@ const useStyles = makeStyles((theme) => {
             width: '100%'
           },
           inputInput: {
-            padding: theme.spacing(2, 1, 1, 0),
-            // vertical padding + font size from searchIcon
-            paddingLeft: `calc(1em + ${theme.spacing(6)}px)`,
+            padding: theme.spacing(1, 1, 1, 1),
             transition: theme.transitions.create('width'),
             width: '100%',
-
           },
           sectionDesktop: {
             display: 'none',
@@ -125,6 +123,10 @@ const useStyles = makeStyles((theme) => {
 function NavBar() {
   const {authToken} = useContext(AuthContext);
   const {updateContextCookies} = useContext(CookiesContext);
+
+  const [searchValues, setSearchValues] = useState({
+    s: ''
+  });
 
   const cartContents = useSelector(store => store.cartReducer);
   const cartContentsQty = cartContents.products.reduce((acc, val) => {
@@ -200,6 +202,31 @@ function NavBar() {
     // in refresh of cookies removing now missing 'sid' cookie.
     updateContextCookies('sid');
     history.push('/');
+  };
+
+  const handleSearchChange = (prop) => (event) => {
+    setSearchValues({ ...searchValues, [prop]: event.target.value });
+  };
+
+  const handleSearch = async (e) => {
+    e.preventDefault();
+
+    const splitSearchVal = searchValues.s.split(" ");
+    const preparedSearchValue = splitSearchVal.reduce((acc, subString) => {
+      if(subString.length > 1) {
+        if (acc.length === 0) {
+          return subString;
+        }
+        return `${acc}+${subString}`;
+      }
+      return acc;
+    }, "");
+
+    if(preparedSearchValue.length === 0) {
+      history.push(`${CATALOG_BROWSE_PATH}`);
+    } else {
+      history.push(`${CATALOG_BROWSE_PATH}?s=${preparedSearchValue}`);
+    }    
   };
 
   const menuId = 'primary-search-account-menu';
@@ -296,19 +323,33 @@ function NavBar() {
           <Link className={classes.title} onClick={handleHome} href="#" variant="h6" noWrap>
             OpusMarket
           </Link>
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
-            <InputBase
-              placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </div>
+          <form className={classes.searchForm} onSubmit={handleSearch}>
+            <FormControl className={classes.inputRoot}>
+              <Input
+                id="navbar-search"
+                value={searchValues.s}
+                onChange={handleSearchChange('s')}
+                type="text"
+                placeholder="Search..."
+                classes={{
+                  root: classes.inputRoot,
+                  input: classes.inputInput,
+                }}
+                disableUnderline
+                endAdornment = {
+                  <InputAdornment position="end">
+                    <IconButton 
+                      aria-label="perform search"
+                      type="submit"
+                      size= "small"
+                    >
+                      <SearchIcon />
+                    </IconButton>
+                  </InputAdornment>
+                }
+              />
+            </FormControl>  
+          </form>
 
           <div className={classes.sectionDesktop}>
             <IconButton onClick={handleViewCart} aria-label={`Your cart currently has ${cartContentsQty} items.`} color="inherit">

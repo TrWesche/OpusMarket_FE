@@ -4,7 +4,6 @@ import {
     REMOVE_PRODUCT_FROM_CART,
     APPLY_COUPON_TO_PRODUCT,
     CREATE_NEW_ORDER,
-    READ_ORDER_DATA,
     ERROR
 } from "../actions/actionTypes";
 
@@ -64,10 +63,7 @@ const cartReducer = (state = INITIAL_STATE, action) => {
             productList = {...state, products: tempProducts}
             return productList;
         case CREATE_NEW_ORDER:
-            productList = {...state, products: action.payload}    
-            return productList;
-        case READ_ORDER_DATA:
-            productList = {...state, products: action.payload}
+            productList = {...state, products: []}    
             return productList;
         case ERROR:
             return {...state, error: true};

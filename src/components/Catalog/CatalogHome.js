@@ -27,6 +27,7 @@ function Catalog() {
     const dispatch = useDispatch();
 
     // Retrieve search parameters from compiled query string
+    // https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams
     const searchParams = new URLSearchParams(location.search);
     
     // Link up to Redux productCatalog store

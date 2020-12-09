@@ -10,6 +10,8 @@ import {
     } from "@material-ui/core";
 import HeroStepper from "../Common/Hero/HeroStepper";
 import ProductGrid from "../../components/Common/CardList/ProductGrid";
+import CatalogFilter from "../Common/CardFilter/CatalogFilter";
+
 import { makeStyles } from '@material-ui/core/styles';
 import { fetchCatalogProducts } from "../../actions/actionsProductCatalog";
 
@@ -32,7 +34,6 @@ function Catalog() {
     
     // Link up to Redux productCatalog store
     const productCatalog = useSelector(store => store.productCatalog);
-
     // const error = useSelector(store => store.error);
 
     // Build query list for API call
@@ -50,6 +51,8 @@ function Catalog() {
         dispatch(fetchCatalogProducts({searchParameters: catalogSearchParameters, searchType: "catalog"}));
     }, [dispatch, updateQueryParams]);
 
+
+
     return (
             <Container>
                 <p>Catalog</p>
@@ -60,7 +63,11 @@ function Catalog() {
                 </Grid>
                 <Grid container className={classes.root} spacing={2}>
                     <Grid item xs={12} md={3}>
-                        <Typography component="div" style={{ backgroundColor: '#cfe8fc', height: '60vh' }} />
+                        <Typography component="div" style={{ backgroundColor: '#cfe8fc', height: '60vh' }} >
+                            <CatalogFilter 
+                                featuredProducts={productCatalog.queryFeatures}
+                                productMetas={productCatalog.queryMetas}/>
+                        </Typography>
                     </Grid>
                     <Grid item xs={12} md={9}>
                         <ProductGrid productDataList={productCatalog.queryProducts} listid={"browse-catalog"} />

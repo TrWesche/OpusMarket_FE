@@ -17,7 +17,7 @@ const catalogReducer = (state = INITIAL_STATE, action) => {
             productCatalog = {...state, bestSellingProducts: action.payload.products};  
             return productCatalog;
         case LOAD_CATALOG_PRODUCTS:
-            productCatalog = {...state, queryProducts: action.payload.products};  
+            productCatalog = {...state, queryProducts: action.payload.products, queryMetas: action.payload.metas, queryFeatures: action.payload.features};  
             return productCatalog;
         case ERROR:
             return {...state, error: true};

@@ -18,7 +18,10 @@ import { fetchCatalogProducts } from "../../actions/actionsProductCatalog";
 
 const useStyles = makeStyles((theme) => ({
     root: {
-      flexGrow: 1,
+        marginTop: '2rem'
+    },
+    vSection: {
+        flexGrow: 1,
     }
 }));
 
@@ -54,14 +57,13 @@ function Catalog() {
 
 
     return (
-            <Container>
-                <p>Catalog</p>
-                <Grid container className={classes.root} spacing={2}>
+            <Container className={classes.root}>
+                <Grid container className={classes.vSection} spacing={2}>
                     <Grid item xs={12}>
                         <HeroStepper />
                     </Grid>
                 </Grid>
-                <Grid container className={classes.root} spacing={2}>
+                <Grid container className={classes.vSection} spacing={2}>
                     <Grid item xs={12} md={3}>
                         <Typography component="div" style={{ backgroundColor: '#cfe8fc', height: '60vh' }} >
                             <CatalogFilter 

@@ -9,7 +9,8 @@ import {
 import { fetchProductDetails } from "../../actions/actionsProductDetail";
 import { makeStyles } from '@material-ui/core/styles';
 
-import HorizontalGridList from "./Components/HorizontalGridList";
+import ProductImageContainer from "./Components/ProductImageContainer";
+import ProductDetailsContainer from "./Components/ProductDetailsContainer";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,22 +19,11 @@ const useStyles = makeStyles((theme) => ({
   vSection: {
     display: 'flex',
     flexWrap: 'wrap',
-    flexGrow: 1,
     margin: '0'
   },
   hSection: {
     margin: '0',
     flexGrow: 1
-  },
-  margin: {
-    margin: theme.spacing(1),
-  },
-  textField: {
-    width: '25ch',
-  },
-  backgroundColor: {
-    backgroundColor: "lightblue",
-    width: '100%'
   }
 }));
 
@@ -42,7 +32,16 @@ export default function ProductDetail() {
   const params = useParams();
   const dispatch = useDispatch();
 
-  const {merchant_id, name, description, base_price, avg_rating, images, promotion, modifiers, reviews} = useSelector(store => store.productDetail);
+  const {
+    merchant_id, 
+    name, 
+    description, 
+    base_price, 
+    avg_rating, 
+    images, 
+    promotion, 
+    modifiers, 
+    reviews} = useSelector(store => store.productDetail);
 
   const [displayData, setDisplayData] = useState({
     img_url: '',
@@ -67,30 +66,21 @@ export default function ProductDetail() {
   return (
     <Container className={classes.root}>
       <Grid container className={classes.vSection} spacing={1}>
-
-        <Grid container className={classes.hSection} xs={12} md={5} spacing={1}>
-          <Grid item xs={12}>
-            <Typography variant="overline">Meet the Creator {merchant_id}</Typography>
-          </Grid>
-          <Grid item xs={12}>
-            <img src={displayData.img_url} alt={displayData.img_alt_text}/>
-          </Grid>
-          <Grid item xs={12}>
-            <HorizontalGridList tileData={images} handleTileClick={handleImageChange}/>
-          </Grid>
-        </Grid>
-
-        <Grid container className={classes.hSection} xs={12} md={7} spacing={1}>
-          <Grid item xs={12} spacing={1}>
-            <Typography variant="h5" className={classes.backgroundColor}>{name}</Typography>
-          </Grid>
-          <Grid item xs={12} spacing={1}>
-            <Typography className={classes.backgroundColor}>{description} Base Price:{base_price} Rating:{avg_rating}</Typography>
-          </Grid>
-          <Grid item xs={12} spacing={1}>
-            <Typography className={classes.backgroundColor}>Product Order Column</Typography>
-          </Grid>
-        </Grid>
+        <ProductImageContainer 
+          heroImage={displayData} 
+          imageList={images} 
+          merchant_id={merchant_id} 
+          handleImageClick={handleImageChange} 
+        />
+        <ProductDetailsContainer 
+          product_id={+params.productID}
+          name={name} 
+          description={description} 
+          base_price={base_price} 
+          avg_rating={+avg_rating} 
+          promotions={promotion}
+          modifiers={modifiers}
+        />
       </Grid>
 
       <Grid container className={classes.vSection} spacing={1}>

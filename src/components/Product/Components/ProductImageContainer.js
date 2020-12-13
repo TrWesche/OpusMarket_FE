@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { 
     Grid,
     Typography
@@ -20,8 +20,26 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function ProductImageContainer({heroImage, imageList, merchant_id, handleImageClick}) {
+export default function ProductImageContainer({imageList, merchant_id}) {
   const classes = useStyles();
+
+  const [displayData, setDisplayData] = useState({
+    img_url: '',
+    img_alt_text: "Product Images Not Available"
+  })
+
+  useEffect(() => {
+    if (imageList && imageList.length > 0) {
+      setDisplayData({...displayData, img_url: imageList[0].url, img_alt_text: imageList[0].alt_text});
+    } else {
+      setDisplayData({...displayData, img_url: "", img_alt_text: "Product Images Not Available"});
+    }
+  }, [imageList]);
+
+  const handleImageChange = (e) => {
+    e.preventDefault();
+    setDisplayData({...displayData, img_url: e.target.src, img_alt_text: e.target.alt});
+  }
 
   return (
     <Grid container className={classes.hSection} xs={12} md={5} spacing={1}>
@@ -29,10 +47,10 @@ export default function ProductImageContainer({heroImage, imageList, merchant_id
             <Typography variant="overline">Meet the Creator {merchant_id}</Typography>
         </Grid>
         <Grid item xs={12}>
-            <img src={heroImage.img_url} alt={heroImage.img_alt_text} className={classes.heroImage}/>
+            <img src={displayData.img_url} alt={displayData.img_alt_text} className={classes.heroImage}/>
         </Grid>
         <Grid item xs={12}>
-            <HorizontalGridList tileData={imageList} handleTileClick={handleImageClick}/>
+            <HorizontalGridList tileData={imageList} handleTileClick={handleImageChange}/>
         </Grid>
     </Grid>
   );

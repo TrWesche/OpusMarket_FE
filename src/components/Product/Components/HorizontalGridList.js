@@ -41,7 +41,7 @@ export default function HorizontalGridList({tileData, handleTileClick}) {
       );
   } else {
       return (
-          <p>No Images Found</p>
+          <p></p>
       )
   }
 

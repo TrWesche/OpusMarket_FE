@@ -7,7 +7,8 @@ import {
     CardContent,
     CardActions,
     IconButton,
-    TextField
+    TextField,
+    MenuItem
 } from "@material-ui/core";
 import { AddShoppingCart } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
@@ -26,18 +27,19 @@ const useStyles = makeStyles((theme) => ({
   productOrder: {
       fontSize: '1.15rem',
       fontWeight: 'bold'
+  },
+  productVariant: {
+      width: '100%'
   }
 }));
 
 
 export default function ProductOrderControls({product_id, modifiers}) {
     const classes = useStyles();
-    const dispatch = useDispatch();  
-
-    
+    const dispatch = useDispatch();     
 
     const [orderSelections, setOrderSelections] = useState({
-        modifier_id: "",
+        modifier_id: 0,
         quantity: 1
     });
 
@@ -56,10 +58,54 @@ export default function ProductOrderControls({product_id, modifiers}) {
         }
     }
 
+    const handleUpdateModifier = (e) => {
+        e.preventDefault();
+        setOrderSelections({...orderSelections, modifier_id: e.target.value})
+    }
+
     const renderModifiers = () => {
-        if(modifiers.length > 0) {
-            console.log(modifiers)
+        if(modifiers && modifiers.length > 0) {
+            return (
+                <Grid item xs={7}>
+                    <TextField
+                        id="select-variant"
+                        select
+                        label={modifiers[0].description}
+                        value={orderSelections.modifier_id}
+                        variant="outlined"
+                        size="small"
+                        onChange={handleUpdateModifier}
+                        className={classes.productVariant}
+                    >
+                    {modifiers.map(modifier => {
+                        return (
+                            <MenuItem key={`variant-item-${modifier.id}`} value={modifier.id}>{modifier.name}</MenuItem>        
+                        )
+                    })}
+                    </TextField>
+                </Grid>
+            )
         }
+    }
+
+    const renderAddToCart = () => {
+        if(modifiers && modifiers.length > 0 && orderSelections.modifier_id === 0) {
+            return (
+                <Grid item xs={1}>
+                    <IconButton onClick={handleAddToCart} aria-label="add to cart" disabled>
+                        <AddShoppingCart className={classes.addShoppingCartIcon} />
+                    </IconButton>
+                </Grid>
+            )
+        }
+
+        return (
+            <Grid item xs={1}>
+                <IconButton onClick={handleAddToCart} aria-label="add to cart">
+                    <AddShoppingCart className={classes.addShoppingCartIcon} />
+                </IconButton>
+            </Grid>
+        )
     }
 
     return (
@@ -77,16 +123,12 @@ export default function ProductOrderControls({product_id, modifiers}) {
                                 type="number"
                                 value={orderSelections.quantity}
                                 variant="outlined"
-                                className={classes.productQty}
                                 size="small"
                                 onChange={handleUpdateQuantity}
                             />
                         </Grid>
-                        <Grid item xs={1} alignItems="flex-start">
-                            <IconButton onClick={handleAddToCart} aria-label="add to cart">
-                                <AddShoppingCart className={classes.addShoppingCartIcon} />
-                            </IconButton>
-                        </Grid>
+                        {renderModifiers()}
+                        {renderAddToCart()}
                     </Grid>
                 </CardActions>
             </Card>

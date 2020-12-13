@@ -2,8 +2,6 @@ import React from 'react';
 import { 
     Grid,
     Typography,
-    Card,
-    CardContent,
     Divider
 } from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
@@ -64,17 +62,17 @@ export default function ProductDetailsContainer({product_id, name, description, 
     const classes = useStyles();
 
     const renderPromotion = () => {
-        if (!promotions) {
+        if (promotions && promotions.length > 0) {
             return (
                 <div className={classes.price_line}>
-                    <Typography className={classes.base_price}>{`$${base_price/100}`}</Typography>
+                    <Typography className={classes.base_price_strikethrough}>{`$${base_price/100}`}</Typography>
+                    <Typography className={classes.promotion}>{`$${promotions[0].promotion_price/100}`}</Typography>
                 </div>
             )
         } else {
             return (
                 <div className={classes.price_line}>
-                    <Typography className={classes.base_price_strikethrough}>{`$${base_price/100}`}</Typography>
-                    <Typography className={classes.promotion}>{`$${promotions[0].promotion_price/100}`}</Typography>
+                    <Typography className={classes.base_price}>{`$${base_price/100}`}</Typography>
                 </div>
             )
         }

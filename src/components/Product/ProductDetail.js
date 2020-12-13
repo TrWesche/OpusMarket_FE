@@ -43,34 +43,17 @@ export default function ProductDetail() {
     modifiers, 
     reviews} = useSelector(store => store.productDetail);
 
-  const [displayData, setDisplayData] = useState({
-    img_url: '',
-    img_alt_text: "Image Not Found"
-  })
 
   useEffect(() => {
     dispatch(fetchProductDetails(+params.productID));
   }, [dispatch]);
 
-  useEffect(() => {
-    if (images) {
-      setDisplayData({...displayData, img_url: images[0].url, img_alt_text: images[0].alt_text});
-    }
-  }, [images]);
-
-  const handleImageChange = (e) => {
-    e.preventDefault();
-    setDisplayData({...displayData, img_url: e.target.src, img_alt_text: e.target.alt});
-  }
-
   return (
     <Container className={classes.root}>
       <Grid container className={classes.vSection} spacing={1}>
         <ProductImageContainer 
-          heroImage={displayData} 
           imageList={images} 
           merchant_id={merchant_id} 
-          handleImageClick={handleImageChange} 
         />
         <ProductDetailsContainer 
           product_id={+params.productID}

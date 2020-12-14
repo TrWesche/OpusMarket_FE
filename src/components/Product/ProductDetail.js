@@ -1,20 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { 
     Container,
-    Grid,
-    Typography
+    Grid, 
+    Divider
 } from "@material-ui/core";
 import { fetchProductDetails } from "../../actions/actionsProductDetail";
 import { makeStyles } from '@material-ui/core/styles';
 
 import ProductImageContainer from "./Components/ProductImageContainer";
 import ProductDetailsContainer from "./Components/ProductDetailsContainer";
+import ProductReviewsContainer from "./Components/ProductReviewsContainer";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    marginTop: '2rem'
+    marginTop: '2rem',
+    backgroundColor: "white",
+    paddingTop: '1rem'
   },
   vSection: {
     display: 'flex',
@@ -24,6 +27,9 @@ const useStyles = makeStyles((theme) => ({
   hSection: {
     margin: '0',
     flexGrow: 1
+  },
+  dividerMargin: {
+    margin: '1rem 0'
   }
 }));
 
@@ -42,7 +48,6 @@ export default function ProductDetail() {
     promotion, 
     modifiers, 
     reviews} = useSelector(store => store.productDetail);
-
 
   useEffect(() => {
     dispatch(fetchProductDetails(+params.productID));
@@ -66,12 +71,9 @@ export default function ProductDetail() {
         />
       </Grid>
 
-      <Grid container className={classes.vSection} spacing={1}>
-        <Grid item xs={12}>
-          <Typography className={classes.backgroundColor}>Reviews</Typography>
-        </Grid>
-      </Grid>
-      
+      <Divider className={classes.dividerMargin}/>
+
+      <ProductReviewsContainer reviews={reviews}/>
     </Container>
   );
 }

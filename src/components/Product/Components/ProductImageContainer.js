@@ -10,8 +10,7 @@ import HorizontalGridList from "./HorizontalGridList";
 const useStyles = makeStyles((theme) => ({
   hSection: {
     margin: '0',
-    flexGrow: 1,
-    backgroundColor: 'white'
+    flexGrow: 1
   }, 
   heroImage: {
     maxHeight: '500px',
@@ -41,6 +40,7 @@ export default function ProductImageContainer({imageList, merchant_id}) {
     setDisplayData({...displayData, img_url: e.target.src, img_alt_text: e.target.alt});
   }
 
+  // TODO: Meet the creator link
   return (
     <Grid container className={classes.hSection} xs={12} md={5} spacing={1}>
         <Grid item xs={12}>

@@ -5,14 +5,6 @@ const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:5000/api";
 class apiOpus {
 
     static async request(endpoint, verb = "get", paramsOrData = {}) {
-        // for now, hardcode token for "testing"
-        // paramsOrData._token = ( 
-        // "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc" +
-        // "3RpbmciLCJpc19hZG1pbiI6ZmFsc2UsImlhdCI6MTU1MzcwMzE1M30." +
-        // "COmFETEsTxN_VfIlgIKw0bYJLkvbRQNgO1XCSE8NZ0U");
-        // paramsOrData._token = localStorage.getItem("token");
-
-
         console.debug("API Call:", endpoint, paramsOrData, verb);
     
         try {
@@ -97,6 +89,7 @@ class apiOpus {
     // ║║║║║║║╚══╗║║║╚╗║╚═╝║║║ ║║║╔═╗║║║ ║║║ ╔╝╚╗ 
     // ╚╝╚╝╚╝╚═══╝╚╝╚═╝╚═══╝╚╝ ╚╝╚╝ ╚╝╚╝ ╚═╝ ╚══╝ 
 
+    // Private Routes
     static async createMerchant(payloadData) {
         const res = await this.request("reg/merchant", "post", payloadData);
         return res.message;
@@ -106,6 +99,7 @@ class apiOpus {
         const res = await this.request(`merchants/details`);
         return res.merchant;
     }
+  
 
     static async updateMerchantDetails(payloadData) {
         const res = await this.request(`merchants/update`, "patch", payloadData);
@@ -117,6 +111,12 @@ class apiOpus {
         return res.message;
     }
 
+
+    // Public Routes
+    static async getMerchantByID(merchantId) {
+        const res = await this.request(`merchants/${merchantId}`);
+        return res.merchant;
+    }
 
     
 

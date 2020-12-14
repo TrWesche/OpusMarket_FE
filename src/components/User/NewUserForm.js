@@ -67,17 +67,14 @@ export default function NewUserForm() {
   });
 
   const handleAlertClose = (e, reason) => {
-    e.preventDefault();
     if (reason === 'clickaway') {
       return;
     }
 
     setAlertValues({...alertValues, open: false});
-  }
+  };
 
   const renderAlert = () => {
-    console.log(alertValues);
-
     return (
       <Snackbar 
         open={alertValues.open} 
@@ -90,7 +87,7 @@ export default function NewUserForm() {
         </Alert>
       </Snackbar>
     )
-  }
+  };
 
 
   const handleChange = (prop) => (event) => {
@@ -114,8 +111,6 @@ export default function NewUserForm() {
       // setAlertValues({open: true, text: "Login Successful!", severity: "success"});
       history.push('/');
     } catch (error) {
-      console.log("Error", error);
-
       if (error[0] && error[0].length > 0) {
         const errorText = error[0];
         setAlertValues({open: true, text: errorText, severity: "error"});

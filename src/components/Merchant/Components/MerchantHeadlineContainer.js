@@ -25,9 +25,9 @@ export default function MerchantHeadlineContainer({ about, display_name }) {
   const classes = useStyles();
 
   const renderLogo = () => {
-    if (about[0].logo_wide_url && about[0].logo_narrow_url) {
+    // if (about[0].logo_wide_url && about[0].logo_narrow_url) {
 
-    }
+    // }
 
     if (about[0].logo_wide_url) {
       return (

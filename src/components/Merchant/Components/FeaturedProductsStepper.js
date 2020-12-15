@@ -17,8 +17,8 @@ const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 400,
-    flexGrow: 1,
+    maxWidth: '100%',
+    flexGrow: 1
   },
   header: {
     display: 'flex',
@@ -28,12 +28,15 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.default,
   },
   img: {
-    height: 255,
-    display: 'block',
-    maxWidth: 400,
+    height: 350,
+    display: 'flex',
     overflow: 'hidden',
-    width: '100%',
+    maxWidth: '100%',
   },
+  imgContainer: {
+    display: 'flex',
+    justifyContent: 'center'
+  }
 }));
 
 function FeaturedProductsStepper({featuredProducts}) {
@@ -54,12 +57,9 @@ function FeaturedProductsStepper({featuredProducts}) {
     setActiveStep(step);
   };
 
-  // {Math.abs(activeStep - index) <= 2 ? (
-  //   <img className={classes.img} src={product.img_urls[0]} alt={product.name} />
-  // ) : null}
-
+  // TODO: This needs to be changed to allow for user to click on the product featured
   const renderImage = (product, index) => {
-    if (Math.abs(activeStep - index) <= 2 && product.img_urls.length > 0) {
+    if (Math.abs(activeStep - index) <= 2 && product.img_urls[0]) {
       return (
         <img className={classes.img} src={product.img_urls[0]} alt={product.name} />
       )
@@ -82,7 +82,7 @@ function FeaturedProductsStepper({featuredProducts}) {
         enableMouseEvents
       >
         {featuredProducts.map((product, index) => (
-          <div key={`product-${product.id}`}>
+          <div className={classes.imgContainer} key={`product-${product.id}`}>
             {renderImage(product, index)}
           </div>
         ))}

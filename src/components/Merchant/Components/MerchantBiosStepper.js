@@ -30,7 +30,6 @@ const useStyles = makeStyles((theme) => ({
   img: {
     height: 255,
     display: 'block',
-    maxWidth: 400,
     overflow: 'hidden',
     width: '100%',
   },

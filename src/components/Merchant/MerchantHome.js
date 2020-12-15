@@ -1,16 +1,15 @@
-import React, { useEffect, useCallback } from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { 
     Container, 
-    Grid,
-    Typography,
-    // useTheme
+    Grid
     } from "@material-ui/core";
 
 import { makeStyles } from '@material-ui/core/styles';
 import { fetchMerchantDetails } from "../../actions/actionsMerchant";
 import MerchantHeroContainer from "./Components/MerchantHeroContainer";
+import MerchantHeadlineContainer from "./Components/MerchantHeadlineContainer";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -22,7 +21,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function MerchantHome() {
-  // const classes = useStyles();
   const classes = useStyles();
   const params = useParams();
   const dispatch = useDispatch();
@@ -39,8 +37,9 @@ function MerchantHome() {
     if (merchantDetails.id) {
       return (
         <Grid container>
+
           <Grid item xs={12}>
-            <p>Merchant Home Under Construction</p>
+            <MerchantHeadlineContainer about={merchantDetails.about} display_name={merchantDetails.display_name}/>
           </Grid>
           <Grid item xs={6}>
             <MerchantHeroContainer 

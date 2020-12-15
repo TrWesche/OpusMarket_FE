@@ -5,7 +5,7 @@ import {
 
 const INITIAL_STATE = {};
 
-const merchantReducer = (state = INITIAL_STATE, action) => {
+const merchantDetails = (state = INITIAL_STATE, action) => {
     let merchantDetails;
     switch (action.type){
         case LOAD_MERCHANT_DETAILS:
@@ -18,4 +18,4 @@ const merchantReducer = (state = INITIAL_STATE, action) => {
     }
 }
 
-export default merchantReducer;
+export default merchantDetails;

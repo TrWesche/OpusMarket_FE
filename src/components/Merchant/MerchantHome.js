@@ -10,7 +10,7 @@ import {
 
 import { makeStyles } from '@material-ui/core/styles';
 import { fetchMerchantDetails } from "../../actions/actionsMerchant";
-
+import MerchantHeroContainer from "./Components/MerchantHeroContainer";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -35,9 +35,26 @@ function MerchantHome() {
   }, [dispatch]);
 
 
+  const render = () => {
+    if (merchantDetails.id) {
+      return (
+        <MerchantHeroContainer 
+          gatherings={merchantDetails.gatherings}
+          featured_products={merchantDetails.featured_products}
+          bios={merchantDetails.bios}
+        />
+      )
+    } else {
+      return (
+        <p>Loading</p>
+      )
+    }
+  }
+
   return (
     <Container className={classes.root}>
       <p>Merchant Home Under Construction</p>
+      {render()}
     </Container>
   );
 }

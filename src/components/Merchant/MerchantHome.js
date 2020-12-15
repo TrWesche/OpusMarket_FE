@@ -38,11 +38,22 @@ function MerchantHome() {
   const render = () => {
     if (merchantDetails.id) {
       return (
-        <MerchantHeroContainer 
-          gatherings={merchantDetails.gatherings}
-          featured_products={merchantDetails.featured_products}
-          bios={merchantDetails.bios}
-        />
+        <Grid container>
+          <Grid item xs={12}>
+            <p>Merchant Home Under Construction</p>
+          </Grid>
+          <Grid item xs={6}>
+            <MerchantHeroContainer 
+              gatherings={merchantDetails.gatherings}
+              featured_products={merchantDetails.featured_products}
+              bios={merchantDetails.bios}
+            />
+          </Grid>
+          <Grid item xs={6}>
+
+          </Grid>
+        </Grid>
+
       )
     } else {
       return (
@@ -53,7 +64,6 @@ function MerchantHome() {
 
   return (
     <Container className={classes.root}>
-      <p>Merchant Home Under Construction</p>
       {render()}
     </Container>
   );

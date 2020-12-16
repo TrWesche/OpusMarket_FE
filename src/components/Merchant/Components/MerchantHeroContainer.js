@@ -43,6 +43,11 @@ const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
     backgroundColor: theme.palette.background.paper,
+    border: '1px solid #EEE',
+    height: '515px'
+  },
+  panel: {
+    height: '465px'
   }
 }));
 
@@ -99,7 +104,6 @@ export default function MerchantHeroContainer({gatherings, featured_products, bi
     createTabs();
 
     const renderTabs = (tabs) => {
-      console.log(tabs);
       return (
         <Tabs
           value={value}
@@ -107,7 +111,7 @@ export default function MerchantHeroContainer({gatherings, featured_products, bi
           indicatorColor="primary"
           textColor="primary"
           variant="fullWidth"
-          aria-label="full width tabs example"
+          aria-label="merchant featured information tab window"
         >
           {tabs.map((tab) => {
             return (
@@ -128,7 +132,7 @@ export default function MerchantHeroContainer({gatherings, featured_products, bi
         >
           {tabs.map((tab) => {
             return (
-              <TabPanel value={value} index={tab.panel.index} key={`tab-panel-${tab.panel.index}`} dir={tab.panel.dir}>
+              <TabPanel value={value} index={tab.panel.index} key={`tab-panel-${tab.panel.index}`} dir={tab.panel.dir} className={classes.panel}>
                 {tab.panel.child}
               </TabPanel>
             )
@@ -138,8 +142,8 @@ export default function MerchantHeroContainer({gatherings, featured_products, bi
     };
 
     return (
-      <Grid container className={classes.root}>
-        <AppBar position="static" color="default">
+      <Grid container className={classes.root} justify="center">
+        <AppBar position="static" color="default" elevation={0}>
           {renderTabs(TabList)}
         </AppBar>
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { useHistory } from 'react-router-dom';
 import {
   MobileStepper,
   Paper,
@@ -18,29 +19,46 @@ const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: '100%',
-    flexGrow: 1
+    flexGrow: 1,
+    overflow: 'hidden'
   },
   header: {
     display: 'flex',
     alignItems: 'center',
+    justifyContent: 'space-between',
     height: 50,
     paddingLeft: theme.spacing(4),
+    paddingRight: theme.spacing(4),
     backgroundColor: theme.palette.background.default,
   },
   img: {
     height: 350,
     display: 'flex',
     overflow: 'hidden',
-    maxWidth: '100%',
+    maxWidth: '100%', 
   },
   imgContainer: {
     display: 'flex',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    height: '100%',
+    cursor: 'pointer'
+  },
+  noImgText: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    cursor: 'pointer',
+    width: '100%'  
+  },
+  saleText: {
+    color: 'red',
+    fontWeight: 'bold'
   }
 }));
 
 function FeaturedProductsStepper({featuredProducts}) {
   const classes = useStyles();
+  const history = useHistory();
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
   const maxSteps = featuredProducts.length;
@@ -57,29 +75,50 @@ function FeaturedProductsStepper({featuredProducts}) {
     setActiveStep(step);
   };
 
-  // TODO: This needs to be changed to allow for user to click on the product featured
+  const handleViewProductDetails = (e) => {
+    e.preventDefault();
+    history.push(`/catalog/${e.target.dataset.id}`);
+  }
+
   const renderImage = (product, index) => {
     if (Math.abs(activeStep - index) <= 2 && product.img_urls[0]) {
       return (
-        <img className={classes.img} src={product.img_urls[0]} alt={product.name} />
+        <img className={classes.img} src={product.img_urls[0]} alt={product.name} data-id={product.id} onClick={handleViewProductDetails}/>
       )
     } else {
       return (
-        <p>No Image Available</p>
+        <p className={classes.noImgText} data-id={product.id} onClick={handleViewProductDetails}>No Image Available</p>
+      )
+    }
+  }
+
+  const renderHeader = () => {
+    if(featuredProducts[activeStep].promotion_price) {
+      return(
+        <Paper square elevation={0} className={classes.header}>
+          <Typography>{featuredProducts[activeStep].name}</Typography>
+          <Typography className={classes.saleText}>On Sale: ${featuredProducts[activeStep].promotion_price/100}</Typography>
+        </Paper>
+      )  
+    } else {
+      return(
+        <Paper square elevation={0} className={classes.header}>
+          <Typography>{featuredProducts[activeStep].name}</Typography>
+          <Typography>${featuredProducts[activeStep].base_price/100}</Typography>
+        </Paper>
       )
     }
   }
 
   return (
     <div className={classes.root}>
-      <Paper square elevation={0} className={classes.header}>
-        <Typography>{featuredProducts[activeStep].name}</Typography>
-      </Paper>
+      {renderHeader()}
       <AutoPlaySwipeableViews
         axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
         index={activeStep}
         onChangeIndex={handleStepChange}
         enableMouseEvents
+        interval='5000'
       >
         {featuredProducts.map((product, index) => (
           <div className={classes.imgContainer} key={`product-${product.id}`}>

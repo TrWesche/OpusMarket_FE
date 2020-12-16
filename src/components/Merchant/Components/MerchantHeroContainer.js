@@ -65,7 +65,7 @@ export default function MerchantHeroContainer({gatherings, featured_products, bi
     };
 
     const createTabs = () => {
-      if(featured_products[0].id) {
+      if(featured_products.length > 0 && featured_products[0].id) {
         const TabData = {};
         TabData.selector = ({label:"Featured Products", ...a11yProps(TabList.length)});
         TabData.panel = ({ 
@@ -77,7 +77,7 @@ export default function MerchantHeroContainer({gatherings, featured_products, bi
         TabList.push(TabData);
       };
 
-      if(gatherings[0].gathering_id) {
+      if(gatherings.length > 0 && gatherings[0].gathering_id) {
         const TabData = {};
         TabData.selector = ({label:"Gatherings", ...a11yProps(TabList.length)});
         TabData.panel = ({ 
@@ -89,7 +89,7 @@ export default function MerchantHeroContainer({gatherings, featured_products, bi
         TabList.push(TabData);
       };
 
-      if(bios[0].name) {
+      if(bios.length > 0 && bios[0].name) {
         const TabData = {};
         TabData.selector = ({label:"Biographies", ...a11yProps(TabList.length)});
         TabData.panel = ({ 
@@ -118,7 +118,6 @@ export default function MerchantHeroContainer({gatherings, featured_products, bi
               <Tab key={tab.selector.id} {...tab.selector} />
             )
           })}
-
         </Tabs>
       );
     };

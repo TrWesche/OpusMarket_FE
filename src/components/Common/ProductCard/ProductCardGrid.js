@@ -64,7 +64,7 @@ const useStyles = makeStyles({
 });
 
 
-function ProductCardRow({cardData}) {
+function ProductCardGrid({cardData}) {
   const classes = useStyles();
   const dispatch = useDispatch();
   const history = useHistory();
@@ -103,14 +103,29 @@ function ProductCardRow({cardData}) {
     }
   }
 
-  return (
-    <Card className={classes.root} variant="outlined">
-      <CardActionArea onClick={handleViewProductDetails}>
+  const cardMediaRender = () => {
+    console.log(cardData)
+    if(cardData.img_urls[0]) {
+      return (
         <CardMedia
           className={classes.media}
           image={cardData.img_urls[0]}
           title={cardData.name}
         />
+      )
+    } else {
+      return (
+        <CardContent className={classes.media}>
+          <Typography>No Image Avaiable</Typography>
+        </CardContent>
+      )
+    }
+  }
+
+  return (
+    <Card className={classes.root} variant="outlined">
+      <CardActionArea onClick={handleViewProductDetails}>
+        {cardMediaRender()}
         <CardContent className={classes.nameContainer}>
           <Typography 
             gutterBottom variant="caption" 
@@ -136,4 +151,4 @@ function ProductCardRow({cardData}) {
   );
 }
 
-export default ProductCardRow;
+export default ProductCardGrid;

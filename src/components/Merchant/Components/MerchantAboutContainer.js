@@ -57,7 +57,7 @@ export default function MerchantAboutContainer({ about }) {
   }
 
   return (
-    <Grid container xs={12} className={classes.root}>
+    <Grid container className={classes.root}>
         {renderAbout()}
     </Grid>
   );

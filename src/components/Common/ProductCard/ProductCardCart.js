@@ -191,15 +191,31 @@ function ProductCardCol({cardData}) {
     }
   }
 
+  const cardMediaRender = () => {
+    console.log(cardData)
+    if(cardData.img_urls[0]) {
+      return (
+        <CardMedia
+          className={classes.media}
+          image={cardData.img_urls[0]}
+          title={cardData.name}
+        />
+      )
+    } else {
+      return (
+        <CardContent className={classes.media}>
+          <Typography>No Image Avaiable</Typography>
+        </CardContent>
+      )
+    }
+  }
+
+
   return (
     <Card className={classes.root} variant="outlined">
       <CardActionArea onClick={handleViewProductDetails}>
         <div>
-          <CardMedia
-            className={classes.media}
-            image={cardData.img_urls[0]}
-            title={cardData.name}
-          />
+          {cardMediaRender()}
           <CardContent className={classes.productInformation}>
             <Typography variant="caption" component="h6">
               {cardData.name}

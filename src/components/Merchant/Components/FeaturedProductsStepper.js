@@ -118,7 +118,7 @@ function FeaturedProductsStepper({featuredProducts}) {
         index={activeStep}
         onChangeIndex={handleStepChange}
         enableMouseEvents
-        interval='5000'
+        interval={5000}
       >
         {featuredProducts.map((product, index) => (
           <div className={classes.imgContainer} key={`product-${product.id}`}>

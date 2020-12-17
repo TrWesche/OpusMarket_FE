@@ -96,14 +96,28 @@ function ProductCardRow({cardData}) {
     }
   }
 
-  return (
-    <Card className={classes.root} variant="outlined">
-      <CardActionArea onClick={handleViewProductDetails}>
+  const cardMediaRender = () => {
+    if(cardData.img_urls[0]) {
+      return (
         <CardMedia
           className={classes.media}
           image={cardData.img_urls[0]}
           title={cardData.name}
         />
+      )
+    } else {
+      return (
+        <CardContent className={classes.media}>
+          <Typography>No Image Provided</Typography>
+        </CardContent>
+      )
+    }
+  }
+
+  return (
+    <Card className={classes.root} variant="outlined">
+      <CardActionArea onClick={handleViewProductDetails}>
+        {cardMediaRender()}
         <CardContent>
           <Typography gutterBottom variant="caption" component="h6">
             {cardData.name}

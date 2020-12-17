@@ -48,6 +48,9 @@ const useStyles = makeStyles((theme) => ({
   },
   panel: {
     height: '465px'
+  },
+  tabViews: {
+    width: '100%'
   }
 }));
 
@@ -128,6 +131,7 @@ export default function MerchantHeroContainer({gatherings, featured_products, bi
           axis='x'
           index={value}
           onChangeIndex={handleChangeIndex}
+          className={classes.tabViews}
         >
           {tabs.map((tab) => {
             return (

@@ -5,7 +5,7 @@ import {
     Container, 
     Grid,
     Typography
-    } from "@material-ui/core";
+} from "@material-ui/core";
 
 import { makeStyles } from '@material-ui/core/styles';
 import { fetchMerchantDetails } from "../../actions/actionsMerchant";
@@ -16,11 +16,19 @@ import ProductGrid from "../Common/CardList/ProductGrid";
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        marginTop: '2rem',
-        backgroundColor: 'white'
+      marginTop: '2rem',
+      backgroundColor: 'white'
     },
     vSection: {
-        flexGrow: 1,
+      flexGrow: 1,
+    },
+    storeHeader: {
+      backgroundColor: theme.palette.primary.dark,
+      color: theme.palette.primary.contrastText,
+      marginTop: theme.spacing(2),
+      marginBottom: theme.spacing(2),
+      paddingTop: theme.spacing(1),
+      paddingBottom: theme.spacing(1)
     }
 }));
 
@@ -42,22 +50,22 @@ function MerchantHome() {
   const render = () => {
     if (merchantDetails.id) {
       return (
-        <Grid container>
+        <Grid container spacing={1}>
           <Grid item xs={12}>
             <MerchantHeadlineContainer about={merchantDetails.about} display_name={merchantDetails.display_name}/>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12} md={6}>
             <MerchantHeroContainer 
               gatherings={merchantDetails.gatherings}
               featured_products={merchantDetails.featured_products}
               bios={merchantDetails.bios}
             />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12} md={6}>
             <MerchantAboutContainer about={merchantDetails.about} />
           </Grid>
           <Grid item xs={12}>
-            <Typography variant="h4">{merchantDetails.display_name} Store</Typography>
+            <Typography variant="h4" className={classes.storeHeader}>{merchantDetails.display_name} Store</Typography>
             <ProductGrid productDataList={merchantDetails.products} listid={`${merchantDetails.id}-products`}/>
           </Grid>
         </Grid>

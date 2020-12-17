@@ -10,15 +10,32 @@ import { makeStyles } from '@material-ui/core/styles';
 // TODO: Add responsive image swapping for the headline image based on screen size
 const useStyles = makeStyles((theme) => ({
     root: {
-        width: '100%'
+      width: '100%',
+      display: 'flex',
+      flexDirection: 'column'
+    },
+    frameInBox: {
+      height: 15,
+      width: '100%',
+      backgroundColor: theme.palette.primary.main,
     },
     img: {
-        maxHeight: 300,
-        display: 'block',
-        overflow: 'hidden',
-        width: '100%',
-        objectFit: 'cover'
+      maxHeight: 300,
+      height: '100%',
+      display: 'block',
+      overflow: 'hidden',
+      width: '100%',
+      objectFit: 'cover'
     },
+    headlineText: {
+      padding: theme.spacing(2),
+      marginTop: theme.spacing(0),
+      marginBottom: theme.spacing(2),
+      backgroundColor: theme.palette.primary.main,
+      color: theme.palette.grey[50],
+      fontSize: '2rem',
+      fontWeight: '400'
+    }
 }));
 
 export default function MerchantHeadlineContainer({ about, display_name }) {
@@ -48,7 +65,7 @@ export default function MerchantHeadlineContainer({ about, display_name }) {
       if (about[0].headline) {
           return (
             <Grid item xs={12}>
-                <p>{about[0].headline}</p>
+                <p className={classes.headlineText}>{about[0].headline}</p>
             </Grid>
           )
       }
@@ -56,6 +73,7 @@ export default function MerchantHeadlineContainer({ about, display_name }) {
 
   return (
     <Grid container className={classes.root}>
+        <div className={classes.frameInBox}></div>
         {renderLogo()}
         {renderHeadline()}
     </Grid>

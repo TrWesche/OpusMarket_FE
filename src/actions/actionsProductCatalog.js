@@ -29,8 +29,6 @@ export const fetchCatalogProducts = ({searchParameters, searchType}) => {
         }
     }
 
-    console.log(callConstructor);
-
     switch (searchType) {
         case "catalog":
             return async function (dispatch) {

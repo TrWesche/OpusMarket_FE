@@ -1,14 +1,11 @@
 import MerchantHome from "../components/Merchant/MerchantHome";
-import MerchantAbout from "../components/Merchant/MerchantAbout";
-import MerchantStore from "../components/Merchant/MerchantStore";
 import MerchantEvents from "../components/Merchant/MerchantEvents";
-
+import MerchantBrowse from "../components/Merchant/MerchantBrowse";
 
 import {
     MERCHANT_HOMEPAGE_PATH,
-    MERCHANT_ABOUT_PATH,
-    MERCHANT_STORE_PATH,
-    MERCHANT_EVENTS_PATH} from './_pathDict';
+    MERCHANT_EVENTS_PATH,
+    MERCHANTS_BROWSE_PATH} from './_pathDict';
 
 const MerchantRoutes = [
     {
@@ -17,13 +14,8 @@ const MerchantRoutes = [
         'exact': true
     },
     {
-        'component': MerchantAbout,
-        'path': MERCHANT_ABOUT_PATH,
-        'exact': false
-    },
-    {
-        'component': MerchantStore,
-        'path': MERCHANT_STORE_PATH,
+        'component': MerchantBrowse,
+        'path': MERCHANTS_BROWSE_PATH,
         'exact': false
     },
     {

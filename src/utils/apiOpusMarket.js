@@ -113,6 +113,12 @@ class apiOpus {
 
 
     // Public Routes
+
+    static async getMerchantList(queryParams) {
+        const res = await this.request(`merchants${queryParams}`);
+        return res;
+    }
+
     static async getMerchantByID(merchantId) {
         const res = await this.request(`merchants/${merchantId}`);
         return res.merchant;

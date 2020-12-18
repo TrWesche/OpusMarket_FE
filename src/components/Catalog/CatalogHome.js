@@ -57,26 +57,26 @@ function Catalog() {
 
 
     return (
-            <Container className={classes.root}>
-                <Grid container className={classes.vSection} spacing={2}>
-                    <Grid item xs={12}>
-                        <HeroStepper />
-                    </Grid>
+        <Container className={classes.root}>
+            <Grid container className={classes.vSection} spacing={2}>
+                <Grid item xs={12}>
+                    <HeroStepper />
                 </Grid>
-                <Grid container className={classes.vSection} spacing={2}>
-                    <Grid item xs={12} md={3}>
-                        <Typography component="div" style={{ backgroundColor: '#cfe8fc', height: '60vh' }} >
-                            <CatalogFilter 
-                                featuredProducts={productCatalog.queryFeatures}
-                                productMetas={productCatalog.queryMetas}/>
-                        </Typography>
-                    </Grid>
-                    <Grid item xs={12} md={9}>
-                        <ProductGrid productDataList={productCatalog.queryProducts} listid={"browse-catalog"} />
-                    </Grid>
+            </Grid>
+            <Grid container className={classes.vSection} spacing={2}>
+                <Grid item xs={12} md={3}>
+                    <Typography component="div" style={{ backgroundColor: '#cfe8fc', height: '60vh' }} >
+                        <CatalogFilter 
+                            featuredProducts={productCatalog.queryFeatures}
+                            productMetas={productCatalog.queryMetas}/>
+                    </Typography>
                 </Grid>
-            </Container>
-          );
+                <Grid item xs={12} md={9}>
+                    <ProductGrid productDataList={productCatalog.queryProducts} listid={"browse-catalog"} />
+                </Grid>
+            </Grid>
+        </Container>
+    );
 }
 
 export default Catalog;

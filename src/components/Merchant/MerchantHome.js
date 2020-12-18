@@ -13,6 +13,9 @@ import MerchantHeroContainer from "./Components/MerchantHeroContainer";
 import MerchantHeadlineContainer from "./Components/MerchantHeadlineContainer";
 import MerchantAboutContainer from "./Components/MerchantAboutContainer";
 import ProductGrid from "../Common/CardList/ProductGrid";
+import {
+  CATALOG_BROWSE_PATH
+} from "../../routes/_pathDict";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -66,7 +69,11 @@ function MerchantHome() {
           </Grid>
           <Grid item xs={12}>
             <Typography variant="h4" className={classes.storeHeader}>{merchantDetails.display_name} Store</Typography>
-            <ProductGrid productDataList={merchantDetails.products} listid={`${merchantDetails.id}-products`}/>
+            <ProductGrid 
+              productDataList={merchantDetails.products} 
+              listid={`${merchantDetails.id}-products`}
+              maxCards={17}
+              redirect={`${CATALOG_BROWSE_PATH}?mid=${merchantDetails.id}`}/>
           </Grid>
         </Grid>
       )

@@ -6,7 +6,7 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 
 import ProductCardGrid from "../ProductCard/ProductCardGrid";
-
+import MoreProductsCardGrid from "../ProductCard/MoreProductsCardGrid";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-function ProductGrid({ productDataList, listid }) {
+function ProductGrid({ productDataList, listid, maxCards=null, redirect=null }) {
     const classes = useStyles();
 
     const render = () => {
@@ -26,7 +26,7 @@ function ProductGrid({ productDataList, listid }) {
             )
         }
 
-        if (productDataList.length) {
+        if ((productDataList.length && !maxCards) || (productDataList.length && maxCards && productDataList.length <= maxCards)) {
             return (
                 <Grid container className={classes.root} spacing={2}>
                     {productDataList.map(productData => {
@@ -39,6 +39,26 @@ function ProductGrid({ productDataList, listid }) {
                 </Grid>
             )
         }
+
+        if (productDataList.length && maxCards && productDataList.length > maxCards) {
+            const truncatedList = productDataList.slice(0, maxCards);
+            return (
+                <Grid container className={classes.root} spacing={2}>
+                    {truncatedList.map(productData => {
+                        return (
+                            <Grid item xs={4} md={3} lg={2} key={`${listid}-${productData.id}`}>
+                                <ProductCardGrid cardData={productData}/>
+                            </Grid>    
+                        )
+                    })}
+                    <Grid item xs={4} md={3} lg={2} key={`${listid}-more`}>
+                        <MoreProductsCardGrid redirect={redirect}/>
+                    </Grid>    
+                </Grid>
+            )
+        }
+
+
     }
 
     return (

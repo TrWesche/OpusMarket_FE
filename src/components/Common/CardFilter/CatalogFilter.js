@@ -77,6 +77,8 @@ function CatalogFilter ({featuredProducts, productMetas}) {
                 currentValue.forEach((value) => {
                     if(value.title && value.checked) {
                         multiVariantQuery.push(value.title);
+                    } else if (typeof(value) === "string") {
+                        multiVariantQuery.push(value);
                     }
                 })
 

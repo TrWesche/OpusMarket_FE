@@ -79,8 +79,6 @@ function SearchForm() {
   };
 
   const handleChangeSearchCategory = (prop) => (event) => {
-    console.log("Triggered Change Search Category", prop)
-
     setSearchValues({ ...searchValues, [prop]: event.target.value });
   };
 

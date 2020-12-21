@@ -70,12 +70,12 @@ function ProductCardGrid({cardData}) {
   const history = useHistory();
 
   const handleAddToCart = () => {
-    console.log("Add To Cart Triggered", cardData.id);
+    // console.log("Add To Cart Triggered", cardData.id);
     dispatch(addProductToCart(1, cardData));
   }
 
   const handleViewProductDetails = () => {
-    console.log("View Product Details Triggered", cardData.id);
+    // console.log("View Product Details Triggered", cardData.id);
     history.push(`/catalog/${cardData.id}`);
   }
 
@@ -104,7 +104,7 @@ function ProductCardGrid({cardData}) {
   }
 
   const cardMediaRender = () => {
-    console.log(cardData)
+    // console.log(cardData)
     if(cardData.img_urls[0]) {
       return (
         <CardMedia

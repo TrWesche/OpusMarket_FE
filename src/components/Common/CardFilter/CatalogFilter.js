@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import {
@@ -17,13 +17,28 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-      flexGrow: 1,
+        display: 'flex',
+        flexDirection: 'column',
+        padding: '0.25rem 0.5rem 1rem 0.5rem',
+        flexGrow: 1,
+        backgroundColor: 'white',
+        border: `1px solid #AAA`,
+        maxHeight: 600,
+        borderRadius: '0.2rem'
+    },
+    vSection: {
+        display: 'flex',
+        flexDirection: 'column'
+    },
+    list: {
+        flexGrow: 1
     }
 }));
 
 function CatalogFilter ({featuredProducts, productMetas}) {
     const multiVariantQueryParams = new Set(['t', 'mid', 's']);
     const displayedQueryParams = new Set(['t', 'featured']);
+    const categoryDisplayLookup = { 't': "Tags", 'featured': "Featured", 'mid': "Merchants"};
     const classes = useStyles();
     const location = useLocation();
     const history = useHistory();
@@ -70,7 +85,12 @@ function CatalogFilter ({featuredProducts, productMetas}) {
                 }
             } else {
                 if(currentValue.checked === true) {
-                    queryParamArray.push(`${currentValue.title}=true`);
+                    if(currentValue.title === 'featured' && !Object.keys(filterListChecked).includes('mid')) {
+                        queryParamArray.push(`${currentValue.title}=true`);
+                        queryParamArray.push(`site_wide=true`);
+                    } else {
+                        queryParamArray.push(`${currentValue.title}=true`);
+                    }
                 }
             }
         })
@@ -83,21 +103,19 @@ function CatalogFilter ({featuredProducts, productMetas}) {
     };
 
     let lastSearchParameters = {};
-    const ingestLastQueryParams = useCallback(() => {
+    const ingestLastQueryParams = () => {
         lastSearchParameters = {};
         for (const [key, value] of searchParams) {
-            if(multiVariantQueryParams.has(value)) {
+            if(multiVariantQueryParams.has(key)) {
                 const splitVal = value.split(' ');
                 lastSearchParameters[key] = splitVal;
             } else {
                 lastSearchParameters[key] = [value];
             }
         }
-    }, [location.search]);
-    ingestLastQueryParams();
+    };
 
-    // Ingest potential filter parameters available
-    const ingestFilterParameters = useCallback(() => {
+    const ingestFilterParameters = () => {
         const filterParameters = {};
         if (featuredProducts && featuredProducts.length > 0) {
             if (lastSearchParameters.featured) {
@@ -105,16 +123,12 @@ function CatalogFilter ({featuredProducts, productMetas}) {
             } else {
                 filterParameters.featured = {title: "featured", display: "Featured", checked: false};
             }
-            
-            if (lastSearchParameters.site_wide) {
-                filterParameters.site_wide = {title: "site_wide", display: "Site Wide", checked: true};
-            }
         }
 
         if (productMetas) {
             filterParameters.t = [];
             productMetas.forEach(meta => {
-                if (lastSearchParameters.t && lastSearchParameters.t.has(meta.title)) {
+                if (lastSearchParameters.t && lastSearchParameters.t.includes(meta.title)) {
                     filterParameters.t.push({title: meta.title, display: meta.title, checked: true});
                 } else {
                     filterParameters.t.push({title: meta.title, display: meta.title, checked: false});
@@ -131,14 +145,15 @@ function CatalogFilter ({featuredProducts, productMetas}) {
         }
 
         setFilterListChecked(filterParameters);
-    }, [featuredProducts, productMetas]);
+    };
 
 
     // Update search results on changes to the query list
     useEffect(() => {
+        console.log("useEffect Triggered")
         ingestLastQueryParams();
         ingestFilterParameters();
-    }, [ingestLastQueryParams]);
+    }, [location.search, featuredProducts, productMetas]);
 
     const renderListItem = (section, item, index=0) => {
         if (item.title) {
@@ -169,10 +184,10 @@ function CatalogFilter ({featuredProducts, productMetas}) {
                             aria-labelledby={`nested-list-subheader-site-${section}`}
                             subheader={
                             <ListSubheader component="div" id={`nested-list-subheader-site-${section}`}>
-                                {section}
+                                {categoryDisplayLookup[section]}
                             </ListSubheader>
                             }
-                            className={classes.root}
+                            className={classes.list}
                         >
                             {data.map((subVal, index) => {
                                 return (
@@ -192,10 +207,10 @@ function CatalogFilter ({featuredProducts, productMetas}) {
                             aria-labelledby="nested-list-subheader-site-promotions"
                             subheader={
                             <ListSubheader component="div" id="nested-list-subheader-site-promotions">
-                                {data.display}
+                                {categoryDisplayLookup[section]}
                             </ListSubheader>
                             }
-                            className={classes.root}
+                            className={classes.list}
                         > 
                             {renderListItem(section, data)}
                         </List>
@@ -208,13 +223,13 @@ function CatalogFilter ({featuredProducts, productMetas}) {
     const render = () => {
         if (Object.keys(filterListChecked).length <= 0) {
             return (
-                <Grid container className={classes.root} spacing={2}>
+                <Grid container className={classes.vSection} spacing={2}>
                     <p>No Filter Parameters</p>
                 </Grid>
             )
         } else {
             return (
-                <Grid container className={classes.root} spacing={2}>
+                <Grid container className={classes.vSection} spacing={2}>
                     {Object.keys(filterListChecked).map((value) => {
                         return (
                             renderListSection(value, filterListChecked[value])
@@ -226,7 +241,7 @@ function CatalogFilter ({featuredProducts, productMetas}) {
     }
 
     return (
-        <Grid item xs={12}>
+        <Grid className={classes.root} item xs={12}>
             <form onSubmit={handleSubmit}>
                 {render()}
                 <Button type="submit" aria-label="apply selected filters" variant="contained" color="primary">

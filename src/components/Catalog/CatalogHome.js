@@ -60,11 +60,10 @@ function Catalog() {
             return (
                 <Grid container className={classes.vSection} spacing={2}>
                     <Grid item xs={12} md={3}>
-                        <Typography component="div" style={{ backgroundColor: '#cfe8fc', height: '60vh' }} >
-                            <CatalogFilter 
-                                featuredProducts={productCatalog.queryFeatures}
-                                productMetas={productCatalog.queryMetas}/>
-                        </Typography>
+                        <CatalogFilter 
+                            featuredProducts={productCatalog.queryFeatures}
+                            productMetas={productCatalog.queryMetas}
+                        />
                     </Grid>
                     <Grid item xs={12} md={9}>
                         <ProductGrid productDataList={productCatalog.queryProducts} listid={"browse-catalog"} />

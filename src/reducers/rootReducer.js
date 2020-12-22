@@ -5,6 +5,7 @@ import productDetail from "./productDetail";
 import orderReducer from "./orderReducer";
 import merchantDetails from "./merchantDetails";
 import merchantBrowse from "./merchantBrowse";
+import currentUser from "./currentUser";
 
 const rootReducer = combineReducers({ 
     cartReducer, 
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
     productDetail, 
     orderReducer, 
     merchantBrowse,
-    merchantDetails });
+    merchantDetails,
+    currentUser });
 
 export default rootReducer;

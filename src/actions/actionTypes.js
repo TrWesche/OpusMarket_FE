@@ -9,9 +9,15 @@ export const LOAD_PRODUCT_DETAILS = 'LOAD_PRODUCT_DETAILS';
 
 
 // User Account Management Routes
+export const LOAD_USER_PROFILE = 'LOAD_USER_PROFILE';
+export const UPDATE_USER_PROFILE = 'UPDATE_USER_PROFILE';
+// export const DELETE_USER_PROFILE = 'DELETE_USER_PROFILE';
 
 
 // Merchant Account Management Routes
+export const LOAD_MERCHANT_PROFILE = 'LOAD_MERCHANT_PROFILE';
+export const UPDATE_MERCHANT_PROFILE = 'UPDATE_MERCHANT_PROFILE';
+// export const DELETE_MERCHANT_PROFILE = 'DELETE_MERCHANT_PROFILE';
 
 
 // Cart Management Routes

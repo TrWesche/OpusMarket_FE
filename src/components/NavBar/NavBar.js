@@ -15,7 +15,7 @@ import {
     ShoppingBasket as ShoppingBasket,
     AccountCircle,
     MoreVert as MoreIcon } from "@material-ui/icons";
-import { fade, makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 
 import SearchForm from "./Components/SearchForm";
 

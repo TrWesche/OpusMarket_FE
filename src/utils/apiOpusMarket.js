@@ -96,10 +96,9 @@ class apiOpus {
     }
 
     static async getMerchantDetails() {
-        const res = await this.request(`merchants/details`);
+        const res = await this.request(`merchants/profile`);
         return res.merchant;
     }
-  
 
     static async updateMerchantDetails(payloadData) {
         const res = await this.request(`merchants/update`, "patch", payloadData);

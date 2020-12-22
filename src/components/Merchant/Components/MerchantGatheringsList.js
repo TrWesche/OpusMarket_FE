@@ -14,9 +14,13 @@ import {
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: '100%',
-    maxWidth: '36ch',
-    backgroundColor: theme.palette.background.paper,
+    display: 'flex',
+    flexGrow: 1, 
+    backgroundColor: theme.palette.grey[100],
+  },
+  listItem: {
+    display: 'flex',
+    flexGrow: 1
   },
   inline: {
     display: 'inline',
@@ -47,7 +51,7 @@ export default function MerchantGatheringsList({gatherings}) {
     return (
         <List className={classes.root}>
         {gatherings.map((gathering, index) => (
-            <ListItem alignItems="flex-start">
+            <ListItem alignItems="flex-start" className={classes.listItem}>
                 {renderImage(gathering)}
                 <ListItemText
                 primary={gathering.title}

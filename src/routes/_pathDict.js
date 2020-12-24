@@ -34,8 +34,9 @@ export const PRODUCT_MANAGEMENT_UPDATE_PRODUCT_PATH = '/pman/update/:productID';
 export const MERCHANT_ACCOUNT_LOGIN_PATH = '/m/login';
 export const MERCHANT_ACCOUNT_NEW_PATH = '/m/register';
 export const MERCHANT_ACCOUNT_PROFILE_PATH = '/m/profile';
-export const MERCHANT_ACCOUNT_UPDATE_PROFILE_PATH = '/m/update';
+export const MERCHANT_ACCOUNT_UPDATE_PROFILE_PATH = '/m/profile/update';
 export const MERCHANT_ACCOUNT_UPDATE_PASSWORD_PATH = '/m/cpw';
+export const MERCHANT_ACCOUNT_UPDATE_ABOUT_PATH = '/m/about/update'
 
 
 // Merchant Public Paths

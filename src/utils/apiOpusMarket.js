@@ -111,6 +111,27 @@ class apiOpus {
     }
 
 
+    
+    static async createMerchantAbout(payloadData) {
+        const res = await this.request(`merchants/about/new`, "post", payloadData);
+        return res.about;
+    }
+
+    static async getMerchantAbout() {
+        const res = await this.request(`merchants/about`);
+        return res.about;
+    }
+
+    static async updateMerchantAbout(payloadData) {
+        const res = await this.request(`merchants/about/update`, "patch", payloadData);
+        return res.about;
+    }
+
+    static async deleteMerchantAbout() {
+        const res = await this.request(`merchants/about/delete`, "delete");
+        return res.message;
+    }
+
     // Public Routes
 
     static async getMerchantList(queryParams) {

@@ -1,27 +1,32 @@
 import React, { useContext, useEffect } from 'react';
 import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { makeStyles } from '@material-ui/core/styles';
 import { 
   Container,
   Grid,
   Typography,
   Button,
-  Tooltip,
   Fab
 } from "@material-ui/core";
+import {
+  Edit,
+  Add
+} from "@material-ui/icons";
 
 import {
-  Edit
-} from "@material-ui/icons";
-import { makeStyles } from '@material-ui/core/styles';
+  MERCHANT_ACCOUNT_UPDATE_PROFILE_PATH,
+  MERCHANT_ACCOUNT_UPDATE_PASSWORD_PATH,
+  MERCHANT_ACCOUNT_UPDATE_ABOUT_PATH
+} from "../../routes/_pathDict";
 
 import {AuthContext} from "../App/AuthContext";
-
 import { fetchMerchantProfile } from "../../actions/actionsMerchantPrivate";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     marginTop: '2rem',
+    marginBottom: '2rem',
     backgroundColor: 'white',
     display: 'flex',
     flexWrap: 'wrap',
@@ -31,7 +36,14 @@ const useStyles = makeStyles((theme) => ({
     position: 'relative',
     flexGrow: 1,
     justifyContent: 'center',
-    alignItems: 'flex-start'
+    alignItems: 'flex-start',
+  },
+  hSection: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'stretch',
+    border: '0.2rem solid white',
+    backgroundColor: theme.palette.grey[200]
   },
   floatingButton: {
     display: 'flex',
@@ -73,50 +85,24 @@ function MerchantProfile() {
 
   const handleEditClick = (destination) => {
     console.log(destination)
+    history.push(destination);
   }
-
-  const render = () => {
-    if (Object.keys(currentUser).length === 0) {
-      return (
-        <Grid container spacing={2} className={classes.root}>
-          <Grid item xs={12} className={classes.vSection}>
-            <Typography>Loading...</Typography>
-          </Grid>
-        </Grid>
-      )
-    } else {
-      return (
-        <Grid container spacing={2} className={classes.root}>
-          <Grid item xs={12} className={classes.vSection}>
-            <Typography variant="h4">Hi {currentUser.display_name}</Typography>
-            <Tooltip title="Edit Display Name">
-              <Fab 
-                color="primary"
-                aria-label="edit display name"
-                size="small" 
-                className={classes.floatingButton}
-                onClick={() => handleEditClick("Edit Display Name Form")}
-              >
-                <Edit fontSize="small" />
-              </Fab>
-            </Tooltip>
-          </Grid>
-          {renderBanner()}
-          {renderHeadline()}
-          {renderAbout()}
-          {renderThumbnail()}
-          {renderRedirects()}
-        </Grid>
-      )
-    };
-  };
 
   const renderBanner = () => {
     const {logo_wide_url} = currentUser.about;
     if (logo_wide_url.length <= 0) {
       return (
         <Grid item xs={12} className={classes.vSection}>
-          <Button>Add Banner Image</Button>
+          <Typography variant="subtitle2">Banner Image</Typography>
+          <Fab 
+            color="primary"
+            aria-label="edit banner image"
+            size="small" 
+            className={classes.floatingButton}
+            onClick={() => handleEditClick("Edit Banner Image")}
+          >
+            <Add fontSize="small" />
+          </Fab>
         </Grid>
       )
     } else {
@@ -124,14 +110,14 @@ function MerchantProfile() {
         <Grid item xs={12} className={classes.vSection}>
           <img className={classes.storeBannerImg} src={logo_wide_url}></img>
           <Fab 
-                color="primary"
-                aria-label="edit banner image"
-                size="small" 
-                className={classes.floatingButton}
-                onClick={() => handleEditClick("Edit Banner Image")}
-              >
-                <Edit fontSize="small" />
-            </Fab>
+            color="primary"
+            aria-label="edit banner image"
+            size="small" 
+            className={classes.floatingButton}
+            onClick={() => handleEditClick("Edit Banner Image")}
+          >
+            <Edit fontSize="small" />
+          </Fab>
         </Grid>
       )
     };
@@ -149,7 +135,15 @@ function MerchantProfile() {
       return (
         <Grid item xs={12} className={classes.vSection}>
           <Typography variant="h6">{headline}</Typography>
-          <Button>Edit Headline</Button>
+          <Fab 
+            color="primary"
+            aria-label="edit banner image"
+            size="small" 
+            className={classes.floatingButton}
+            onClick={() => handleEditClick("Edit Banner Image")}
+          >
+            <Edit fontSize="small" />
+          </Fab>
         </Grid>
       )
     };
@@ -193,18 +187,60 @@ function MerchantProfile() {
 
   const renderRedirects = () => {
     return (
-      <Grid item xs={12} className={classes.vSection}>
-        <Typography variant="subtitle1">Products</Typography>
-        <Button>Add Product</Button>
-        <Button>Manage Products</Button>
-
-        <Typography variant="subtitle1">Gatherings</Typography>
-        <Button>Add Gathering</Button>
-        <Button>Manage Gatherings</Button>
-      </Grid>
+      <React.Fragment>
+        <Grid item xs={12} md={6} lg={4} className={classes.hSection}>
+          <Typography variant="subtitle1">Manage My Account</Typography>
+          <Button onClick={() => handleEditClick(MERCHANT_ACCOUNT_UPDATE_PROFILE_PATH)}>
+            Update Display Name & Email
+          </Button>
+          <Button onClick={() => handleEditClick(MERCHANT_ACCOUNT_UPDATE_ABOUT_PATH)}>
+            Update Store Page
+          </Button>
+          <Button disabled onClick={() => handleEditClick(MERCHANT_ACCOUNT_UPDATE_PASSWORD_PATH)}>
+            Change Password
+          </Button>
+          <Button disabled>Delete Account</Button>
+        </Grid>
+        <Grid item xs={12} md={6} lg={4} className={classes.hSection}>
+          <Typography variant="subtitle1">Manage Products</Typography>
+          <Button>Add A New Product</Button>
+          <Button>Update Product(s)</Button>
+          <Button>Remove Product(s)</Button>
+        </Grid>
+        <Grid item xs={12} lg={4} className={classes.hSection}>
+          <Typography variant="subtitle1">Manage Gatherings</Typography>
+          <Button>Add A New Gathering</Button>
+          <Button>Update Gathering(s)</Button>
+          <Button>Remove Gathering(s)</Button>
+        </Grid>
+      </React.Fragment>
     )
   }
 
+
+  const render = () => {
+    if (Object.keys(currentUser).length === 0) {
+      return (
+        <Grid container spacing={2} className={classes.root}>
+          <Grid item xs={12} className={classes.vSection}>
+            <Typography>Loading...</Typography>
+          </Grid>
+        </Grid>
+      )
+    } else {
+      return (
+        <Grid container spacing={2} className={classes.root}>
+          <Grid item xs={12} className={classes.vSection}>
+            <Typography variant="h4">Hi {currentUser.display_name}</Typography>
+          </Grid>
+          <Grid item xs={12} className={classes.vSection}>
+            <Typography variant="subtitle2">What would you like to do?</Typography>
+          </Grid>
+          {renderRedirects()}
+        </Grid>
+      )
+    };
+  };
 
   return (
     <Container className={classes.root}>

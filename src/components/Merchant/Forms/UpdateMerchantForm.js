@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useSelector } from "react-redux";
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import { 
@@ -41,16 +42,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function NewMerchantForm() {
+function UpdateMerchantForm() {
+  const classes = useStyles();
+  const history = useHistory();
   const {updateContextCookies} = useContext(CookiesContext);
 
-  const history = useHistory();
-  const classes = useStyles();
+  const currentUser = useSelector(store => store.currentUser);
+
   const [values, setValues] = React.useState({
-    password: '',
-    email: '',
-    display_name: '',
-    showPassword: false,
+    email: currentUser.email,
+    display_name: currentUser.display_name
   });
 
   const [alertValues, setAlertValues] = useState({
@@ -169,3 +170,5 @@ export default function NewMerchantForm() {
     </Container>
   );
 }
+
+export default UpdateMerchantForm;

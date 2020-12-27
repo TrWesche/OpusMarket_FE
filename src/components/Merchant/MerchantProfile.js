@@ -17,7 +17,11 @@ import {
 import {
   MERCHANT_ACCOUNT_UPDATE_PROFILE_PATH,
   MERCHANT_ACCOUNT_UPDATE_PASSWORD_PATH,
-  MERCHANT_ACCOUNT_UPDATE_ABOUT_PATH
+  MERCHANT_ACCOUNT_UPDATE_ABOUT_PATH,
+  PRODUCT_MANAGEMENT_HOME_PATH,
+  PRODUCT_MANAGEMENT_NEW_PRODUCT_PATH,
+  GATHERING_MANAGEMENT_HOME_PATH,
+  GATHERING_MANAGEMENT_NEW_PATH
 } from "../../routes/_pathDict";
 
 import {AuthContext} from "../App/AuthContext";
@@ -80,138 +84,136 @@ function MerchantProfile() {
   }, [dispatch]);
 
 
-  console.log(currentUser);
-  console.log(authToken);
+  // console.log(currentUser);
+  // console.log(authToken);
 
-  const handleEditClick = (destination) => {
-    console.log(destination)
+  const handleRedirectClick = (destination) => {
+    // console.log(destination)
     history.push(destination);
   }
 
-  const renderBanner = () => {
-    const {logo_wide_url} = currentUser.about;
-    if (logo_wide_url.length <= 0) {
-      return (
-        <Grid item xs={12} className={classes.vSection}>
-          <Typography variant="subtitle2">Banner Image</Typography>
-          <Fab 
-            color="primary"
-            aria-label="edit banner image"
-            size="small" 
-            className={classes.floatingButton}
-            onClick={() => handleEditClick("Edit Banner Image")}
-          >
-            <Add fontSize="small" />
-          </Fab>
-        </Grid>
-      )
-    } else {
-      return (
-        <Grid item xs={12} className={classes.vSection}>
-          <img className={classes.storeBannerImg} src={logo_wide_url}></img>
-          <Fab 
-            color="primary"
-            aria-label="edit banner image"
-            size="small" 
-            className={classes.floatingButton}
-            onClick={() => handleEditClick("Edit Banner Image")}
-          >
-            <Edit fontSize="small" />
-          </Fab>
-        </Grid>
-      )
-    };
-  };
+  // const renderBanner = () => {
+  //   const {logo_wide_url} = currentUser.about;
+  //   if (logo_wide_url.length <= 0) {
+  //     return (
+  //       <Grid item xs={12} className={classes.vSection}>
+  //         <Typography variant="subtitle2">Banner Image</Typography>
+  //         <Fab 
+  //           color="primary"
+  //           aria-label="edit banner image"
+  //           size="small" 
+  //           className={classes.floatingButton}
+  //           onClick={() => handleRedirectClick("Edit Banner Image")}
+  //         >
+  //           <Add fontSize="small" />
+  //         </Fab>
+  //       </Grid>
+  //     )
+  //   } else {
+  //     return (
+  //       <Grid item xs={12} className={classes.vSection}>
+  //         <img className={classes.storeBannerImg} src={logo_wide_url}></img>
+  //         <Fab 
+  //           color="primary"
+  //           aria-label="edit banner image"
+  //           size="small" 
+  //           className={classes.floatingButton}
+  //           onClick={() => handleRedirectClick("Edit Banner Image")}
+  //         >
+  //           <Edit fontSize="small" />
+  //         </Fab>
+  //       </Grid>
+  //     )
+  //   };
+  // };
 
-  const renderHeadline = () => {
-    const {headline} = currentUser.about;
-    if (headline.length <= 0) {
-      return (
-        <Grid item xs={12} className={classes.vSection}>
-          <Button>Add a Headline</Button>
-        </Grid>
-      )
-    } else {
-      return (
-        <Grid item xs={12} className={classes.vSection}>
-          <Typography variant="h6">{headline}</Typography>
-          <Fab 
-            color="primary"
-            aria-label="edit banner image"
-            size="small" 
-            className={classes.floatingButton}
-            onClick={() => handleEditClick("Edit Banner Image")}
-          >
-            <Edit fontSize="small" />
-          </Fab>
-        </Grid>
-      )
-    };
-  };
+  // const renderHeadline = () => {
+  //   const {headline} = currentUser.about;
+  //   if (headline.length <= 0) {
+  //     return (
+  //       <Grid item xs={12} className={classes.vSection}>
+  //         <Button>Add a Headline</Button>
+  //       </Grid>
+  //     )
+  //   } else {
+  //     return (
+  //       <Grid item xs={12} className={classes.vSection}>
+  //         <Typography variant="h6">{headline}</Typography>
+  //         <Fab 
+  //           color="primary"
+  //           aria-label="edit banner image"
+  //           size="small" 
+  //           className={classes.floatingButton}
+  //           onClick={() => handleRedirectClick("Edit Banner Image")}
+  //         >
+  //           <Edit fontSize="small" />
+  //         </Fab>
+  //       </Grid>
+  //     )
+  //   };
+  // };
 
-  const renderAbout = () => {
-    const {about} = currentUser.about;
-    if (about.length <= 0) {
-      return (
-        <Grid item xs={12} className={classes.vSection}>
-          <Button>Add Your Story</Button>
-        </Grid>
-      )
-    } else {
-      return (
-        <Grid item xs={12} className={classes.vSection}>
-          <Typography variant="body1">{about}</Typography>
-          <Button>Edit Your Story</Button>
-        </Grid>
-      )
-    };
-  };
+  // const renderAbout = () => {
+  //   const {about} = currentUser.about;
+  //   if (about.length <= 0) {
+  //     return (
+  //       <Grid item xs={12} className={classes.vSection}>
+  //         <Button>Add Your Story</Button>
+  //       </Grid>
+  //     )
+  //   } else {
+  //     return (
+  //       <Grid item xs={12} className={classes.vSection}>
+  //         <Typography variant="body1">{about}</Typography>
+  //         <Button>Edit Your Story</Button>
+  //       </Grid>
+  //     )
+  //   };
+  // };
 
-  const renderThumbnail = () => {
-    const {logo_narrow_url} = currentUser.about;
-    if (logo_narrow_url.length <= 0) {
-      return (
-        <Grid item xs={12} className={classes.vSection}>
-          <Button>Add Thumbnail Image</Button>
-        </Grid>
-      )
-    } else {
-      return (
-        <Grid item xs={12} className={classes.vSection}>
-          <img src={logo_narrow_url}></img>
-          <Button>Edit Your Thumbnail</Button>
-        </Grid>
-      )
-    };
-  };
+  // const renderThumbnail = () => {
+  //   const {logo_narrow_url} = currentUser.about;
+  //   if (logo_narrow_url.length <= 0) {
+  //     return (
+  //       <Grid item xs={12} className={classes.vSection}>
+  //         <Button>Add Thumbnail Image</Button>
+  //       </Grid>
+  //     )
+  //   } else {
+  //     return (
+  //       <Grid item xs={12} className={classes.vSection}>
+  //         <img src={logo_narrow_url}></img>
+  //         <Button>Edit Your Thumbnail</Button>
+  //       </Grid>
+  //     )
+  //   };
+  // };
 
   const renderRedirects = () => {
     return (
       <React.Fragment>
         <Grid item xs={12} md={6} lg={4} className={classes.hSection}>
           <Typography variant="subtitle1">Manage My Account</Typography>
-          <Button onClick={() => handleEditClick(MERCHANT_ACCOUNT_UPDATE_PROFILE_PATH)}>
+          <Button onClick={() => handleRedirectClick(MERCHANT_ACCOUNT_UPDATE_PROFILE_PATH)}>
             Update Display Name & Email
           </Button>
-          <Button onClick={() => handleEditClick(MERCHANT_ACCOUNT_UPDATE_ABOUT_PATH)}>
+          <Button onClick={() => handleRedirectClick(MERCHANT_ACCOUNT_UPDATE_ABOUT_PATH)}>
             Update Store Page
           </Button>
-          <Button disabled onClick={() => handleEditClick(MERCHANT_ACCOUNT_UPDATE_PASSWORD_PATH)}>
+          <Button disabled onClick={() => handleRedirectClick(MERCHANT_ACCOUNT_UPDATE_PASSWORD_PATH)}>
             Change Password
           </Button>
           <Button disabled>Delete Account</Button>
         </Grid>
         <Grid item xs={12} md={6} lg={4} className={classes.hSection}>
-          <Typography variant="subtitle1">Manage Products</Typography>
-          <Button>Add A New Product</Button>
-          <Button>Update Product(s)</Button>
-          <Button>Remove Product(s)</Button>
+          <Typography variant="subtitle1">Products</Typography>
+          <Button onClick={() => handleRedirectClick(PRODUCT_MANAGEMENT_NEW_PRODUCT_PATH)}>Add A New Product</Button>
+          <Button onClick={() => handleRedirectClick(PRODUCT_MANAGEMENT_HOME_PATH)}>Manage Existing Product(s)</Button>
         </Grid>
         <Grid item xs={12} lg={4} className={classes.hSection}>
           <Typography variant="subtitle1">Manage Gatherings</Typography>
-          <Button>Add A New Gathering</Button>
-          <Button>Update Gathering(s)</Button>
-          <Button>Remove Gathering(s)</Button>
+          <Button onClick={() => handleRedirectClick(GATHERING_MANAGEMENT_NEW_PATH)}>Add A New Gathering</Button>
+          <Button onClick={() => handleRedirectClick(GATHERING_MANAGEMENT_HOME_PATH)}>Manage Existing Gathering(s)</Button>
         </Grid>
       </React.Fragment>
     )

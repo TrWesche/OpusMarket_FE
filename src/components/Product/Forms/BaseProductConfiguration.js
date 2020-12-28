@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import { 
   Container,
@@ -12,11 +11,7 @@ import {
   Link,
 } from "@material-ui/core";
 
-import {
-  MERCHANT_ACCOUNT_PROFILE_PATH
-} from "../../routes/_pathDict";
-
-import apiOpus from "../../utils/apiOpusMarket";
+import apiOpus from "../../../utils/apiOpusMarket";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,8 +31,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function NewProductConfiguration() {
-  const history = useHistory();
+function BaseProductConfiguration() {
   const classes = useStyles();
 
   const [values, setValues] = useState({
@@ -55,18 +49,10 @@ function NewProductConfiguration() {
 
     try {
       await apiOpus.createProduct(values);
-    
-      history.push('/');
     } catch (error) {
       console.log(error);
     }
   };
-
-  const handleCancel = async (e) => {
-    e.preventDefault();
-    history.push(MERCHANT_ACCOUNT_PROFILE_PATH);
-  };
-
 
   return (
     <Container>
@@ -137,12 +123,9 @@ function NewProductConfiguration() {
             </Grid>
           </form>
         </Grid>
-        <Grid item xs={12}>
-          <Link href="#" onClick={handleCancel}>Cancel</Link>
-        </Grid>
       </Grid>
     </Container>
   );
 }
 
-export default NewProductConfiguration;
+export default BaseProductConfiguration;

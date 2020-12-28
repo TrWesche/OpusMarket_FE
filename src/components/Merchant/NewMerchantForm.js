@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function NewMerchantForm() {
+function NewMerchantForm() {
   const {updateContextCookies} = useContext(CookiesContext);
 
   const history = useHistory();
@@ -146,6 +146,7 @@ export default function NewMerchantForm() {
                   id="merchant-email"
                   value={values.email}
                   onChange={handleChange('email')}
+                  type='email'
                   aria-describedby="merchant-email-helper-text"
                   inputProps={{
                     'aria-label': 'email',
@@ -211,3 +212,5 @@ export default function NewMerchantForm() {
     </Container>
   );
 }
+
+export default NewMerchantForm;

@@ -2,6 +2,7 @@ import ProductManagementHome from "../components/Product/ProductManagementHome";
 import NewProductConfiguration from "../components/Product/NewProductConfiguration";
 import ViewProductConfiguration from "../components/Product/ViewProductConfiguration";
 import UpdateProductConfiguration from "../components/Product/UpdateProductConfiguration";
+import ProductConfigurationWizard from "../components/Product/ProductConfigurationWizard";
 
 import {
     PRODUCT_MANAGEMENT_HOME_PATH, 
@@ -16,7 +17,8 @@ const ProductManagementRoutes = [
         'exact': true
     },
     {
-        'component': NewProductConfiguration,
+        // 'component': NewProductConfiguration,
+        'component': ProductConfigurationWizard,
         'path': PRODUCT_MANAGEMENT_NEW_PRODUCT_PATH,
         'exact': true
     },

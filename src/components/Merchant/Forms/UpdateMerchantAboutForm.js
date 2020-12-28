@@ -141,6 +141,7 @@ function UpdateMerchantAboutForm() {
                   className={classes.sectionInput}
                   value={values.logo_wide_url}
                   onChange={handleChange('logo_wide_url')}
+                  type='url'
                   aria-describedby="merchant-banner-url-helper-text"
                   inputProps={{
                     'aria-label': 'banner-url',
@@ -152,7 +153,6 @@ function UpdateMerchantAboutForm() {
         </Grid>
       )
     } else {
-      // setValues({...values, logo_wide_url: about.logo_wide_url});
       return (
         <Grid item xs={12} className={classes.vSection}>
           <Typography className={classes.sectionTitle} variant="h6">Banner Image</Typography>
@@ -163,6 +163,7 @@ function UpdateMerchantAboutForm() {
                   className={classes.sectionInput}
                   value={values.logo_wide_url}
                   onChange={handleChange('logo_wide_url')}
+                  type='url'
                   aria-describedby="merchant-banner-url-helper-text"
                   inputProps={{
                     'aria-label': 'banner-url',
@@ -282,6 +283,7 @@ function UpdateMerchantAboutForm() {
                   className={classes.sectionInput}
                   value={values.logo_narrow_url}
                   onChange={handleChange('logo_narrow_url')}
+                  type='url'
                   aria-describedby="merchant-thumbnail-url-helper-text"
                   inputProps={{
                     'aria-label': 'thumbnail-url',
@@ -303,6 +305,7 @@ function UpdateMerchantAboutForm() {
                   className={classes.sectionInput}
                   value={values.logo_narrow_url}
                   onChange={handleChange('logo_narrow_url')}
+                  type='url'
                   aria-describedby="merchant-thumbnail-url-helper-text"
                   inputProps={{
                     'aria-label': 'thumbnail-url',

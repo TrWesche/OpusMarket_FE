@@ -63,7 +63,7 @@ function BaseProductConfiguration(productData, setProductData) {
               }}
               labelWidth={0}
             />
-            <FormHelperText id="product-base-price-helper-text">Price</FormHelperText>
+            <FormHelperText id="product-base-price-helper-text">Price (Format: XX.xx)</FormHelperText>
           </FormControl>
         </Grid>
 

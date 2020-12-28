@@ -11,6 +11,10 @@ import {
 
 import BaseProductConfiguration from "./Forms/BaseProductConfiguration";
 import ProductImagesConfiguration from "./Forms/ProductImagesConfiguration";
+import ProductMetaConfiguration from "./Forms/ProductMetaConfiguration";
+import ProductModifierConfiguration from "./Forms/ProductModifierConfiguration";
+import ProductPromotionConfiguration from "./Forms/ProductPromotionConfiguration";
+import ProductCouponConfiguration from "./Forms/ProductCouponConfiguration";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -42,13 +46,13 @@ function getStepContent(step) {
     case 1:
         return ProductImagesConfiguration;
     case 2:
-        return 'Step 3 (optional): Add meta data for your product...';
+        return ProductMetaConfiguration;
     case 3:
-        return 'Step 4 (optional): Add any variants your product may have...';
+        return ProductModifierConfiguration;
     case 4:
-        return 'Step 5 (optional): Add a current promotion to your product...';
+        return ProductPromotionConfiguration;
     case 5:
-        return 'Step 6 (optional): Add a coupon which can be applied to yoru product...';
+        return ProductCouponConfiguration;
     default:
         return 'Unknown step';
   }
@@ -67,7 +71,7 @@ function getStepText(step) {
       case 4:
           return 'Step 5 (optional): Add a current promotion to your product...';
       case 5:
-          return 'Step 6 (optional): Add a coupon which can be applied to yoru product...';
+          return 'Step 6 (optional): Add a coupon which can be applied to your product...';
       default:
           return 'Unknown step';
     }
@@ -88,7 +92,7 @@ function ProductConfigurationWizard() {
         images: [],
         metas: [],
         modifiers: [],
-        promotion: [],
+        promotions: [],
         coupons: []
     });
 

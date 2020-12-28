@@ -10,7 +10,7 @@ import {
 } from '@material-ui/core';
 
 import BaseProductConfiguration from "./Forms/BaseProductConfiguration";
-
+import ProductImagesConfiguration from "./Forms/ProductImagesConfiguration";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -38,9 +38,9 @@ function getSteps() {
 function getStepContent(step) {
   switch (step) {
     case 0:
-        return BaseProductConfiguration();
+        return BaseProductConfiguration;
     case 1:
-        return 'Step 2 (optional): Add images to your product listing...';
+        return ProductImagesConfiguration;
     case 2:
         return 'Step 3 (optional): Add meta data for your product...';
     case 3:
@@ -81,8 +81,15 @@ function ProductConfigurationWizard() {
     const [skipped, setSkipped] = useState(new Set());
     const steps = getSteps();
 
-    const [productDetails, setProductDetails] = useState({
-
+    const [productData, setProductData] = useState({
+        name: '',
+        description: '',
+        base_price: '',
+        images: [],
+        metas: [],
+        modifiers: [],
+        promotion: [],
+        coupons: []
     });
 
     const totalSteps = () => {
@@ -170,7 +177,7 @@ function ProductConfigurationWizard() {
     return (
         <div className={classes.root}>
             <Container>
-                {getStepContent(activeStep)}
+                {getStepContent(activeStep)(productData, setProductData)}
             </Container>
 
             <Stepper alternativeLabel nonLinear activeStep={activeStep}>

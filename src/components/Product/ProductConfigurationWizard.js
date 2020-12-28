@@ -86,6 +86,7 @@ function ProductConfigurationWizard() {
     const steps = getSteps();
 
     const [productData, setProductData] = useState({
+        id: '',
         name: '',
         description: '',
         base_price: '',

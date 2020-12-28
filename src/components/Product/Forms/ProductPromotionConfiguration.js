@@ -43,7 +43,7 @@ function ProductPromotionConfiguration(productData, setProductData) {
         e.preventDefault();
         const promotions = [...productData.promotions];
         promotions.push({
-            product_id: "",
+            product_id: productData.id,
             promotion_price: "",
             active: true
         });

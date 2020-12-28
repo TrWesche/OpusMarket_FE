@@ -40,7 +40,7 @@ function ProductImagesConfiguration(productData, setProductData) {
         e.preventDefault();
         const images = [...productData.images];
         images.push({
-            product_id: "",
+            product_id: productData.id,
             url: "",
             alt_text: "",
             weight: 1

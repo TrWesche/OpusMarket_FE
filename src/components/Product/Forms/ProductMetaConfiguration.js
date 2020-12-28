@@ -40,7 +40,7 @@ function ProductMetaConfiguration(productData, setProductData) {
         e.preventDefault();
         const metas = [...productData.metas];
         metas.push({
-            product_id: "",
+            product_id: productData.id,
             title: "",
             description: ""
         });

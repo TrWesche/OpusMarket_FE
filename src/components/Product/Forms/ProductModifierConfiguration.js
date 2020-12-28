@@ -40,7 +40,7 @@ function ProductModifierConfiguration(productData, setProductData) {
         e.preventDefault();
         const modifiers = [...productData.modifiers];
         modifiers.push({
-            product_id: "",
+            product_id: productData.id,
             name: "",
             description: ""
         });

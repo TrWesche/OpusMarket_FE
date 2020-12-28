@@ -43,7 +43,7 @@ function ProductCouponConfiguration(productData, setProductData) {
         e.preventDefault();
         const coupons = [...productData.coupons];
         coupons.push({
-            product_id: "",
+            product_id: productData.id,
             code: "",
             pct_discount: "",
             active: true

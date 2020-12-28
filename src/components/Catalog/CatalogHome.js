@@ -4,9 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { 
     Container, 
-    Grid,
-    Typography,
-    // useTheme
+    Grid
     } from "@material-ui/core";
 import HeroStepper from "../Common/Hero/HeroStepper";
 import ProductGrid from "../../components/Common/CardList/ProductGrid";

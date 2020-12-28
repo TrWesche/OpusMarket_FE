@@ -11,9 +11,7 @@
 // import { makeStyles } from '@material-ui/core/styles';
 
 
-import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from "react-redux";
-import axios from 'axios';
+import React, { useState } from 'react';
 import { 
   SquarePaymentForm,
   ApplePayButton,
@@ -30,7 +28,7 @@ import apiOpus from '../../utils/apiOpusMarket';
 
 const APPLICATION_ID = process.env.REACT_APP_SQUARE_APP_ID;
 const LOCATION_ID = process.env.REACT_APP_SQUARE_LOC_ID;
-const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:5000/api";
+// const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:5000/api";
 
 const SquarePurchase = ({orderDetails}) => {
   

@@ -42,7 +42,7 @@ export default function TablePaginationDisplay({handleChangePage, handleChangeRo
     const classes = useStyles();
     const {page, rowsPerPage} = tableAttributes;
   
-    const emptyRows = rowsPerPage - Math.min(rowsPerPage, tableRows.length - page * rowsPerPage);
+    // const emptyRows = rowsPerPage - Math.min(rowsPerPage, tableRows.length - page * rowsPerPage);
 
     return (
       <TableContainer>

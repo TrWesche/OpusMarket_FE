@@ -156,7 +156,7 @@ function UpdateMerchantAboutForm() {
       return (
         <Grid item xs={12} className={classes.vSection}>
           <Typography className={classes.sectionTitle} variant="h6">Banner Image</Typography>
-          <img className={classes.storeBannerImg} src={about.logo_wide_url}></img>
+          <img className={classes.storeBannerImg} src={about.logo_wide_url} alt="Store Banner"></img>
           <FormControl fullWidth className={clsx(classes.margin, classes.textField)} variant="outlined">
                 <OutlinedInput
                   id="merchant-banner-url"
@@ -296,7 +296,7 @@ function UpdateMerchantAboutForm() {
       return (
         <Grid item xs={12} className={classes.vSection}>
           <Typography className={classes.sectionTitle} variant="h6">Thumbnail Image</Typography>
-          <img className={classes.thumbnailImg} src={about.logo_narrow_url}></img>
+          <img className={classes.thumbnailImg} src={about.logo_narrow_url} alt="Store Thumbnail"></img>
           <FormControl fullWidth className={clsx(classes.margin, classes.textField)} variant="outlined">
                 <OutlinedInput
                   id="merchant-thumbnail-url"

@@ -102,7 +102,7 @@ export default function NewMerchantForm() {
     e.preventDefault();
 
     try {
-      const res = await apiOpus.createMerchant(values);
+      await apiOpus.createMerchant(values);
       updateContextCookies('sid');
       // setAlertValues({open: true, text: "Login Successful!", severity: "success"});
       history.push('/');

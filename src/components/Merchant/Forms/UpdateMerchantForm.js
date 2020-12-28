@@ -88,7 +88,7 @@ function UpdateMerchantForm() {
     e.preventDefault();
 
     try {
-      const res = await apiOpus.updateMerchantDetails(values);
+      await apiOpus.updateMerchantDetails(values);
       updateContextCookies('sid');
 
       history.push(MERCHANT_ACCOUNT_PROFILE_PATH);

@@ -77,7 +77,7 @@ export default function UserLoginForm() {
     e.preventDefault();
 
     try {
-      const res = await apiOpus.loginUser(values);
+      await apiOpus.loginUser(values);
       updateContextCookies('sid');
       history.push('/');
     } catch (error) {

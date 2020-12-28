@@ -106,7 +106,7 @@ export default function NewUserForm() {
     e.preventDefault();
 
     try {
-      const res = await apiOpus.createUser(values);
+      await apiOpus.createUser(values);
       updateContextCookies('sid');
       // setAlertValues({open: true, text: "Login Successful!", severity: "success"});
       history.push('/');

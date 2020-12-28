@@ -73,7 +73,7 @@ export default function MerchantLoginForm() {
     e.preventDefault();
 
     try {
-      const res = await apiOpus.loginMerchant(values);
+      await apiOpus.loginMerchant(values);
       updateContextCookies('sid');
       history.push('/');
     } catch (error) {

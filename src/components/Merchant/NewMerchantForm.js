@@ -50,7 +50,7 @@ export default function NewMerchantForm() {
 
   const history = useHistory();
   const classes = useStyles();
-  const [values, setValues] = React.useState({
+  const [values, setValues] = useState({
     password: '',
     email: '',
     display_name: '',

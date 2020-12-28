@@ -7,10 +7,7 @@ import {
   Container,
   Grid,
   Typography,
-  IconButton,
   OutlinedInput,
-  InputLabel,
-  InputAdornment,
   FormHelperText,
   FormControl,
   Button,
@@ -49,7 +46,7 @@ function UpdateMerchantForm() {
 
   const currentUser = useSelector(store => store.currentUser);
 
-  const [values, setValues] = React.useState({
+  const [values, setValues] = useState({
     email: currentUser.email,
     display_name: currentUser.display_name
   });

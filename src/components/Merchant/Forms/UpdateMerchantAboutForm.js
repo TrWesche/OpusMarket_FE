@@ -1,88 +1,107 @@
-import React, { useContext, useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from "react-redux";
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import { 
   Container,
   Grid,
   Typography,
-  IconButton,
   OutlinedInput,
-  InputLabel,
-  InputAdornment,
   FormHelperText,
   FormControl,
   Button,
-  Link,
-  Snackbar
+  Link
 } from "@material-ui/core";
-import {
-
-} from '@material-ui/icons';
-import {
-  Alert
-} from '@material-ui/lab';
-
-import {AuthContext} from "../../App/AuthContext";
 
 import apiOpus from "../../../utils/apiOpusMarket";
 import {
   MERCHANT_ACCOUNT_PROFILE_PATH
 } from "../../../routes/_pathDict";
 
+import {
+  fetchMerchantProfile
+} from "../../../actions/actionsMerchantPrivate";
+
+import {
+  AuthContext
+} from "../../App/AuthContext";
+
 const useStyles = makeStyles((theme) => ({
   root: {
+    marginTop: '2rem',
+    marginBottom: '2rem',
+    backgroundColor: 'white',
     display: 'flex',
     flexWrap: 'wrap',
   },
-  margin: {
-    margin: theme.spacing(1),
+  storeBannerImg: {
+    maxHeight: 300,
+    height: '100%',
+    display: 'block',
+    overflow: 'hidden',
+    width: '100%',
+    objectFit: 'cover',
   },
-  textField: {
-    width: '25ch',
+  thumbnailImg: {
+    height: 110,
+    overflow: 'clip'
   },
+  vSection: {
+    display: 'flex',
+    flexDirection: 'column',
+    position: 'relative',
+    flexGrow: 1,
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+    paddingBottom: '0.5rem',
+    margin: '2rem 0',
+    border: '0.15rem solid #CCC',
+  },
+  sectionTitle: {
+    display: 'flex',
+    justifyContent: 'center',
+    width:'100%',
+    backgroundColor: theme.palette.grey[300],
+    padding: '0.25rem 0'
+  }, 
+  sectionContent: {
+    margin: '0.35rem'
+  },
+  sectionInput: {
+    margin: '0.35rem'
+  }
 }));
 
-export default function NewMerchantForm() {
+
+function UpdateMerchantAboutForm() {
+  const classes = useStyles();
+  const history = useHistory();
+  const dispatch = useDispatch();
   const {authToken} = useContext(AuthContext);
 
-  const history = useHistory();
-  const classes = useStyles();
-  const [values, setValues] = React.useState({
-    password: '',
-    email: '',
-    display_name: '',
-    showPassword: false,
+  const about = useSelector(store => store.currentUser.about);
+
+  const [values, setValues] = useState({
+    headline: '',
+    about: '',
+    logo_wide_url: '',
+    logo_narrow_url: ''
   });
 
-  const [alertValues, setAlertValues] = useState({
-    open: false,
-    text: "",
-    severity: "success"
-  });
+  useEffect(() => {
+    dispatch(fetchMerchantProfile());
+  }, [dispatch]);
 
-  const handleAlertClose = (e, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
+  useEffect(() => {
+    setValues({
+      headline: (about) ? about.headline : '',
+      about: (about) ? about.about : '',
+      logo_wide_url: (about) ? about.logo_wide_url : '',
+      logo_narrow_url: (about) ? about.logo_narrow_url : ''
+    })
+  }, [about]);
 
-    setAlertValues({...alertValues, open: false});
-  };
-
-  const renderAlert = () => {
-    return (
-      <Snackbar 
-        open={alertValues.open} 
-        autoHideDuration={6000} 
-        onClose={handleAlertClose}
-        anchorOrigin={{vertical: 'bottom', horizontal: 'center'}}
-      >
-        <Alert onClose={handleAlertClose} severity={alertValues.severity}>
-          {alertValues.text}
-        </Alert>
-      </Snackbar>
-    )
-  };
 
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
@@ -91,18 +110,17 @@ export default function NewMerchantForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // TODO: This isn't a good permanent solution but to move things along this has been implemented in this manner
     try {
-      const res = await apiOpus.updateMerchantDetails(values);
-      // updateContextCookies('sid');
-      // setAlertValues({open: true, text: "Login Successful!", severity: "success"});
-      history.push(`/merchants/${authToken.id}`);
-    } catch (error) {
-      if (error[0] && error[0].length > 0) {
-        const errorText = error[0];
-        setAlertValues({open: true, text: errorText, severity: "error"});
+      if (about.id) {
+        await apiOpus.updateMerchantAbout(values);
+        history.push(`/merchants/${authToken.id}`);
       } else {
-        setAlertValues({open: true, text: "We encountered a problem, if this persists please contact support.", severity: "error"});
+        await apiOpus.createMerchantAbout(values);
+        history.push(`/merchants/${authToken.id}`);
       }
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -111,24 +129,63 @@ export default function NewMerchantForm() {
     history.push(MERCHANT_ACCOUNT_PROFILE_PATH);
   };
 
-
-  return (
-    <Container>
-      {renderAlert()}
-      <Grid container spacing={2} className={classes.displayArea}>
-        <Grid item xs={12}>
-          <Typography className={classes.title} variant="h6" noWrap>
-            Merchant Update About
-          </Typography>
-        </Grid>
-
-        <Grid item xs={12}>
-          <form onSubmit={handleSubmit}>
-            <Grid item xs={12}>
-              <FormControl className={clsx(classes.margin, classes.textField)} variant="outlined">
+  const renderBanner = () => {
+    if (!about || !about.logo_wide_url || about.logo_wide_url.length <= 0) {
+      return (
+        <Grid item xs={12} className={classes.vSection}>
+          <Typography className={classes.sectionTitle} variant="h6">Banner Image</Typography>
+          <Typography className={classes.sectionContent} variant="subtitle2">No Banner Image Provided</Typography>
+          <FormControl fullWidth className={clsx(classes.margin, classes.textField)} variant="outlined">
                 <OutlinedInput
-                  required
+                  id="merchant-banner-url"
+                  className={classes.sectionInput}
+                  value={values.logo_wide_url}
+                  onChange={handleChange('logo_wide_url')}
+                  aria-describedby="merchant-banner-url-helper-text"
+                  inputProps={{
+                    'aria-label': 'banner-url',
+                  }}
+                  labelWidth={0}
+                />
+                <FormHelperText id="merchant-banner-url-helper-text">Banner Image URL</FormHelperText>
+            </FormControl>
+        </Grid>
+      )
+    } else {
+      // setValues({...values, logo_wide_url: about.logo_wide_url});
+      return (
+        <Grid item xs={12} className={classes.vSection}>
+          <Typography className={classes.sectionTitle} variant="h6">Banner Image</Typography>
+          <img className={classes.storeBannerImg} src={about.logo_wide_url}></img>
+          <FormControl fullWidth className={clsx(classes.margin, classes.textField)} variant="outlined">
+                <OutlinedInput
+                  id="merchant-banner-url"
+                  className={classes.sectionInput}
+                  value={values.logo_wide_url}
+                  onChange={handleChange('logo_wide_url')}
+                  aria-describedby="merchant-banner-url-helper-text"
+                  inputProps={{
+                    'aria-label': 'banner-url',
+                  }}
+                  labelWidth={0}
+                />
+                <FormHelperText id="merchant-banner-url-helper-text">Banner Image URL</FormHelperText>
+            </FormControl>
+        </Grid>
+      )
+    };
+  };
+
+  const renderHeadline = () => {
+    if (!about || !about.headline || about.headline.length <= 0) {
+      return (
+        <Grid item xs={12} className={classes.vSection}>
+          <Typography className={classes.sectionTitle} variant="h6">Headline Text</Typography>
+          <Typography className={classes.sectionContent} variant="subtitle2">No Headline Text Provided</Typography>
+          <FormControl fullWidth className={clsx(classes.margin, classes.textField)} variant="outlined">
+                <OutlinedInput
                   id="merchant-headline"
+                  className={classes.sectionInput}
                   value={values.headline}
                   onChange={handleChange('headline')}
                   aria-describedby="merchant-headline-helper-text"
@@ -137,55 +194,144 @@ export default function NewMerchantForm() {
                   }}
                   labelWidth={0}
                 />
-                <FormHelperText id="merchant-headline-helper-text">Headline</FormHelperText>
-              </FormControl>
-
-              <FormControl className={clsx(classes.margin, classes.textField)} variant="outlined">
+                <FormHelperText id="merchant-headline-helper-text">Header Text</FormHelperText>
+            </FormControl>
+        </Grid>
+      )
+    } else {
+      return (
+        <Grid item xs={12} className={classes.vSection}>
+          <Typography className={classes.sectionTitle} variant="h6">Headline Text</Typography>
+          <Typography className={classes.sectionContent} variant="subtitle2">{about.headline}</Typography>
+          <FormControl fullWidth className={clsx(classes.margin, classes.textField)} variant="outlined">
                 <OutlinedInput
-                  required
+                  id="merchant-headline"
+                  className={classes.sectionInput}
+                  value={values.headline}
+                  onChange={handleChange('headline')}
+                  aria-describedby="merchant-headline-helper-text"
+                  inputProps={{
+                    'aria-label': 'headline',
+                  }}
+                  labelWidth={0}
+                />
+                <FormHelperText id="merchant-headline-helper-text">Header Text</FormHelperText>
+            </FormControl>
+        </Grid>
+      )
+    };
+  };
+
+  const renderAbout = () => {
+    if (!about || !about.about || about.about.length <= 0) {
+      return (
+        <Grid item xs={12} className={classes.vSection}>
+          <Typography className={classes.sectionTitle} variant="h6">Your Story</Typography>
+          <Typography className={classes.sectionContent} variant="subtitle2">No Story Provided</Typography>
+          <FormControl fullWidth className={clsx(classes.margin, classes.textField)} variant="outlined">
+                <OutlinedInput
+                  multiline
                   id="merchant-about"
+                  className={classes.sectionInput}
                   value={values.about}
                   onChange={handleChange('about')}
                   aria-describedby="merchant-about-helper-text"
                   inputProps={{
-                    'aria-label': 'about me',
+                    'aria-label': 'about',
                   }}
                   labelWidth={0}
                 />
-                <FormHelperText id="merchant-about-helper-text">About / Bio</FormHelperText>
-              </FormControl>
-
-              <FormControl className={clsx(classes.margin, classes.textField)} variant="outlined">
+                <FormHelperText id="merchant-about-helper-text">About Text</FormHelperText>
+            </FormControl>
+        </Grid>
+      )
+    } else {
+      return (
+        <Grid item xs={12} className={classes.vSection}>
+          <Typography className={classes.sectionTitle} variant="h6">Your Story</Typography>
+          <Typography className={classes.sectionContent} variant="subtitle2">{about.about}</Typography>
+          <FormControl fullWidth className={clsx(classes.margin, classes.textField)} variant="outlined">
                 <OutlinedInput
-                  required
-                  id="merchant-banner-img"
-                  value={values.logo_wide_url}
-                  onChange={handleChange('logo_wide_url')}
-                  aria-describedby="merchant-banner-img-helper-text"
+                  multiline
+                  id="merchant-about"
+                  className={classes.sectionInput}
+                  value={values.about}
+                  onChange={handleChange('about')}
+                  aria-describedby="merchant-about-helper-text"
                   inputProps={{
-                    'aria-label': 'banner',
+                    'aria-label': 'about',
                   }}
                   labelWidth={0}
                 />
-                <FormHelperText id="merchant-banner-img-helper-text">Store Banner Image</FormHelperText>
-              </FormControl>
+                <FormHelperText id="merchant-about-helper-text">About Text</FormHelperText>
+            </FormControl>
+        </Grid>
+      )
+    };
+  };
 
-              <FormControl className={clsx(classes.margin, classes.textField)} variant="outlined">
+  const renderThumbnail = () => {
+    if (!about || !about.logo_narrow_url || about.logo_narrow_url.length <= 0) {
+      return (
+        <Grid item xs={12} className={classes.vSection}>
+          <Typography className={classes.sectionTitle} variant="h6">Thumbnail Image</Typography>
+          <Typography className={classes.sectionContent} variant="subtitle2">No Thumbnail Provided</Typography>
+          <FormControl fullWidth className={clsx(classes.margin, classes.textField)} variant="outlined">
                 <OutlinedInput
-                  required
-                  id="merchant-thumbnail"
+                  id="merchant-thumbnail-url"
+                  className={classes.sectionInput}
                   value={values.logo_narrow_url}
                   onChange={handleChange('logo_narrow_url')}
-                  aria-describedby="merchant-thumbnail-helper-text"
+                  aria-describedby="merchant-thumbnail-url-helper-text"
                   inputProps={{
-                    'aria-label': 'thumbnail',
+                    'aria-label': 'thumbnail-url',
                   }}
                   labelWidth={0}
                 />
-                <FormHelperText id="merchant-thumbnail-helper-text">Store Thumbnail Image</FormHelperText>
-              </FormControl>
-            </Grid>
+                <FormHelperText id="merchant-thumbnail-url-helper-text">Thumbnail Image URL</FormHelperText>
+            </FormControl>
+        </Grid>
+      )
+    } else {
+      return (
+        <Grid item xs={12} className={classes.vSection}>
+          <Typography className={classes.sectionTitle} variant="h6">Thumbnail Image</Typography>
+          <img className={classes.thumbnailImg} src={about.logo_narrow_url}></img>
+          <FormControl fullWidth className={clsx(classes.margin, classes.textField)} variant="outlined">
+                <OutlinedInput
+                  id="merchant-thumbnail-url"
+                  className={classes.sectionInput}
+                  value={values.logo_narrow_url}
+                  onChange={handleChange('logo_narrow_url')}
+                  aria-describedby="merchant-thumbnail-url-helper-text"
+                  inputProps={{
+                    'aria-label': 'thumbnail-url',
+                  }}
+                  labelWidth={0}
+                />
+                <FormHelperText id="merchant-thumbnail-url-helper-text">Thumbnail Image URL</FormHelperText>
+            </FormControl>
+        </Grid>
+      )
+    };
+  };
 
+
+  return (
+    <Container>
+      <Grid container spacing={2} className={classes.root}>
+        <Grid item xs={12}>
+          <Typography variant="h4" noWrap>
+            Update Store Page
+          </Typography>
+        </Grid>
+
+        <Grid item xs={12}>
+          <form onSubmit={handleSubmit}>
+            {renderBanner()}
+            {renderHeadline()}
+            {renderAbout()}
+            {renderThumbnail()}
             <Grid item xs={12}>
               <Button type="submit" aria-label="update merchant store details" variant="contained" color="primary">
                   Update Store Details
@@ -200,3 +346,5 @@ export default function NewMerchantForm() {
     </Container>
   );
 }
+
+export default UpdateMerchantAboutForm;

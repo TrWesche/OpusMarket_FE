@@ -113,7 +113,7 @@ class apiOpus {
 
     
     static async createMerchantAbout(payloadData) {
-        const res = await this.request(`merchants/about/new`, "post", payloadData);
+        const res = await this.request(`merchants/about`, "post", payloadData);
         return res.about;
     }
 
@@ -123,12 +123,12 @@ class apiOpus {
     }
 
     static async updateMerchantAbout(payloadData) {
-        const res = await this.request(`merchants/about/update`, "patch", payloadData);
+        const res = await this.request(`merchants/about`, "patch", payloadData);
         return res.about;
     }
 
     static async deleteMerchantAbout() {
-        const res = await this.request(`merchants/about/delete`, "delete");
+        const res = await this.request(`merchants/about`, "delete");
         return res.message;
     }
 

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { makeStyles } from '@material-ui/core/styles';
@@ -6,13 +6,8 @@ import {
   Container,
   Grid,
   Typography,
-  Button,
-  Fab
+  Button
 } from "@material-ui/core";
-import {
-  Edit,
-  Add
-} from "@material-ui/icons";
 
 import {
   MERCHANT_ACCOUNT_UPDATE_PROFILE_PATH,
@@ -24,7 +19,7 @@ import {
   GATHERING_MANAGEMENT_NEW_PATH
 } from "../../routes/_pathDict";
 
-import {AuthContext} from "../App/AuthContext";
+// import { AuthContext } from "../App/AuthContext";
 import { fetchMerchantProfile } from "../../actions/actionsMerchantPrivate";
 
 const useStyles = makeStyles((theme) => ({
@@ -48,34 +43,14 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'stretch',
     border: '0.2rem solid white',
     backgroundColor: theme.palette.grey[200]
-  },
-  floatingButton: {
-    display: 'flex',
-    position: 'absolute',
-    bottom: theme.spacing(4),
-    right: theme.spacing(4),
-  },
-  storeBannerImg: {
-    maxHeight: 300,
-    height: '100%',
-    display: 'block',
-    overflow: 'hidden',
-    width: '100%',
-    objectFit: 'cover'
-  },
-  // margin: {
-  //   margin: theme.spacing(1),
-  // },
-  // textField: {
-  //   width: '25ch',
-  // },
+  }
 }));
 
 function MerchantProfile() {
   const classes = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
-  const {authToken} = useContext(AuthContext);
+  // const {authToken} = useContext(AuthContext);
 
   const currentUser = useSelector(store => store.currentUser);
 
@@ -84,110 +59,9 @@ function MerchantProfile() {
   }, [dispatch]);
 
 
-  // console.log(currentUser);
-  // console.log(authToken);
-
   const handleRedirectClick = (destination) => {
-    // console.log(destination)
     history.push(destination);
   }
-
-  // const renderBanner = () => {
-  //   const {logo_wide_url} = currentUser.about;
-  //   if (logo_wide_url.length <= 0) {
-  //     return (
-  //       <Grid item xs={12} className={classes.vSection}>
-  //         <Typography variant="subtitle2">Banner Image</Typography>
-  //         <Fab 
-  //           color="primary"
-  //           aria-label="edit banner image"
-  //           size="small" 
-  //           className={classes.floatingButton}
-  //           onClick={() => handleRedirectClick("Edit Banner Image")}
-  //         >
-  //           <Add fontSize="small" />
-  //         </Fab>
-  //       </Grid>
-  //     )
-  //   } else {
-  //     return (
-  //       <Grid item xs={12} className={classes.vSection}>
-  //         <img className={classes.storeBannerImg} src={logo_wide_url}></img>
-  //         <Fab 
-  //           color="primary"
-  //           aria-label="edit banner image"
-  //           size="small" 
-  //           className={classes.floatingButton}
-  //           onClick={() => handleRedirectClick("Edit Banner Image")}
-  //         >
-  //           <Edit fontSize="small" />
-  //         </Fab>
-  //       </Grid>
-  //     )
-  //   };
-  // };
-
-  // const renderHeadline = () => {
-  //   const {headline} = currentUser.about;
-  //   if (headline.length <= 0) {
-  //     return (
-  //       <Grid item xs={12} className={classes.vSection}>
-  //         <Button>Add a Headline</Button>
-  //       </Grid>
-  //     )
-  //   } else {
-  //     return (
-  //       <Grid item xs={12} className={classes.vSection}>
-  //         <Typography variant="h6">{headline}</Typography>
-  //         <Fab 
-  //           color="primary"
-  //           aria-label="edit banner image"
-  //           size="small" 
-  //           className={classes.floatingButton}
-  //           onClick={() => handleRedirectClick("Edit Banner Image")}
-  //         >
-  //           <Edit fontSize="small" />
-  //         </Fab>
-  //       </Grid>
-  //     )
-  //   };
-  // };
-
-  // const renderAbout = () => {
-  //   const {about} = currentUser.about;
-  //   if (about.length <= 0) {
-  //     return (
-  //       <Grid item xs={12} className={classes.vSection}>
-  //         <Button>Add Your Story</Button>
-  //       </Grid>
-  //     )
-  //   } else {
-  //     return (
-  //       <Grid item xs={12} className={classes.vSection}>
-  //         <Typography variant="body1">{about}</Typography>
-  //         <Button>Edit Your Story</Button>
-  //       </Grid>
-  //     )
-  //   };
-  // };
-
-  // const renderThumbnail = () => {
-  //   const {logo_narrow_url} = currentUser.about;
-  //   if (logo_narrow_url.length <= 0) {
-  //     return (
-  //       <Grid item xs={12} className={classes.vSection}>
-  //         <Button>Add Thumbnail Image</Button>
-  //       </Grid>
-  //     )
-  //   } else {
-  //     return (
-  //       <Grid item xs={12} className={classes.vSection}>
-  //         <img src={logo_narrow_url}></img>
-  //         <Button>Edit Your Thumbnail</Button>
-  //       </Grid>
-  //     )
-  //   };
-  // };
 
   const renderRedirects = () => {
     return (

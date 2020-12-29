@@ -1,41 +1,35 @@
 import React from 'react';
 import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import {
     Card,
-    CardActionArea,
-    CardActions,
     CardContent,
     CardMedia,
-    IconButton,
-    Typography
+    Typography,
+    Button
 } from '@material-ui/core';
-import { AddShoppingCart } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
-import { addProductToCart } from '../../../actions/actionsCart';
+
+import BaseProductConfiguration from "../Forms/BaseProductConfiguration";
+import ProductImagesConfiguration from "../Forms/ProductImagesConfiguration";
+import ProductMetaConfiguration from "../Forms/ProductMetaConfiguration";
+import ProductModifierConfiguration from "../Forms/ProductModifierConfiguration";
+import ProductPromotionConfiguration from "../Forms/ProductPromotionConfiguration";
+import ProductCouponConfiguration from "../Forms/ProductCouponConfiguration";
 
 const useStyles = makeStyles({
     root: {
-      // display: 'flex'
-      // maxWidth: 345,
+      display: 'flex'
     },
     media: {
-      height: 110,
+      width: 100,
+      height: 100,
       overflow: 'clip'
-    },
-    actionBar: {
-      alignContent: 'space-between',
-      backgroundColor: '#F0FAFA',
-      height: 45
     },
     pricing: {
       display: 'flex',
       flexDirection: 'column',
       flexGrow: 1,
       alignContent: 'start'
-    },
-    actionButtons: {
-      display: 'flex'
     },
     stdPriceNoSale: {
       display: 'flex',
@@ -56,30 +50,41 @@ const useStyles = makeStyles({
     productName: {
       display: 'flex',
       overflow: 'clip',
-      fontSize: '0.75rem',
-      whiteSpace: 'nowrap'
+      fontSize: '1rem'
     },
-    nameContainer: {
-      padding: '0.2rem 0.4rem'
+    productDescription: {
+      display: 'flex',
+      overflow: 'clip',
+      fontSize: '0.75rem',
+    },
+    imgContainer: {
+      padding: '0.2rem 0.4rem',
+    },
+    detailsContainer: {
+      padding: '0.2rem 0.4rem',
+      minWidth: '40ch',
+      flexGrow: 2
+    },
+    buttons: {
+      display: 'flex',
+      margin: '0.4rem'
+    },
+    buttonsContainer: {
+      display: 'flex',
+      justifyContent: 'end',
+      flexWrap: 'wrap',
+      flexGrow: 1
     }
 });
 
 
 function ProductManagementCard({cardData}) {
   const classes = useStyles();
-  const dispatch = useDispatch();
   const history = useHistory();
 
-  const handleAddToCart = () => {
-    // console.log("Add To Cart Triggered", cardData.id);
-    dispatch(addProductToCart(1, cardData));
-  }
-
   const handleViewProductDetails = () => {
-    // console.log("View Product Details Triggered", cardData.id);
     history.push(`/catalog/${cardData.id}`);
   }
-
 
   const priceRender = () => {
     if(cardData.promotion_price) {
@@ -105,7 +110,6 @@ function ProductManagementCard({cardData}) {
   }
 
   const cardMediaRender = () => {
-    // console.log(cardData)
     if(cardData.img_urls[0]) {
       return (
         <CardMedia
@@ -125,29 +129,46 @@ function ProductManagementCard({cardData}) {
 
   return (
     <Card className={classes.root} variant="outlined">
-      <CardActionArea onClick={handleViewProductDetails}>
+      <div className={classes.imgContainer}>
         {cardMediaRender()}
-        <CardContent className={classes.nameContainer}>
-          <Typography 
-            gutterBottom variant="caption" 
-            className={classes.productName}
-          >
-            {cardData.name}
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-      <CardActions className={classes.actionBar}>
+      </div>
+      <div className={classes.detailsContainer}>
+        <Typography className={classes.productName}>
+          {cardData.name}
+        </Typography>
+        <Typography className={classes.productDescription}>
+          {cardData.description}
+        </Typography>
         {priceRender()}
-        <div className={classes.actionButtons}>
-          <IconButton 
-            onClick={handleAddToCart} 
-            aria-label="add to cart"
-            size="small"
-          >
-            <AddShoppingCart className={classes.addShoppingCartIcon} />
-          </IconButton>
-        </div>
-      </CardActions>
+      </div>
+      <div className={classes.buttonsContainer}>
+        <Button className={classes.buttons} variant="contained" color="primary" onClick={handleViewProductDetails}>
+          View Listing
+        </Button>
+      </div>
+      <div className={classes.buttonsContainer}>
+        <Button className={classes.buttons} variant="contained" onClick={handleViewProductDetails}>
+          Update Basic Info
+        </Button>
+        <Button className={classes.buttons} variant="contained" onClick={handleViewProductDetails}>
+          Update Images
+        </Button>
+        <Button className={classes.buttons} variant="contained" onClick={handleViewProductDetails}>
+          Update Meta Data
+        </Button>
+        <Button className={classes.buttons} variant="contained" onClick={handleViewProductDetails}>
+          Update Modifiers
+        </Button>
+        <Button className={classes.buttons}  variant="contained" onClick={handleViewProductDetails}>
+          Update Promotion
+        </Button>
+        <Button className={classes.buttons}  variant="contained" onClick={handleViewProductDetails}>
+          Update Coupons
+        </Button>
+        <Button className={classes.buttons}  variant="contained" color="secondary" onClick={handleViewProductDetails}>
+          Delete Product
+        </Button>
+      </div>
     </Card>
   );
 }

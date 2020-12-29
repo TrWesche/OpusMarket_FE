@@ -8,13 +8,12 @@ import {
 } from "@material-ui/core";
 import ProductManagementCardVList from "./Components/ProductManagementCardVList";
 
-import apiOpus from "../../utils/apiOpusMarket";
+// import apiOpus from "../../utils/apiOpusMarket";
 import { fetchCatalogProducts } from "../../actions/actionsProductCatalog";
 
 import {
   AuthContext
 } from "../App/AuthContext";
-
 
 const useStyles = makeStyles((theme) => ({
   root: {

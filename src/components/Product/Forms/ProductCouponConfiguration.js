@@ -62,7 +62,11 @@ function ProductCouponConfiguration(productData, setProductData) {
 
     const handleChange = (prop, index) => (e) => {
         const coupons = [...productData.coupons];
-        coupons[index][prop] = e.target.value;
+        if (prop === "pct_discount") {
+            coupons[index][prop] = +e.target.value;    
+        } else {
+            coupons[index][prop] = e.target.value;
+        }
 
         setProductData({ ...productData, "coupons": coupons });
     };
@@ -117,12 +121,13 @@ function ProductCouponConfiguration(productData, setProductData) {
                                 value={coupon.pct_discount}
                                 onChange={handleChange('pct_discount', index)}
                                 aria-describedby={`product-coupon-pct-discount-${index}-helper-text`}
+                                type="number"
                                 inputProps={{
                                 'aria-label': 'Percent Discount',
                                 }}
                                 labelWidth={0}
                             />
-                            <FormHelperText id={`product-coupon-pct-discount-${index}-helper-text`}>% Discount (Format: 0.xx)</FormHelperText>
+                            <FormHelperText id={`product-coupon-pct-discount-${index}-helper-text`}>% Discount (1-99)</FormHelperText>
                         </FormControl>
 
                         <FormControl component="fieldset" className={classes.rowInputs} key={`product-coupon-active-${index}`} variant="outlined">

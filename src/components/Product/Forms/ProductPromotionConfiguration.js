@@ -44,10 +44,9 @@ function ProductPromotionConfiguration(productData, setProductData) {
         const promotions = [...productData.promotions];
         promotions.push({
             product_id: productData.id,
-            promotion_price: "",
+            promotion_price: '',
             active: true
         });
-
 
         setProductData({...productData, "promotions": promotions});
     }
@@ -61,7 +60,12 @@ function ProductPromotionConfiguration(productData, setProductData) {
 
     const handleChange = (prop, index) => (e) => {
         const promotions = [...productData.promotions];
-        promotions[index][prop] = e.target.value;
+        if (prop === "promotion_price") {
+            promotions[index][prop] = +e.target.value;
+        } else {
+            promotions[index][prop] = e.target.value;
+        }
+        
 
         setProductData({ ...productData, "promotions": promotions });
     };

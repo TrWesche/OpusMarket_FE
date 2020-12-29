@@ -59,7 +59,11 @@ function ProductImagesConfiguration(productData, setProductData) {
 
     const handleChange = (prop, index) => (e) => {
         const images = [...productData.images];
-        images[index][prop] = e.target.value;
+        if (prop === "weight") {
+            images[index][prop] = +e.target.value;    
+        } else {
+            images[index][prop] = e.target.value;
+        }
 
         setProductData({ ...productData, "images": images });
     };

@@ -47,7 +47,7 @@ function ProductManagementHome() {
             <Typography variant="h4">Manage Products</Typography>
         </Grid>
         <Grid item xs={12}>
-            <ProductManagementCardVList productDataList={productCatalog.queryProducts} listid={"browse-catalog"} />
+            <ProductManagementCardVList productDataList={productCatalog.queryProducts} listid={"browse-catalog"} merchantId={authToken.id} />
         </Grid>
       </Grid>
     </Container>

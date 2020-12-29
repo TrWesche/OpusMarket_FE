@@ -1,5 +1,6 @@
 import React from 'react';
 import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import {
     Card,
     CardContent,
@@ -9,12 +10,15 @@ import {
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
-import BaseProductConfiguration from "../Forms/BaseProductConfiguration";
-import ProductImagesConfiguration from "../Forms/ProductImagesConfiguration";
-import ProductMetaConfiguration from "../Forms/ProductMetaConfiguration";
-import ProductModifierConfiguration from "../Forms/ProductModifierConfiguration";
-import ProductPromotionConfiguration from "../Forms/ProductPromotionConfiguration";
-import ProductCouponConfiguration from "../Forms/ProductCouponConfiguration";
+import apiOpus from "../../../utils/apiOpusMarket";
+import { fetchCatalogProducts } from "../../../actions/actionsProductCatalog";
+
+// import BaseProductConfiguration from "../Forms/BaseProductConfiguration";
+// import ProductImagesConfiguration from "../Forms/ProductImagesConfiguration";
+// import ProductMetaConfiguration from "../Forms/ProductMetaConfiguration";
+// import ProductModifierConfiguration from "../Forms/ProductModifierConfiguration";
+// import ProductPromotionConfiguration from "../Forms/ProductPromotionConfiguration";
+// import ProductCouponConfiguration from "../Forms/ProductCouponConfiguration";
 
 const useStyles = makeStyles({
     root: {
@@ -78,12 +82,24 @@ const useStyles = makeStyles({
 });
 
 
-function ProductManagementCard({cardData}) {
+function ProductManagementCard({cardData, merchantId}) {
   const classes = useStyles();
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const handleViewProductDetails = () => {
     history.push(`/catalog/${cardData.id}`);
+  }
+
+  const handleDeleteProduct = async (productId) => {
+    try {
+      await apiOpus.deleteProduct(productId);
+
+      dispatch(fetchCatalogProducts({searchParameters: {mid: merchantId}, searchType: "catalog"}))
+    } catch (error) {
+      console.log(error) 
+    }
+    
   }
 
   const priceRender = () => {
@@ -147,25 +163,25 @@ function ProductManagementCard({cardData}) {
         </Button>
       </div>
       <div className={classes.buttonsContainer}>
-        <Button className={classes.buttons} variant="contained" onClick={handleViewProductDetails}>
+        <Button disabled className={classes.buttons} variant="contained" onClick={handleViewProductDetails}>
           Update Basic Info
         </Button>
-        <Button className={classes.buttons} variant="contained" onClick={handleViewProductDetails}>
+        <Button disabled className={classes.buttons} variant="contained" onClick={handleViewProductDetails}>
           Update Images
         </Button>
-        <Button className={classes.buttons} variant="contained" onClick={handleViewProductDetails}>
+        <Button disabled className={classes.buttons} variant="contained" onClick={handleViewProductDetails}>
           Update Meta Data
         </Button>
-        <Button className={classes.buttons} variant="contained" onClick={handleViewProductDetails}>
+        <Button disabled className={classes.buttons} variant="contained" onClick={handleViewProductDetails}>
           Update Modifiers
         </Button>
-        <Button className={classes.buttons}  variant="contained" onClick={handleViewProductDetails}>
+        <Button disabled className={classes.buttons}  variant="contained" onClick={handleViewProductDetails}>
           Update Promotion
         </Button>
-        <Button className={classes.buttons}  variant="contained" onClick={handleViewProductDetails}>
+        <Button disabled className={classes.buttons}  variant="contained" onClick={handleViewProductDetails}>
           Update Coupons
         </Button>
-        <Button className={classes.buttons}  variant="contained" color="secondary" onClick={handleViewProductDetails}>
+        <Button className={classes.buttons}  variant="contained" color="secondary" onClick={() => handleDeleteProduct(cardData.id)}>
           Delete Product
         </Button>
       </div>

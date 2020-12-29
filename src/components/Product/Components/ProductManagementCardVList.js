@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-function ProductManagementCardVList({ productDataList, listid, maxCards=null, redirect=null }) {
+function ProductManagementCardVList({ productDataList, listid, merchantId, maxCards=null, redirect=null }) {
     const classes = useStyles();
 
     const render = () => {
@@ -31,7 +31,7 @@ function ProductManagementCardVList({ productDataList, listid, maxCards=null, re
                     {productDataList.map(productData => {
                         return (
                             <Grid item xs={12} key={`${listid}-${productData.id}`}>
-                                <ProductManagementCard cardData={productData}/>
+                                <ProductManagementCard cardData={productData} merchantId={merchantId}/>
                             </Grid>    
                         )
                     })}
@@ -46,7 +46,7 @@ function ProductManagementCardVList({ productDataList, listid, maxCards=null, re
                     {truncatedList.map(productData => {
                         return (
                             <Grid item xs={12} key={`${listid}-${productData.id}`}>
-                                <ProductManagementCard cardData={productData}/>
+                                <ProductManagementCard cardData={productData} merchantId={merchantId}/>
                             </Grid>    
                         )
                     })}

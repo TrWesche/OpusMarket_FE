@@ -56,7 +56,8 @@ const useStyles = makeStyles({
     productName: {
       display: 'flex',
       overflow: 'clip',
-      fontSize: '0.75rem'
+      fontSize: '0.75rem',
+      whiteSpace: 'nowrap'
     },
     nameContainer: {
       padding: '0.2rem 0.4rem'

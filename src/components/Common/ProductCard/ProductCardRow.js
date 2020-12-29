@@ -50,8 +50,10 @@ const useStyles = makeStyles({
       fontWeight: 'bold',
       color: '#AA0000'
     },
-    addShoppingCartIcon: {
-      
+    productName: {
+      overflow: 'clip',
+      textOverflow: 'ellipsis',
+      whiteSpace: 'nowrap'
     }
 });
 
@@ -118,7 +120,7 @@ function ProductCardRow({cardData}) {
       <CardActionArea onClick={handleViewProductDetails}>
         {cardMediaRender()}
         <CardContent>
-          <Typography gutterBottom variant="caption" component="h6">
+          <Typography className={classes.productName} gutterBottom variant="caption" component="h6">
             {cardData.name}
           </Typography>
         </CardContent>
@@ -127,7 +129,7 @@ function ProductCardRow({cardData}) {
         {priceRender()}
         <div className={classes.actionButtons}>
           <IconButton onClick={handleAddToCart} aria-label="add to cart">
-            <AddShoppingCart className={classes.addShoppingCartIcon} />
+            <AddShoppingCart />
           </IconButton>
         </div>
       </CardActions>

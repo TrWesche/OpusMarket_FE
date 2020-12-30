@@ -6,8 +6,6 @@ export const BUY_CART_PATH = '/cart/buy';
 // Gathering Management Paths
 export const GATHERING_MANAGEMENT_HOME_PATH = '/gman';
 export const GATHERING_MANAGEMENT_NEW_PATH = '/gman/new';
-export const GATHERING_MANAGEMENT_VIEW_PATH = '/gman/view/:gatheringID';
-export const GATHERING_MANAGEMENT_UPDATE_PATH = '/gman/update/:gatheringID';
 
 
 // User Account Paths
@@ -26,8 +24,6 @@ export const ORDER_HISTORY_PATH = '/orders/history';
 // Product Management Paths
 export const PRODUCT_MANAGEMENT_HOME_PATH = '/pman';
 export const PRODUCT_MANAGEMENT_NEW_PRODUCT_PATH = '/pman/new';
-export const PRODUCT_MANAGEMENT_VIEW_PRODUCT_PATH = '/pman/view/:productID';
-export const PRODUCT_MANAGEMENT_UPDATE_PRODUCT_PATH = '/pman/update/:productID';
 
 
 // Merchant Account Paths

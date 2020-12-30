@@ -19,7 +19,9 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     flexWrap: 'wrap',
-    marginTop: '2rem'
+    marginBottom: '2rem',
+    padding: '1rem 0',
+    backgroundColor: 'white'
   },
   margin: {
     margin: theme.spacing(1),

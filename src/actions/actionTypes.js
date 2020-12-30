@@ -30,6 +30,7 @@ export const APPLY_COUPON_TO_PRODUCT = 'APPLY_COUPON_TO_PRODUCT';
 // Order Management Routes
 export const CREATE_NEW_ORDER = 'CREATE_NEW_ORDER';
 export const READ_ORDER_DATA = 'READ_ORDER_DATA';
+export const READ_USER_ORDERS = 'READ_USER_ORDERS';
 
 
 // Merchant Browsing Routes

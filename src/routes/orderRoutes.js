@@ -7,14 +7,14 @@ import {
 
 const OrderRoutes = [
     {
-        'component': OrderDetails,
-        'path': ORDER_DETAILS_PATH,
-        'exact': true
-    },
-    {
         'component': OrderHome,
         'path': ORDER_HISTORY_PATH,
         'exact': false
+    },
+    {
+        'component': OrderDetails,
+        'path': ORDER_DETAILS_PATH,
+        'exact': true
     }
 ];
 

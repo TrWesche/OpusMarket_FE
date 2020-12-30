@@ -350,11 +350,18 @@ class apiOpus {
         return res.order;
     }
 
+    // Get Single Order Details
     static async getOrderDetails(orderId) {
         const res = await this.request(`orders/${orderId}`);
         return res;
     }
     
+    // Get All User's Orders
+    static async getUserOrders() {
+        const res = await this.request(`orders/history`);
+        return res;
+    }
+
 
     // Pay Routes
     static async processPaymentSquare(data) {

@@ -36,6 +36,9 @@ import {
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    marginTop: '2rem',
+    marginBottom: '2rem',
+    backgroundColor: 'white',
     display: 'flex',
     flexWrap: 'wrap',
   },

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import {
     Stepper,
@@ -18,6 +19,10 @@ import ProductCouponConfiguration from "./Forms/ProductCouponConfiguration";
 import ProductConfigurationComplete from "./Components/ProductConfigurationComplete";
 
 import apiOpus from "../../utils/apiOpusMarket";
+import {
+    PRODUCT_MANAGEMENT_HOME_PATH
+  } from "../../routes/_pathDict";
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -92,6 +97,8 @@ function getStepText(step) {
 
 function ProductConfigurationWizard() {
     const classes = useStyles();
+    const history = useHistory();
+
     const [activeStep, setActiveStep] = useState(0);
     const [completed, setCompleted] = useState(new Set());
     const [skipped, setSkipped] = useState(new Set());
@@ -183,9 +190,6 @@ function ProductConfigurationWizard() {
         const res = await apiOpus.createProduct({"products": [{"name": productData.name, "description": productData.description, "base_price": basePriceInt}]})    
         const productId = res[0].id;
 
-        console.log(res);
-        console.log(productId);
-
         if (productData.images.length > 0) {
             await apiOpus.addProductImage(productId, {"images": productData.images});
         }
@@ -210,9 +214,10 @@ function ProductConfigurationWizard() {
                 return retCoupon;
             })
 
-            console.log(correctedCoupons);
             await apiOpus.addProductCoupon(productId, {"coupons": correctedCoupons});
         }
+
+        history.push(PRODUCT_MANAGEMENT_HOME_PATH);
     }
 
     const handleComplete = () => {

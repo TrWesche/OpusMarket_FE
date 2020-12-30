@@ -35,3 +35,7 @@ export const READ_ORDER_DATA = 'READ_ORDER_DATA';
 // Merchant Browsing Routes
 export const LOAD_MERCHANT_DETAILS = 'LOAD_MERCHANT_DETAILS';
 export const LOAD_MERCHANT_LIST = 'LOAD_MERCHANT_LIST';
+
+
+// Gathering Management Routes
+export const LOAD_MERCHANT_GATHERINGS = 'LOAD_MERCHANT_GATHERINGS'

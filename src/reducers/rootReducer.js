@@ -6,6 +6,7 @@ import orderReducer from "./orderReducer";
 import merchantDetails from "./merchantDetails";
 import merchantBrowse from "./merchantBrowse";
 import currentUser from "./currentUser";
+import gatheringReducer from "./gatheringReducer";
 
 const rootReducer = combineReducers({ 
     cartReducer, 
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
     orderReducer, 
     merchantBrowse,
     merchantDetails,
-    currentUser });
+    currentUser,
+    gatheringReducer });
 
 export default rootReducer;

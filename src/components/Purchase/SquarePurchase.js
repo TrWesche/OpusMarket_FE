@@ -5,17 +5,12 @@
 
 // https://square.github.io/react-square-payment-form/docs/paymentform
 
-// import { 
-//   Container
-// } from "@material-ui/core";
-// import { makeStyles } from '@material-ui/core/styles';
-
-
 import React, { useState } from 'react';
 import { useHistory } from "react-router-dom";
 import {
   Grid,
-  Typography
+  Typography,
+  Link
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -34,10 +29,8 @@ import 'react-square-payment-form/lib/default.css';
 import apiOpus from '../../utils/apiOpusMarket';
 import { ORDER_HISTORY_PATH } from "../../routes/_pathDict";
 
-
 const APPLICATION_ID = process.env.REACT_APP_SQUARE_APP_ID;
 const LOCATION_ID = process.env.REACT_APP_SQUARE_LOC_ID;
-// const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:5000/api";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -59,10 +52,9 @@ const SquarePurchase = ({orderDetails}) => {
   const classes = useStyles();
   const history = useHistory();
 
-  // console.log("Order Details Square", orderDetails)
   const [errorMessages, setErrorMessages] = useState([]);
 
-  function cardNonceResponseReceived(errors, nonce, cardData, buyerVerificationToken) {
+  async function cardNonceResponseReceived(errors, nonce, cardData, buyerVerificationToken) {
     if (errors) {
       setErrorMessages(errors.map(error => error.message));
       return;
@@ -76,10 +68,8 @@ const SquarePurchase = ({orderDetails}) => {
       order_id: orderDetails.id
     }
 
-    // const result = axios.post(`${BASE_URL}/sqpay/process-payment`, {nonce: nonce, buyerVerificationToken: buyerVerificationToken});
-    const result = apiOpus.processPaymentSquare(data);
-    // const result = axios.post(`${BASE_URL}/sqpay/process-payment`, data);
-    console.log(result);
+    const result = await apiOpus.processPaymentSquare(data);
+    // console.log(result);
     history.push(ORDER_HISTORY_PATH);
   }
 
@@ -100,26 +90,16 @@ const SquarePurchase = ({orderDetails}) => {
       countryCode: 'US',
       total: {
         label: `OpusMarket - Order: ${orderDetails.id}`,
-        // label: 'Square Test Order',
         amount: `${orderDetails.order_total}`,
-        // amount: '1000',
         pending: false,
       },
       lineItems: lineItems,
-      // lineItems: [
-      //   {
-      //     label: 'Total',
-      //     amount: '1',
-      //     pending: false,
-      //   },
-      // ],
     };
   }
 
   function createVerificationDetails() {
     return {
       amount: `${orderDetails.order_total / 100}`,
-      // amount: '10.00',
       currencyCode: 'USD',
       intent: 'CHARGE',
       billingContact: {
@@ -155,6 +135,22 @@ const SquarePurchase = ({orderDetails}) => {
     <Grid container className={classes.root}>
       <Grid item xs={12} className={classes.vSection}>
         <Typography variant='h4'>Complete Purchase</Typography>
+      </Grid>
+      <Grid item xs={12} className={classes.vSection}>
+        <Typography variant="subtitle1">Please do not enter personal information in the form below!</Typography>
+      </Grid>
+      <Grid item xs={12} className={classes.vSection}>
+        <Typography variant='body1'>
+          This payment form is linked to a Square sandbox.  To test payment functionality please use a Square Test Card, such as "Card Number: 4111 1111 1111 111 / CVV: 111".  Postal code and expiration date are not checked for this card number.
+        </Typography>
+      </Grid>
+      <Grid item xs={12} className={classes.vSection}>
+        <Typography variant='body1'>
+          A full list of Square Test Cards can be found at the link below.  Please note all error handling functionalities have not been implemented.
+        </Typography>
+      </Grid>
+      <Grid item xs={12} className={classes.vSection}>
+        <Link href="https://developer.squareup.com/docs/testing/test-values">Square Sandbox Testing Values</Link>
       </Grid>
       <Grid item xs={12} className={classes.vSection}>
         <SquarePaymentForm

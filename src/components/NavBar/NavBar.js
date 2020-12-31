@@ -29,7 +29,7 @@ import {
   MERCHANT_ACCOUNT_PROFILE_PATH
 } from "../../routes/_pathDict";
 import apiOpus from "../../utils/apiOpusMarket";
-import TemporaryDrawer from "./NavDrawer";
+import NavDrawer from "./Components/NavDrawer";
 
 const useStyles = makeStyles((theme) => {
   return (
@@ -141,9 +141,9 @@ function NavBar() {
   const handleProfile = () => {
     setAnchorEl(null);
     handleMobileMenuClose();
-    if(authToken.type === "user") {
+    if(authToken && authToken.type === "user") {
       history.push(USER_ACCOUNT_PROFILE_PATH);
-    } else if (authToken.type === "merchant") {
+    } else if (authToken && authToken.type === "merchant") {
       history.push(MERCHANT_ACCOUNT_PROFILE_PATH);
     }
   };
@@ -202,7 +202,7 @@ function NavBar() {
       return (
         <div className={classes.account}>
           <p className={classes.accountLine1}>Welcome</p>
-      <p className={classes.accountLine2}>{authToken.first_name}</p>
+          <p className={classes.accountLine2}>{(authToken.first_name) ? authToken.first_name : authToken.display_name}</p>
         </div>
       )
     } else {
@@ -252,7 +252,7 @@ function NavBar() {
     <div className={classes.grow}>
       <AppBar position="static">
         <Toolbar>
-          <TemporaryDrawer />
+          <NavDrawer />
           <Link className={classes.title} onClick={handleHome} href="#" variant="h6" noWrap>
             OpusMarket
           </Link>

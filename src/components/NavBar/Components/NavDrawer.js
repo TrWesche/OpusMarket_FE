@@ -17,7 +17,7 @@ import {
 import {
   CATALOG_BROWSE_PATH,
   MERCHANTS_BROWSE_PATH
-} from '../../routes/_pathDict';
+} from '../../../routes/_pathDict';
 
 
 const useStyles = makeStyles({

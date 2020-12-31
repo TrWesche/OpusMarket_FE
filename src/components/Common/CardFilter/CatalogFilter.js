@@ -152,7 +152,6 @@ function CatalogFilter ({featuredProducts, productMetas}) {
 
     // Update search results on changes to the query list
     useEffect(() => {
-        console.log("useEffect Triggered")
         ingestLastQueryParams();
         ingestFilterParameters();
     }, [location.search, featuredProducts, productMetas]);
@@ -180,35 +179,31 @@ function CatalogFilter ({featuredProducts, productMetas}) {
         if(displayedQueryParams.has(section)) {
             if(multiVariantQueryParams.has(section)) {
                 return (
-                    <Grid item xs={12}>
+                    <Grid item key={`subheader-section-${section}`} xs={12}>
                         <List
                             component="nav"
                             aria-labelledby={`nested-list-subheader-site-${section}`}
+                            key={`subheader-section-list-${section}`}
                             subheader={
-                            <ListSubheader component="div" id={`nested-list-subheader-site-${section}`}>
+                            <ListSubheader component="div" id={`nested-list-subheader-site-${section}`} key={`nested-list-subheader-site-${section}`}>
                                 {categoryDisplayLookup[section]}
                             </ListSubheader>
                             }
                             className={classes.list}
                         >
-                            {data.map((subVal, index) => {
-                                return (
-                                    <React.Fragment>
-                                        {renderListItem(section, subVal, index)}
-                                    </React.Fragment>
-                                )
-                            })}
+                            {data.map((subVal, index) => renderListItem(section, subVal, index))}
                         </List>
                     </Grid>
                 )
             } else {
                 return (
-                    <Grid item xs={12}>
+                    <Grid item key={`subheader-section-promotions-${section}`} xs={12}>
                         <List
                             component="nav"
                             aria-labelledby="nested-list-subheader-site-promotions"
+                            key={`subheader-list-promotions-${section}`}
                             subheader={
-                            <ListSubheader component="div" id="nested-list-subheader-site-promotions">
+                            <ListSubheader component="div" id="nested-list-subheader-site-promotions" key={`nested-list-subheader-promotions-${section}`}>
                                 {categoryDisplayLookup[section]}
                             </ListSubheader>
                             }

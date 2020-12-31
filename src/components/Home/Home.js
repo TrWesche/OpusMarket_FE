@@ -14,7 +14,7 @@ import { fetchCatalogProducts } from "../../actions/actionsProductCatalog";
 
 const useStyles = makeStyles((theme) => ({
     root: {
-      flexGrow: 1,
+      marginTop: '2rem'
     },
     productSection: {
         backgroundColor: "#FFF",
@@ -28,8 +28,6 @@ const useStyles = makeStyles((theme) => ({
 
 function Home() {
     const classes = useStyles();
-    // const theme = useTheme();
-
     const productCatalog = useSelector(store => store.productCatalog);
 
     // const error = useSelector(store => store.error);
@@ -42,9 +40,8 @@ function Home() {
 
     // TODO: Hero Stepper Needs to be Finalized
     return (
-            <Container>
-                <p>Home</p>
-                <Grid container className={classes.root} spacing={4}>
+            <Container className={classes.root}>
+                <Grid container spacing={2}>
                     <Grid item xs={12}>
                         <HeroStepper />
                     </Grid>

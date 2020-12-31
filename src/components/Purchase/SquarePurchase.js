@@ -12,6 +12,13 @@
 
 
 import React, { useState } from 'react';
+import { useHistory } from "react-router-dom";
+import {
+  Grid,
+  Typography
+} from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+
 import { 
   SquarePaymentForm,
   ApplePayButton,
@@ -25,14 +32,34 @@ import {
 } from 'react-square-payment-form';
 import 'react-square-payment-form/lib/default.css';
 import apiOpus from '../../utils/apiOpusMarket';
+import { ORDER_HISTORY_PATH } from "../../routes/_pathDict";
+
 
 const APPLICATION_ID = process.env.REACT_APP_SQUARE_APP_ID;
 const LOCATION_ID = process.env.REACT_APP_SQUARE_LOC_ID;
 // const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:5000/api";
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    marginTop: '2rem',
+    marginBottom: '2rem'
+  },
+  vSection: {
+    display: 'flex',
+    justifyContent: 'center',
+    margin: theme.spacing(3)
+  }
+}));
+
+
 const SquarePurchase = ({orderDetails}) => {
-  
-  console.log("Order Details Square", orderDetails)
+  const classes = useStyles();
+  const history = useHistory();
+
+  // console.log("Order Details Square", orderDetails)
   const [errorMessages, setErrorMessages] = useState([]);
 
   function cardNonceResponseReceived(errors, nonce, cardData, buyerVerificationToken) {
@@ -53,6 +80,7 @@ const SquarePurchase = ({orderDetails}) => {
     const result = apiOpus.processPaymentSquare(data);
     // const result = axios.post(`${BASE_URL}/sqpay/process-payment`, data);
     console.log(result);
+    history.push(ORDER_HISTORY_PATH);
   }
 
   const lineItems = orderDetails.products.map(product => {
@@ -124,49 +152,56 @@ const SquarePurchase = ({orderDetails}) => {
   const unavailableMasterpass = <div className="sq-wallet-unavailable">Masterpass unavailable.</div>;
 
   return (
-    <SquarePaymentForm
-      sandbox={true}
-      applicationId={APPLICATION_ID}
-      locationId={LOCATION_ID}
-      cardNonceResponseReceived={cardNonceResponseReceived}
-      createPaymentRequest={createPaymentRequest}
-      createVerificationDetails={createVerificationDetails}
-      postalCode={postalCode}
-      focusField={focusField}
-    >
-      <ApplePayButton loadingView={loadingView} unavailableView={unavailableApple} />
-      <GooglePayButton loadingView={loadingView} unavailableView={unavailableGoogle} />
-      <MasterpassButton loadingView={loadingView} unavailableView={unavailableMasterpass} />
+    <Grid container className={classes.root}>
+      <Grid item xs={12} className={classes.vSection}>
+        <Typography variant='h4'>Complete Purchase</Typography>
+      </Grid>
+      <Grid item xs={12} className={classes.vSection}>
+        <SquarePaymentForm
+          sandbox={true}
+          applicationId={APPLICATION_ID}
+          locationId={LOCATION_ID}
+          cardNonceResponseReceived={cardNonceResponseReceived}
+          createPaymentRequest={createPaymentRequest}
+          createVerificationDetails={createVerificationDetails}
+          postalCode={postalCode}
+          focusField={focusField}
+        >
+          <ApplePayButton loadingView={loadingView} unavailableView={unavailableApple} />
+          <GooglePayButton loadingView={loadingView} unavailableView={unavailableGoogle} />
+          <MasterpassButton loadingView={loadingView} unavailableView={unavailableMasterpass} />
 
-      <div className="sq-divider">
-        <span className="sq-divider-label">Or</span>
-        <hr className="sq-divider-hr" />
-      </div>
+          <div className="sq-divider">
+            <span className="sq-divider-label">Or</span>
+            <hr className="sq-divider-hr" />
+          </div>
 
-      <fieldset className="sq-fieldset">
-        <CreditCardNumberInput />
+          <fieldset className="sq-fieldset">
+            <CreditCardNumberInput />
 
-        <div className="sq-form-third">
-          <CreditCardExpirationDateInput />
-        </div>
+            <div className="sq-form-third">
+              <CreditCardExpirationDateInput />
+            </div>
 
-        <div className="sq-form-third">
-          <CreditCardPostalCodeInput />
-        </div>
+            <div className="sq-form-third">
+              <CreditCardPostalCodeInput />
+            </div>
 
-        <div className="sq-form-third">
-          <CreditCardCVVInput />
-        </div>
-      </fieldset>
+            <div className="sq-form-third">
+              <CreditCardCVVInput />
+            </div>
+          </fieldset>
 
-      <CreditCardSubmitButton>Pay ${orderDetails.order_total/100}</CreditCardSubmitButton>
+          <CreditCardSubmitButton>Pay ${orderDetails.order_total/100}</CreditCardSubmitButton>
 
-      <div className="sq-error-message">
-        {errorMessages.map(errorMessage => (
-          <li key={`sq-error-${errorMessage}`}>{errorMessage}</li>
-        ))}
-      </div>
-    </SquarePaymentForm>
+          <div className="sq-error-message">
+            {errorMessages.map(errorMessage => (
+              <li key={`sq-error-${errorMessage}`}>{errorMessage}</li>
+            ))}
+          </div>
+        </SquarePaymentForm>
+      </Grid>
+    </Grid>
   );
 };
 

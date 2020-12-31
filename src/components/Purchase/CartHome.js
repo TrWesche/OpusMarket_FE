@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 import { 
     Container,
     Grid,
-    // useTheme
   } from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
 import CartList from "../Common/CardList/CartList";
@@ -27,14 +26,6 @@ export default function CartHome() {
   const classes = useStyles();
   
   const cartContents = useSelector(store => store.cartReducer);
-  // const error = useSelector(store => store.error);
-  // const dispatch = useDispatch();
-
-  // const theme = useTheme();
-
-  // useEffect(() => {
-  //   dispatch(updateProductInCart());
-  // }, [dispatch]);
 
   const renderCart = () => {
     if (cartContents.products.length > 0) {

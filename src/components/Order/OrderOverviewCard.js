@@ -1,6 +1,5 @@
 import React from 'react';
 import { useHistory } from "react-router-dom";
-// import { useDispatch } from "react-redux";
 import {
     Card,
     CardActions,
@@ -9,11 +8,7 @@ import {
     Typography,
     Grid
 } from '@material-ui/core';
-// import { 
-//   RemoveShoppingCart,
-//   AddCircleOutline } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
-// import { createOrder } from '../../actions/actionsCart';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -38,13 +33,9 @@ const useStyles = makeStyles((theme) => ({
 
 function OrderOverviewCard({productDataList}) {
   const classes = useStyles();
-  // const dispatch = useDispatch();
   const history = useHistory();
 
   const handleProccedToCheckout = () => {
-    console.log("Proceed to checkout triggered")
-
-    // dispatch(createOrder(productDataList));
     history.push(`/cart/buy`);
   }
 

@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
       display: 'flex',
     },
     media: {
-      maxWidth: 80,
+      width: 100,
       overflow: 'clip'
     },
     actionBar: {
@@ -55,6 +55,11 @@ const useStyles = makeStyles((theme) => ({
       fontWeight: 'bold',
       fontSize: '0.75rem'
     },
+    productDetails: {
+      display: 'flex',
+      height: '100%',
+      flexDirection: 'row'
+    }, 
     productInformation: {
       flexDirection: 'column',
       textAlign: 'start'
@@ -213,7 +218,7 @@ function ProductCardCol({cardData}) {
   return (
     <Card className={classes.root} variant="outlined">
       <CardActionArea onClick={handleViewProductDetails}>
-        <div>
+        <div className={classes.productDetails}>
           {cardMediaRender()}
           <CardContent className={classes.productInformation}>
             <Typography variant="caption" component="h6">

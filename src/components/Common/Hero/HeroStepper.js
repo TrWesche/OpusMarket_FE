@@ -25,39 +25,40 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: theme.palette.background.default,
     },
     img: {
-      height: 255,
-      // maxWidth: 400,
-      overflow: 'clip',
+      maxHeight: 300,
+      height: '100%',
       display: 'block',
+      overflow: 'hidden',
       width: '100%',
+      objectFit: 'cover'
     },
 }));
 
 const tutorialSteps = [
   {
-    label: 'San Francisco – Oakland Bay Bridge, United States',
+    label: '3D printing with ZMorph VX multitool 3D printer and Voxelizer software.',
     imgPath:
-      'https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60',
+      'https://images.unsplash.com/photo-1539586916228-3db588cc6f69?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1573&q=80',
   },
   {
-    label: 'Bird',
+    label: 'Eating at the Maschsee in Hannover',
     imgPath:
-      'https://images.unsplash.com/photo-1538032746644-0212e812a9e7?auto=format&fit=crop&w=400&h=250&q=60',
+      'https://images.unsplash.com/photo-1510427979624-03bb913c923d?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=2086&q=80',
   },
   {
-    label: 'Bali, Indonesia',
+    label: 'Poster Boy',
     imgPath:
-      'https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=400&h=250&q=80',
+      'https://images.unsplash.com/photo-1583153777434-3f892eb61d50?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1951&q=80',
   },
   {
-    label: 'NeONBRAND Digital Marketing, Las Vegas, United States',
+    label: 'Burnt Orange and White Nikes',
     imgPath:
-      'https://images.unsplash.com/photo-1518732714860-b62714ce0c59?auto=format&fit=crop&w=400&h=250&q=60',
+      'https://images.unsplash.com/photo-1608224107411-799a4c3de97d?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80',
   },
   {
-    label: 'Goč, Serbia',
+    label: 'Herbal Supplements',
     imgPath:
-      'https://images.unsplash.com/photo-1512341689857-198e7e2f3ca8?auto=format&fit=crop&w=400&h=250&q=60',
+      'https://images.unsplash.com/photo-1608354580506-716faac4aa36?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80',
   },
 ];
 

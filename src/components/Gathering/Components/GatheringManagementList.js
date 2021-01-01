@@ -26,7 +26,7 @@ function GatheringManagementList({gatherings, merchantId}) {
     return (
         <Container className={classes.root}>
           {gatherings.map((gathering, index) => (
-            <GatheringManagementCard cardData={gathering} merchantId={merchantId} />
+            <GatheringManagementCard cardData={gathering} merchantId={merchantId} key={`merchant-${merchantId}-gathering-${gathering.gathering_id}`}/>
           ))}
         </Container>
   );

@@ -77,7 +77,7 @@ function GatheringManagementCard({cardData, merchantId}) {
   }
 
   const renderImage = (cardData) => {
-    if (cardData && cardData.images[0].url) {
+    if (cardData && cardData.img_urls[0].url) {
       return (
         <CardMedia
           className={classes.media}

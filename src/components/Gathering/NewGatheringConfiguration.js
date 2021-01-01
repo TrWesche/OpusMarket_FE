@@ -186,7 +186,7 @@ export default function NewGatheringConfiguration() {
             </Grid> 
 
             <Grid item xs={12}>
-              <Button className={clsx(classes.margin)} type="submit" aria-label="create merchant account" variant="contained" color="primary">
+              <Button className={clsx(classes.margin)} type="submit" aria-label="create merchant gathering" variant="contained" color="primary">
                   Create Gathering
               </Button>
             </Grid>

@@ -5,17 +5,30 @@ import BaseProductConfiguration from '../../../components/Product/Forms/BaseProd
 import theme from "../../../theme";
 
 
-const renderWithProviders = () => {
+const emptyProduct = {
+    id: '',
+    name: '',
+    description: '',
+    base_price: '',
+    images: [],
+    metas: [],
+    modifiers: [],
+    promotions: [],
+    coupons: []
+}
+
+
+const renderWithProviders = (productData) => {
     return render(
         <ThemeProvider theme={theme}>
-            <BaseProductConfiguration />
+            <BaseProductConfiguration productData={productData} />
         </ThemeProvider>
     );
 }
 
 
 test('it renders without crashing', () => {
-    renderWithProviders();
+    renderWithProviders(emptyProduct);
     const nameInput = screen.getByText("Name");
     const priceInput = screen.getByText("Price (Format: XX.xx)");
     const descriptionInput = screen.getByText("Description");

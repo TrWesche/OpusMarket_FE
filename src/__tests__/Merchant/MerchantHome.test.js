@@ -15,7 +15,7 @@ jest.mock("react-redux", () => ({
 }))
 
 jest.mock("react-router-dom", () => ({
-    ...jest.requireActual("react-redux"),
+    ...jest.requireActual("react-router-dom"),
     useParams: jest.fn,
     useHistory: jest.fn
 }))

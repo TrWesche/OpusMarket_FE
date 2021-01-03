@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-function ProductCouponConfiguration(productData, setProductData) {
+function ProductCouponConfiguration({productData, setProductData}) {
     const classes = useStyles();
 
     const handleAdd = (e) => {
@@ -77,7 +77,7 @@ function ProductCouponConfiguration(productData, setProductData) {
 
         setProductData({...productData, "coupons": coupons});
     }
-
+    
     // TODO: The product_id should be hidden in the future, currently going to be used for validation
     return (
         <Grid container spacing={2} className={classes.root}>

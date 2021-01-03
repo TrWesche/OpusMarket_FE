@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function ProductConfigurationComplete(productData, setProductData) {
+function ProductConfigurationComplete() {
   const classes = useStyles();
 
   return (

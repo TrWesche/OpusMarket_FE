@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function BaseProductConfiguration(productData, setProductData) {
+function BaseProductConfiguration({productData, setProductData}) {
   const classes = useStyles();
 
   const handleChange = (prop) => (event) => {

@@ -315,7 +315,7 @@ function ProductConfigurationWizard() {
                 )}
             </div>
             <Container>
-                {getStepContent(activeStep)(productData, setProductData)}
+                {getStepContent(activeStep)({productData, setProductData})}
             </Container>
         </div>
     );

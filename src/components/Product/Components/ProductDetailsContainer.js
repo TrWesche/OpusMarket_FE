@@ -79,7 +79,7 @@ export default function ProductDetailsContainer({product_id, name, description, 
     };
 
     return (
-        <Grid container className={classes.hSection} xs={12} md={7} spacing={1}>
+        <Grid item className={classes.hSection} xs={12} md={7}>
             <Grid item xs={12}>
                 <Typography className={classes.title}>{name}</Typography>
                 <Typography className={classes.rating}>Rating: {avg_rating.toPrecision(2)}</Typography>

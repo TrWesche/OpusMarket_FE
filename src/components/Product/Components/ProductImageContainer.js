@@ -42,9 +42,9 @@ export default function ProductImageContainer({imageList, merchant_id}) {
 
   // TODO: Meet the creator link
   return (
-    <Grid container className={classes.hSection} xs={12} md={5} spacing={1}>
+    <Grid item className={classes.hSection} xs={12} md={5}>
         <Grid item xs={12}>
-            <Typography variant="overline">Meet the Creator {merchant_id}</Typography>
+            <Typography variant="overline">Meet the Creator</Typography>
         </Grid>
         <Grid item xs={12}>
             <img src={displayData.img_url} alt={displayData.img_alt_text} className={classes.heroImage}/>

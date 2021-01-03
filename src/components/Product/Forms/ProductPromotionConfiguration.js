@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-function ProductPromotionConfiguration(productData, setProductData) {
+function ProductPromotionConfiguration({productData, setProductData}) {
     const classes = useStyles();
 
     const handleAdd = (e) => {

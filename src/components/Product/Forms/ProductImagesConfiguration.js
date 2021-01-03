@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-function ProductImagesConfiguration(productData, setProductData) {
+function ProductImagesConfiguration({productData, setProductData}) {
     const classes = useStyles();
 
     const handleAdd = (e) => {

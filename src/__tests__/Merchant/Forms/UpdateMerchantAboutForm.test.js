@@ -12,7 +12,6 @@ import { createStore } from "redux"
 jest.mock("react-redux", () => ({
     ...jest.requireActual("react-redux"),
     useDispatch: jest.fn
-    
 }))
 
 jest.mock("react-router-dom", () => ({

@@ -51,7 +51,7 @@ export default function OrderHome() {
     } else {
       return (
         <Grid item xs={12}>
-          {orderList.orders.map((order) => <OrderCard cardData={order} />)}
+          {orderList.orders.map((order) => <OrderCard cardData={order} key={`order-${order.id}`} />)}
         </Grid>
       )
     }

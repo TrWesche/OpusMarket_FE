@@ -47,8 +47,7 @@ function OrderCard({cardData}) {
   const history = useHistory();
 
   const handleViewDetails = () => {
-    console.log("View order details triggered")
-
+    // console.log("View order details triggered")
     history.push(`/orders/${cardData.id}`);
   }
 
@@ -80,7 +79,7 @@ function OrderCard({cardData}) {
       <CardActions className={classes.actionBar}>
           <Grid container spacing={1} alignItems="flex-end">
             <Grid item>
-              <Button onClick={handleViewDetails} variant="outlined">
+              <Button disabled onClick={handleViewDetails} variant="outlined">
                 View Order Details
               </Button>
             </Grid>

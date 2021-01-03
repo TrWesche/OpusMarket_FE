@@ -68,6 +68,7 @@ export default function ProductDetail() {
           avg_rating={+avg_rating} 
           promotions={promotion}
           modifiers={modifiers}
+          imageList={images} 
         />
       </Grid>
 

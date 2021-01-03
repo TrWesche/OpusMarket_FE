@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function ProductOrderControls({product_id, modifiers}) {
+export default function ProductOrderControls({product_id, name, description, base_price, promotions, img_urls, modifiers}) {
     const classes = useStyles();
     const dispatch = useDispatch();     
 
@@ -44,8 +44,16 @@ export default function ProductOrderControls({product_id, modifiers}) {
     });
 
     const handleAddToCart = () => {
-        console.log("Add To Cart Triggered", product_id);
-        dispatch(addProductToCart(orderSelections.quantity, product_id));
+        const product = {
+            id: product_id,
+            name: name,
+            description: description,
+            base_price: base_price,
+            img_urls: (img_urls[0] ? [img_urls[0].url] : [null]),
+            promotion_price: (promotions[0] ? promotions[0].promotion_price : null)
+        }
+
+        dispatch(addProductToCart(orderSelections.quantity, product));
     }
 
     const handleUpdateQuantity = (e) => {

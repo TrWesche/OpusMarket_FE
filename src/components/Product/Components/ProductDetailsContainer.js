@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function ProductDetailsContainer({product_id, name, description, base_price, avg_rating, promotions, modifiers}) {
+export default function ProductDetailsContainer({product_id, name, description, base_price, avg_rating, promotions, modifiers, imageList}) {
     const classes = useStyles();
 
     const renderPromotion = () => {
@@ -88,7 +88,14 @@ export default function ProductDetailsContainer({product_id, name, description, 
                 <Typography className={classes.description}>{description}</Typography>
             </Grid>
             <Grid item xs={12}>
-                <ProductOrderControls className={classes.root} product_id={product_id} modifiers={modifiers}/>
+                <ProductOrderControls className={classes.root} 
+                    product_id={product_id} 
+                    name={name} 
+                    description={description} 
+                    base_price={base_price}
+                    promotions={promotions}
+                    img_urls={imageList}
+                    modifiers={modifiers}/>
             </Grid>
         </Grid>
     );

@@ -51,7 +51,7 @@ export default function MerchantGatheringsList({gatherings}) {
     return (
         <List className={classes.root}>
         {gatherings.map((gathering, index) => (
-            <ListItem alignItems="flex-start" className={classes.listItem}>
+            <ListItem alignItems="flex-start" className={classes.listItem} key={`gathering-${gathering.gathering_id}`}>
                 {renderImage(gathering)}
                 <ListItemText
                 primary={gathering.title}

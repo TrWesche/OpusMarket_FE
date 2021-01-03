@@ -60,19 +60,13 @@ function MerchantBiosStepper({merchantBios}) {
   const renderImage = (bio, index) => {
     if (Math.abs(activeStep - index) <= 2 && bio.image_url) {
       return (
-        <img className={classes.img} src={bio.image_url} alt={bio.name} />
+        <img className={classes.img} src={bio.image_url} alt={bio.alt_text} />
       )
     } else {
       return (
         <p>No Image Available</p>
       )
     }
-  };
-
-  const renderName = (bio) => {
-    return (
-        <p>{bio.name}</p>
-    )
   };
 
   const renderAbout = (bio) => {
@@ -101,7 +95,6 @@ function MerchantBiosStepper({merchantBios}) {
         {merchantBios.map((bio, index) => (
           <div key={`bio-${index}`}>
             {renderImage(bio, index)}
-            {renderName(bio)}
             {renderAbout(bio)}
           </div>
         ))}

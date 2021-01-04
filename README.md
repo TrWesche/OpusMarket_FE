@@ -1,15 +1,23 @@
 # OpusMarket
 
+## System Requirements:
+- The OpusMarket Frontend is dependent on its partner backend project.  Any deployment should include the backend server to provide data for the website to render on-screen.  All calls are handled via an API whose functionalities can be found under utils > apiOpusMarket.
+
+## Deployment Instructions:
+- The connection between the OpusMarket frontend and backend is secured via a Public/Private rsa key.  A key generator for these files has been included in the backend project at keygen/key-gen.js.  Running this script will create two files: "id_rsa_priv.pem" and "id_rsa_pub.pem."  The public key should be copied into the "keys.example.js" file and that file renamed to keys.js to enable the frontend to decode encrypted cookies provided by the backend.
+- The frontend is additionally dependent on 3 values contained in the ".env" of the frontend.  "REACT_APP_SQUARE_APP_ID" and "REACT_APP_SQUARE_LOC_ID" will require the user to create a api account with Square (https://developer.squareup.com/us/en) and duplicate their individual Application ID and Location ID to the applicable variable.  The third value "REACT_APP_BASE_URL" is the root address for the connection with the API backend.  This should match the address of your deployment of the backend server.
+
+
 ## Tech Stack:
 ### Frontend:
 - React
   - Routing - react-router-dom
 - Redux
   - React integration - react-redux
-  - Persistence (Reduce Resource Loads & Handle Anonymous Carts) - redux-persist
   - Asynchronous Calls - redux-thunk
 - Styling: MaterialUI or Standard Bootstrap (not Reactstrap)
 - API Calls: Axios
+- Integrations: Square API
 
 ### Backend:
 - Node.js
@@ -59,10 +67,11 @@ Niche online shoppers looking for unique, hand built pieces.  LIkely to be less 
 ## Data Source:
 Product and User data will be hosted locally and accessed through custom built APIs. The intent is to populate the product database with publicly available data fitted to the project need.
 
-### Additional APIs include:
-- Stripe / Square – eCommerce / Payment Processing Functionality (will be setup with faked out data to mimic the appearance of full operability)  
+### Implemented API(s):
+- Square – eCommerce / Payment Processing Functionality (will be setup with faked out data to mimic the appearance of full operability)  
   - https://developer.squareup.com/us/en
-  - https://stripe.com/docs/api
+
+### Future API(s) Integrations:
 - Discord / Slack / Twitch: For low latency text & voice chat
   - https://discord.com/developers/docs/intro 
 - Azure Cognitive Services - Cognitive / Intelligent Search (Potential - Bing Entity Search, Bing Autosuggest)

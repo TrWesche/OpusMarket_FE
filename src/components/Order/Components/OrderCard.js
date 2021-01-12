@@ -47,7 +47,6 @@ function OrderCard({cardData}) {
   const history = useHistory();
 
   const handleViewDetails = () => {
-    // console.log("View order details triggered")
     history.push(`/orders/${cardData.id}`);
   }
 

@@ -5,7 +5,7 @@ const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:5000/api";
 class apiOpus {
 
     static async request(endpoint, verb = "get", paramsOrData = {}) {
-        console.debug("API Call:", endpoint, paramsOrData, verb);
+        // console.debug("API Call:", endpoint, paramsOrData, verb);
     
         try {
           return (await axios({

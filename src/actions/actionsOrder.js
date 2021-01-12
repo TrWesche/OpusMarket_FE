@@ -69,13 +69,10 @@ export const createOrder = (productList) => {
         }
     }
 
-    // console.log(orderData);
 
     return async function (dispatch) {
         try {
             const data = await apiOpus.createNewOrder(orderData);
-            // const { data } = await axios.post(`${BASE_URL}/orders/new`, orderData);
-            console.log("From API Call:", data)
             dispatch(createOrderSuccess(data));
         } catch (error) {
             dispatch(gotError());

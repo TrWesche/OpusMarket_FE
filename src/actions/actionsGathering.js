@@ -7,7 +7,6 @@ import {
 export const fetchMerchantGatherings = (merchantId) => {
     return async function (dispatch) {
         try {
-            console.log("Dispatching get gatherings", merchantId);
             const data = await apiOpus.getMerchantGatherings(merchantId);
             dispatch(gotMerchantGatherings(data));
         } catch (error) {

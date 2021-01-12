@@ -8,7 +8,6 @@ export const fetchProductDetails = (productID) => {
     return async function (dispatch) {
         try {
             const data = await apiOpus.getProductDetails(productID);
-            console.log(data);
             dispatch(gotProductDetails(data));
         } catch (error) {
             dispatch(gotError());

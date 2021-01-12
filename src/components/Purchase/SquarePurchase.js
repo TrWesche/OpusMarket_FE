@@ -68,8 +68,7 @@ const SquarePurchase = ({orderDetails}) => {
       order_id: orderDetails.id
     }
 
-    const result = await apiOpus.processPaymentSquare(data);
-    // console.log(result);
+    await apiOpus.processPaymentSquare(data);
     history.push(ORDER_HISTORY_PATH);
   }
 

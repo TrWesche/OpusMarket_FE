@@ -33,7 +33,6 @@ function MoreProductsCardGrid({redirect}) {
   const history = useHistory();
 
   const handleViewMoreProducts = () => {
-    console.log("View Product More Products Triggered", redirect);
     history.push(`${redirect}`);
   }
 

@@ -196,7 +196,6 @@ function ProductCardCol({cardData}) {
   }
 
   const cardMediaRender = () => {
-    console.log(cardData)
     if(cardData.img_urls[0]) {
       return (
         <CardMedia

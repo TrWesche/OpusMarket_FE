@@ -44,8 +44,6 @@ export const fetchMerchantList = ({ searchParameters }) => {
         }
     }
 
-    console.log(callConstructor);
-
     return async function (dispatch) {
         try {
             const data = await apiOpus.getMerchantList(callConstructor);

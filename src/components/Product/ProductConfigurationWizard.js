@@ -183,7 +183,6 @@ function ProductConfigurationWizard() {
 
     // TODO: This should all be handled by a single route on the backend, not multiple independent calls from the frontend
     const handleCommit = async () => {
-        console.log("Commiting product data to database");
         
         const basePriceInt = Math.floor(+productData.base_price * 100);
 

@@ -26,14 +26,10 @@ function Home() {
     // const error = useSelector(store => store.error);
     const dispatch = useDispatch();
 
-    // console.log("Cart Contents", cartContents)
-
     useEffect(() => {
         dispatch(createOrder(cartContents.products));
     }, [dispatch]);
 
-    // console.log(productCatalog);
-    // console.log("Order Details", orderDetails);
 
     const render = () => {
         if(!orderDetails.hasOwnProperty("order")) {

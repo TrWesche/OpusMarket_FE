@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useHistory } from "react-router-dom";
+import {AuthContext} from "../App/AuthContext";
 import {
     Card,
     CardActions,
@@ -32,11 +33,16 @@ const useStyles = makeStyles((theme) => ({
 
 
 function OrderOverviewCard({productDataList}) {
+  const {authToken} = useContext(AuthContext);
   const classes = useStyles();
   const history = useHistory();
 
   const handleProccedToCheckout = () => {
-    history.push(`/cart/buy`);
+    if (authToken) {
+      history.push(`/cart/buy`);
+    } else {
+      history.push(`/login`)
+    }
   }
 
   const renderTotal = () => {

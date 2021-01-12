@@ -23,8 +23,9 @@ const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
         backgroundColor: 'white',
         border: `1px solid #AAA`,
-        maxHeight: 600,
-        borderRadius: '0.2rem'
+        maxHeight: 750,
+        borderRadius: '0.2rem',
+        overflowY: 'scroll'
     },
     vSection: {
         display: 'flex',
@@ -32,6 +33,12 @@ const useStyles = makeStyles((theme) => ({
     },
     list: {
         flexGrow: 1
+    },
+    subheader: {
+        backgroundColor: theme.palette.common.white
+    },
+    submitButton: {
+        marginBottom: '1rem'
     }
 }));
 
@@ -185,7 +192,7 @@ function CatalogFilter ({featuredProducts, productMetas}) {
                             aria-labelledby={`nested-list-subheader-site-${section}`}
                             key={`subheader-section-list-${section}`}
                             subheader={
-                            <ListSubheader component="div" id={`nested-list-subheader-site-${section}`} key={`nested-list-subheader-site-${section}`}>
+                            <ListSubheader className={classes.subheader} component="div" id={`nested-list-subheader-site-${section}`} key={`nested-list-subheader-site-${section}`}>
                                 {categoryDisplayLookup[section]}
                             </ListSubheader>
                             }
@@ -203,7 +210,7 @@ function CatalogFilter ({featuredProducts, productMetas}) {
                             aria-labelledby="nested-list-subheader-site-promotions"
                             key={`subheader-list-promotions-${section}`}
                             subheader={
-                            <ListSubheader component="div" id="nested-list-subheader-site-promotions" key={`nested-list-subheader-promotions-${section}`}>
+                            <ListSubheader className={classes.subheader} component="div" id="nested-list-subheader-site-promotions" key={`nested-list-subheader-promotions-${section}`}>
                                 {categoryDisplayLookup[section]}
                             </ListSubheader>
                             }
@@ -241,7 +248,7 @@ function CatalogFilter ({featuredProducts, productMetas}) {
         <Grid className={classes.root} item xs={12}>
             <form onSubmit={handleSubmit}>
                 {render()}
-                <Button type="submit" aria-label="apply selected filters" variant="contained" color="primary">
+                <Button className={classes.submitButton} type="submit" aria-label="apply selected filters" variant="contained" color="primary">
                     Apply
                 </Button>
             </form>

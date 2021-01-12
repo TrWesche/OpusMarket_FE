@@ -17,6 +17,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexGrow: 1, 
     backgroundColor: theme.palette.grey[100],
+    flexDirection: 'column'
   },
   listItem: {
     display: 'flex',

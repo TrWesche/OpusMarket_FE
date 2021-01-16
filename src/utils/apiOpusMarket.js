@@ -12,6 +12,7 @@ class apiOpus {
             method: verb,
             url: `${BASE_URL}/${endpoint}`,
             withCredentials: true,
+            crossorigin: true,
             [verb === "get" ? "params" : "data"]: paramsOrData})).data;
             // axios sends query string data via the "params" key,
             // and request body data via the "data" key,

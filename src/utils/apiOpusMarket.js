@@ -11,6 +11,7 @@ class apiOpus {
           return (await axios({
             method: verb,
             url: `${BASE_URL}/${endpoint}`,
+            crossDomain: true,
             withCredentials: true,
             [verb === "get" ? "params" : "data"]: paramsOrData})).data;
             // axios sends query string data via the "params" key,

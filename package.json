@@ -2,6 +2,7 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
+  "proxy": "https://opusmarket-backend.herokuapp.com/api",
   "dependencies": {
     "@date-io/luxon": "^1.3.13",
     "@material-ui/core": "^4.11.0",

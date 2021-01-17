@@ -10,8 +10,8 @@ class apiOpus {
         try {
           return (await axios({
             method: verb,
-            // url: `${BASE_URL}/${endpoint}`,
-            url: `/${endpoint}`,
+            url: `${BASE_URL}/${endpoint}`,
+            // url: `/${endpoint}`,
             crossDomain: true,
             withCredentials: true,
             [verb === "get" ? "params" : "data"]: paramsOrData})).data;

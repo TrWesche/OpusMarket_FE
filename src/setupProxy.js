@@ -8,10 +8,7 @@ module.exports = function(app) {
     createProxyMiddleware({
       target: BASE_URL,
       changeOrigin: true,
-      cookieDomainRewrite: {
-          "https://opusmarket-backend.herokuapp.com/": "https://opusmarket-frontend.herokuapp.com/",
-          "*": ""
-      }
+      cookieDomainRewrite: "https://opusmarket-frontend.herokuapp.com/"
     })
   );
 };

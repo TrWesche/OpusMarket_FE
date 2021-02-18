@@ -1,12 +1,31 @@
-# OpusMarket
+# OpusMarket - Frontend
 
 ## System Requirements:
-- The OpusMarket Frontend is dependent on its partner backend project.  Any deployment should include the backend server to provide data for the website to render on-screen.  All calls are handled via an API whose functionalities can be found under utils > apiOpusMarket.
+- The OpusMarket Frontend is dependent on its partner backend project located at https://github.com/TrWesche/OpusMarket_BE.  Any deployment should include the backend server to provide data for the website to render on-screen.  All calls are handled via an API whose functionalities can be found under utils > apiOpusMarket.
 
 ## Deployment Instructions:
-- The connection between the OpusMarket frontend and backend is secured via a Public/Private rsa key.  A key generator for these files has been included in the backend project at keygen/key-gen.js.  Running this script will create two files: "id_rsa_priv.pem" and "id_rsa_pub.pem."  The public key should be copied into the "keys.example.js" file and that file renamed to keys.js to enable the frontend to decode encrypted cookies provided by the backend.
-- The frontend is additionally dependent on 3 values contained in the ".env" of the frontend.  "REACT_APP_SQUARE_APP_ID" and "REACT_APP_SQUARE_LOC_ID" will require the user to create a api account with Square (https://developer.squareup.com/us/en) and duplicate their individual Application ID and Location ID to the applicable variable.  The third value "REACT_APP_BASE_URL" is the root address for the connection with the API backend.  This should match the address of your deployment of the backend server.
+- The connection between the OpusMarket frontend and backend is secured via a Public/Private rsa key.  A key generator for these files has been included in the backend project (https://github.com/TrWesche/OpusMarket_BE) at keygen/key-gen.js.  Running this script will create two files: "id_rsa_priv.pem" and "id_rsa_pub.pem."  The public key should be copied into the "keys.example.js" file and that file renamed to keys.js to enable the frontend to decode encrypted cookies provided by the backend.
+- The frontend is additionally dependent on 3 values contained in the ".env" of the frontend (note: These values cannot be updated live, any changes will require the React project to be recompiled).  
+  - "REACT_APP_SQUARE_APP_ID" and "REACT_APP_SQUARE_LOC_ID" will require the user to create a api account with Square (https://developer.squareup.com/us/en) and duplicate their individual Application ID and Location ID to the applicable variable.
+  - "REACT_APP_BASE_URL" is the root address for the connection with the API backend.  This should match the address of your deployment of the backend server.
 
+## Sample Deployment:
+- The OpusMarket Web Application is Currently Deployed at with Sample Data Loaded into the Backend: https://opusmarket.twesche.com/
+  - Below are Sample Accounts for Purchasing and Merchant Users:
+    - 6 Users Are Present - All with a password of "password"
+      - cHylda@fakeprovider.com
+      - bJonquil@fakeprovider.com
+      - eMchumba@fakeprovider.com
+      - sRasim@fakeprovider.com
+      - aMarlies@fakeprovider.com
+      - CAnita@fakeprovider.com
+    - 20 Merchants Are Present - All with a password of "passwordpassword" (6 listed, see db.sql for full list)
+      - support@graytable.com
+      - support@bulbzy.com
+      - support@glaazel.com
+      - support@superlamp.com
+      - support@techshoe.com
+      - support@wearsly.com
 
 ## Tech Stack:
 ### Frontend:
@@ -15,119 +34,63 @@
 - Redux
   - React integration - react-redux
   - Asynchronous Calls - redux-thunk
-- Styling: MaterialUI or Standard Bootstrap (not Reactstrap)
+- Styling: MaterialUI
 - API Calls: Axios
-- Integrations: Square API
+- Integrations: Square Payment Form
 
 ### Backend:
+Link: https://github.com/TrWesche/OpusMarket_BE
 - Node.js
 - Express.js
-- Postgres.sql
+- PostgreSQL
+- Integrations: Square API
 
-## Focus:
-Elements of Front-end and Back-end work with a front-end bias.
-- Back End:
-  - Source & Potentially modify an ecommerce site dataset (data must have a “creator” column at a minimum)
-  - Build Architecture for “Creator Pages”
-- Front End:
-  - Create UX which handles standard eCommerce flows / jobs to be done.  Full Structure to be defined via mapping user-flows.
-  - Example User Flow: 
-    - User Navigates to Site Homepage
-      - Components: Homepage, Search Bar, Hero/Ad Space, Popular Items - 1
-    - User Navigates to Registration
-      - Components: User Registration Form
-    - User Completes Form and is Redirected back to Site Homepage
-      - Components: Homepage – Sub-components: Search bar, Hero/Ad Space, Recently Viewed - 1
-    - User Navigates to Products Home Page
-      - Components: Products Home – Sub-components: Search bar, Hero/Ad Space, Popular Items – 1
-    - User Searches for a Product
-      - Components: Products List – Sub-Components: Product Card
-    - User Selects a Product
-      - Components: Product Hero, Reviews, Add-to-Cart, About The Creator / Company Brief
-    - User Navigates to About the Creator Details
-      - Components: Creator Hero, Creator Upcoming Events, Products List, Product Quick View
-    - User Adds Creator Product(s) to Cart
-      - -- Update Navbar Cart
-    - User Navigates to Cart
-      - Components: Products List, Cart Summary, Checkout
-    - User Proceeds to Checkout
-      - Components: Billing Details, Shipping Details
-    - User Completes Purchase
-      - Components: Order Summary, Thank You Card
+## About:
+OpusMarket provides a fully functional eCommerce website experience split between two independent projects an API Served React Front-End and Express Webserver attached to a PostgreSQL Database.
 
-## Application Type:
-Responsive Website
+### Application Functions:
+- Public Access
+  - Browse/Search Products
+  - View Individual Products
+  - Browse/Search Merchants
+  - Add/Remove Products From Cart
+- Merchant Users
+  - Create/Update/Delete/Login/Logout Merchant Account
+  - Create/Delete Products
+    - Includes: Images, Product Name, Product Description, Product Pricing, Product Promotions, Product Coupons, Featured Products, Product Tags, Product Modifiers
+  - Create Personal Web Store
+    - Includes: Merchant Gatherings (Events), Featured Products, About Us Section
+- Purchasing Users
+  - Create/Update/Delete/Login/Logout Purchasing Account
+  - Purchase Products via Square
+  - View Previous Orders
 
-## Project Goal:
-The eCommerce website will help individual artists and creators sell their products and develop connections with prospective buyers by providing both a comprehensive eCommerce store experience as well as unique functionalities enabling them to interact with their customers and build a community around their brand via personal landing pages, Live AMA and collaboration sessions hosted through their personal page, and more.
 
-## User Demographics:
-Niche online shoppers looking for unique, hand built pieces.  LIkely to be less cost sensitive and to value developing emotional connections with brands/creators.
+### Sample Supported Purchase Flow & Generalized React Components:
+  1. User Navigates to Site Homepage
+  2. User Navigates to Registration
+  3. User Completes Registration Form and is Redirected back to Site Homepage
+  4. User Adds a Product from the Homepage Directly to Cart
+  5. User Performs a Product Search from the Navbar and is returned relevant results
+  6. User Opens Target Product Page, Selects Modifiers, and Adds to Cart
+  7. User Performs a Merchant Search from the Navbar and is returned relevant results
+  8. User Opens Merchant Store and Opens a Merchant's Featured Product
+  9. User Adds Featured Product to Cart
+  10. User Navigates to Cart and Applys Coupon to Product for which they have a coupon
+  11. User Proceed to Checkout and Fills in their Credit Card Information
+  12. Users Order is Processed and Payment Taken - Purchase Complete
 
-## Data Source:
-Product and User data will be hosted locally and accessed through custom built APIs. The intent is to populate the product database with publicly available data fitted to the project need.
 
 ### Implemented API(s):
 - Square – eCommerce / Payment Processing Functionality (will be setup with faked out data to mimic the appearance of full operability)  
   - https://developer.squareup.com/us/en
 
 ### Future API(s) Integrations:
-- Discord / Slack / Twitch: For low latency text & voice chat
+- Discord / Slack / Twitch: For low latency text & voice chat - Extend "Gathering" Functionality
   - https://discord.com/developers/docs/intro 
-- Azure Cognitive Services - Cognitive / Intelligent Search (Potential - Bing Entity Search, Bing Autosuggest)
+- Azure Cognitive Services - Cognitive / Intelligent Search (Potential - Bing Entity Search, Bing Autosuggest) - Improve Website Search Capability
   - https://azure.microsoft.com/en-us/services/cognitive-services/#api 
-  
-## Project Approach:
-### High Level DB Schema:
-- Products Table:
-  - Id, Name, Category, Description, Image URL, Price, Rating, Brand/Creator Id
-- Product Reviews Table:
-  - Id, Product Id, Reviewer Id, Rating, Review Text
-- Brand/Creators Table:
-  - Id, BrandName, Logo Image URL, emailAddress, Location, Description
-- Events Table:
-  - Id, Creator Id, Event Type, Event URL
-- User Table
-  - Id, First Name, Last Name, Email, BrandId
-- Billing Information
-  - Id, UserId, Payment Type, Payment Number, Exp Date
-- Shipping Information
-  - Id, UserId, Street Address, City, State, Country, Postal Code
-- Orders Table
-  - Id, Destination Address, Method of Payment, Total Cost, Shipping Notes
-- Order-Products
-  - Id, Order ID, Product ID, Quantity
 
-### Potential API issues
-- Inconsistent Entries in the Product Fields, especially with entries in Category and Image urls.
-- Appropriately securing the critical channels for payments.
-
-### Sensitive Information
-- User Personally Identifiable information and Critical Billing data needs to be secured (User Table, Billing Information, Shipping Information).
-
-### App Functionalities
-- App will include:
-  - Full end-to-end eCommerce capabilities
-    - Product Browse/Search
-    - Shopping Cart
-    - Ordering
-    - Payment Processing
-  -  The ability for Brands/Creators to interact with their audience
-    - Personal brand pages
-    - Event Listings
-    - Web based text/voice/video event streams (stretch)
-
-### User Flow
-- See sample user flow above
-
-### Features & Stretch Goals
-- Stretch Goals:
-  - Voice & Video Chat Integration
-  - Bing Cognitive Search Integration
-- Features:
-  - eCommerce Store w/ Shopping Cart & Payment Processing
-  - Creator Pages
-  - Events / Social Options
 
 
 # This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
